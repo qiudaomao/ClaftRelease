@@ -11,7 +11,7 @@ import SwiftUI
 struct claftApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(servers: [])
         }
     }
 }

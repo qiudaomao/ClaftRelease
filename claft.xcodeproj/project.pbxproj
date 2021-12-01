@@ -14,6 +14,10 @@
 		E9D75DDC2754C109008E20F0 /* claftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DDB2754C109008E20F0 /* claftTests.swift */; };
 		E9D75DE62754C109008E20F0 /* claftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DE52754C109008E20F0 /* claftUITests.swift */; };
 		E9D75DE82754C109008E20F0 /* claftUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DE72754C109008E20F0 /* claftUITestsLaunchTests.swift */; };
+		E9D75DF52754CE26008E20F0 /* ProxiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DF42754CE26008E20F0 /* ProxiesView.swift */; };
+		E9D75DF72755CA62008E20F0 /* ServerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DF62755CA62008E20F0 /* ServerCard.swift */; };
+		E9F83ED6275788350022B6BC /* ManageServerPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F83ED5275788350022B6BC /* ManageServerPanel.swift */; };
+		E9F83ED82757A2B60022B6BC /* CreateServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F83ED72757A2B60022B6BC /* CreateServer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +48,10 @@
 		E9D75DE12754C109008E20F0 /* claftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = claftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9D75DE52754C109008E20F0 /* claftUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = claftUITests.swift; sourceTree = "<group>"; };
 		E9D75DE72754C109008E20F0 /* claftUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = claftUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E9D75DF42754CE26008E20F0 /* ProxiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxiesView.swift; sourceTree = "<group>"; };
+		E9D75DF62755CA62008E20F0 /* ServerCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCard.swift; sourceTree = "<group>"; };
+		E9F83ED5275788350022B6BC /* ManageServerPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageServerPanel.swift; sourceTree = "<group>"; };
+		E9F83ED72757A2B60022B6BC /* CreateServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateServer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,9 +103,13 @@
 			isa = PBXGroup;
 			children = (
 				E9D75DCA2754C106008E20F0 /* claftApp.swift */,
+				E9D75DF62755CA62008E20F0 /* ServerCard.swift */,
 				E9D75DCC2754C106008E20F0 /* ContentView.swift */,
+				E9D75DF42754CE26008E20F0 /* ProxiesView.swift */,
+				E9F83ED5275788350022B6BC /* ManageServerPanel.swift */,
 				E9D75DCE2754C109008E20F0 /* Assets.xcassets */,
 				E9D75DD02754C109008E20F0 /* Preview Content */,
+				E9F83ED72757A2B60022B6BC /* CreateServer.swift */,
 			);
 			path = claft;
 			sourceTree = "<group>";
@@ -257,8 +269,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9D75DF72755CA62008E20F0 /* ServerCard.swift in Sources */,
 				E9D75DCD2754C106008E20F0 /* ContentView.swift in Sources */,
+				E9F83ED82757A2B60022B6BC /* CreateServer.swift in Sources */,
 				E9D75DCB2754C106008E20F0 /* claftApp.swift in Sources */,
+				E9D75DF52754CE26008E20F0 /* ProxiesView.swift in Sources */,
+				E9F83ED6275788350022B6BC /* ManageServerPanel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
