@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E925832227588FC4002B0F49 /* NetWorkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925832127588FC4002B0F49 /* NetWorkManager.swift */; };
+		E9258325275895B2002B0F49 /* ConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9258324275895B2002B0F49 /* ConfigView.swift */; };
+		E935F3042759EF78001CD0BC /* SpecificCornerShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */; };
+		E9C99BBE27588E6A009EF515 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C99BBD27588E6A009EF515 /* Config.swift */; };
 		E9D75DCB2754C106008E20F0 /* claftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DCA2754C106008E20F0 /* claftApp.swift */; };
 		E9D75DCD2754C106008E20F0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DCC2754C106008E20F0 /* ContentView.swift */; };
 		E9D75DCF2754C109008E20F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9D75DCE2754C109008E20F0 /* Assets.xcassets */; };
@@ -16,6 +20,9 @@
 		E9D75DE82754C109008E20F0 /* claftUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DE72754C109008E20F0 /* claftUITestsLaunchTests.swift */; };
 		E9D75DF52754CE26008E20F0 /* ProxiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DF42754CE26008E20F0 /* ProxiesView.swift */; };
 		E9D75DF72755CA62008E20F0 /* ServerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DF62755CA62008E20F0 /* ServerCard.swift */; };
+		E9EA0FE52760E0D800F9AAB4 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = E9EA0FE42760E0D800F9AAB4 /* config.json */; };
+		E9EA0FE72760E46E00F9AAB4 /* LocalFileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EA0FE62760E46E00F9AAB4 /* LocalFileReader.swift */; };
+		E9EA0FEA2760E5CC00F9AAB4 /* Formater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EA0FE92760E5CC00F9AAB4 /* Formater.swift */; };
 		E9F83ED6275788350022B6BC /* ManageServerPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F83ED5275788350022B6BC /* ManageServerPanel.swift */; };
 		E9F83ED82757A2B60022B6BC /* CreateServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F83ED72757A2B60022B6BC /* CreateServer.swift */; };
 /* End PBXBuildFile section */
@@ -38,6 +45,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E925832127588FC4002B0F49 /* NetWorkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkManager.swift; sourceTree = "<group>"; };
+		E9258324275895B2002B0F49 /* ConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigView.swift; sourceTree = "<group>"; };
+		E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificCornerShape.swift; sourceTree = "<group>"; };
+		E9C99BBD27588E6A009EF515 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		E9D75DC72754C106008E20F0 /* claft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = claft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9D75DCA2754C106008E20F0 /* claftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = claftApp.swift; sourceTree = "<group>"; };
 		E9D75DCC2754C106008E20F0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -50,6 +61,9 @@
 		E9D75DE72754C109008E20F0 /* claftUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = claftUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E9D75DF42754CE26008E20F0 /* ProxiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxiesView.swift; sourceTree = "<group>"; };
 		E9D75DF62755CA62008E20F0 /* ServerCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCard.swift; sourceTree = "<group>"; };
+		E9EA0FE42760E0D800F9AAB4 /* config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
+		E9EA0FE62760E46E00F9AAB4 /* LocalFileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileReader.swift; sourceTree = "<group>"; };
+		E9EA0FE92760E5CC00F9AAB4 /* Formater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formater.swift; sourceTree = "<group>"; };
 		E9F83ED5275788350022B6BC /* ManageServerPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageServerPanel.swift; sourceTree = "<group>"; };
 		E9F83ED72757A2B60022B6BC /* CreateServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateServer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,6 +93,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E925832027588FB5002B0F49 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				E925832127588FC4002B0F49 /* NetWorkManager.swift */,
+				E9EA0FE62760E46E00F9AAB4 /* LocalFileReader.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		E92583232758957D002B0F49 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E9D75DF62755CA62008E20F0 /* ServerCard.swift */,
+				E9D75DCC2754C106008E20F0 /* ContentView.swift */,
+				E9D75DF42754CE26008E20F0 /* ProxiesView.swift */,
+				E9F83ED5275788350022B6BC /* ManageServerPanel.swift */,
+				E9F83ED72757A2B60022B6BC /* CreateServer.swift */,
+				E9258324275895B2002B0F49 /* ConfigView.swift */,
+				E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E9C99BBC27588E3A009EF515 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E9C99BBD27588E6A009EF515 /* Config.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		E9D75DBE2754C106008E20F0 = {
 			isa = PBXGroup;
 			children = (
@@ -102,14 +147,13 @@
 		E9D75DC92754C106008E20F0 /* claft */ = {
 			isa = PBXGroup;
 			children = (
+				E9EA0FE82760E5BE00F9AAB4 /* Components */,
+				E92583232758957D002B0F49 /* Views */,
+				E925832027588FB5002B0F49 /* Tools */,
+				E9C99BBC27588E3A009EF515 /* Model */,
 				E9D75DCA2754C106008E20F0 /* claftApp.swift */,
-				E9D75DF62755CA62008E20F0 /* ServerCard.swift */,
-				E9D75DCC2754C106008E20F0 /* ContentView.swift */,
-				E9D75DF42754CE26008E20F0 /* ProxiesView.swift */,
-				E9F83ED5275788350022B6BC /* ManageServerPanel.swift */,
 				E9D75DCE2754C109008E20F0 /* Assets.xcassets */,
 				E9D75DD02754C109008E20F0 /* Preview Content */,
-				E9F83ED72757A2B60022B6BC /* CreateServer.swift */,
 			);
 			path = claft;
 			sourceTree = "<group>";
@@ -117,6 +161,7 @@
 		E9D75DD02754C109008E20F0 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				E9EA0FE42760E0D800F9AAB4 /* config.json */,
 				E9D75DD12754C109008E20F0 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
@@ -137,6 +182,14 @@
 				E9D75DE72754C109008E20F0 /* claftUITestsLaunchTests.swift */,
 			);
 			path = claftUITests;
+			sourceTree = "<group>";
+		};
+		E9EA0FE82760E5BE00F9AAB4 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E9EA0FE92760E5CC00F9AAB4 /* Formater.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,6 +298,7 @@
 			files = (
 				E9D75DD22754C109008E20F0 /* Preview Assets.xcassets in Resources */,
 				E9D75DCF2754C109008E20F0 /* Assets.xcassets in Resources */,
+				E9EA0FE52760E0D800F9AAB4 /* config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,9 +323,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E935F3042759EF78001CD0BC /* SpecificCornerShape.swift in Sources */,
 				E9D75DF72755CA62008E20F0 /* ServerCard.swift in Sources */,
 				E9D75DCD2754C106008E20F0 /* ContentView.swift in Sources */,
 				E9F83ED82757A2B60022B6BC /* CreateServer.swift in Sources */,
+				E9258325275895B2002B0F49 /* ConfigView.swift in Sources */,
+				E9EA0FEA2760E5CC00F9AAB4 /* Formater.swift in Sources */,
+				E9C99BBE27588E6A009EF515 /* Config.swift in Sources */,
+				E925832227588FC4002B0F49 /* NetWorkManager.swift in Sources */,
+				E9EA0FE72760E46E00F9AAB4 /* LocalFileReader.swift in Sources */,
 				E9D75DCB2754C106008E20F0 /* claftApp.swift in Sources */,
 				E9D75DF52754CE26008E20F0 /* ProxiesView.swift in Sources */,
 				E9F83ED6275788350022B6BC /* ManageServerPanel.swift in Sources */,

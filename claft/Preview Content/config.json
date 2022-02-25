@@ -1,0 +1,13 @@
+{
+    "allow-lan": true,
+    "authentication": [],
+    "bind-address": "*",
+    "ipv6": false,
+    "log-level": "info",
+    "mixed-port": 7890,
+    "mode": "rule",
+    "port": 0,
+    "redir-port": 0,
+    "socks-port": 0,
+    "tproxy-port": 0
+}

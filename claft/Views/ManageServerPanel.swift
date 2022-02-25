@@ -6,22 +6,32 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ManageServerPanel: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    var servers:[Server] = []
+    @EnvironmentObject var serverModel: ServerModel
     @State private var showSheet = false
     var body: some View {
         NavigationView {
             VStack {
                 List() {
-                    ForEach(servers) { server in
+                    ForEach(serverModel.servers) { server in
                         HStack {
                             if server.secret != nil {
-                                Image(systemName: "lock.fill")
-                                    .foregroundColor(Color.green)
+                                if server.https {
+                                    Image(systemName: "lock.fill")
+                                        .foregroundColor(Color.green)
+                                } else {
+                                    Image(systemName: "lock.fill")
+                                }
                             } else {
-                                Image(systemName: "lock")
+                                if server.https {
+                                    Image(systemName: "lock")
+                                        .foregroundColor(Color.green)
+                                } else {
+                                    Image(systemName: "lock")
+                                }
                             }
                             Text("\(server.host)")
                                 .padding()
@@ -33,6 +43,9 @@ struct ManageServerPanel: View {
                         .swipeActions {
                             Button(role:.destructive, action: {
                                 print("delete")
+                                serverModel.servers = serverModel.servers.filter({ server_ in
+                                    server != server_
+                                })
                             }) {
                                 Label("Delete", systemImage: "trash")
                             }
@@ -53,7 +66,7 @@ struct ManageServerPanel: View {
                 Image(systemName: "plus")
             })
             .sheet(isPresented: $showSheet) {
-                CreateServer()
+                CreateServer().environmentObject(serverModel)
             }
         }
     }
@@ -61,10 +74,13 @@ struct ManageServerPanel: View {
 
 struct ManageServerPanel_Previews: PreviewProvider {
     static var previews: some View {
-        ManageServerPanel(servers: [
+        let serverModel = ServerModel()
+        serverModel.servers = [
             Server(id: 0, host: "serverA", port: "9090"),
-            Server(id: 1, host: "serverB", port: "9091", secret: "abc"),
-            Server(id: 2, host: "serverC", port: "9092")
-        ])
+            Server(id: 1, host: "serverB", port: "9090", https: true),
+            Server(id: 2, host: "serverC", port: "9091", secret: "abc"),
+            Server(id: 3, host: "serverD", port: "9092", secret: "def", https: true)
+        ]
+        return ManageServerPanel().environmentObject(serverModel)
     }
 }

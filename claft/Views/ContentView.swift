@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct Server: Hashable, Codable, Identifiable {
     var id: Int
@@ -14,6 +15,7 @@ struct Server: Hashable, Codable, Identifiable {
     var up:Float = 0.0
     var down:Float = 0.0
     var secret:String? = nil
+    var https:Bool = false
 }
 
 struct MenuItem: Identifiable {
@@ -22,9 +24,20 @@ struct MenuItem: Identifiable {
     var image: String = ""
 }
 
+class ServerModel: ObservableObject {
+    @Published var servers:[Server] = [
+        Server(id: 0, host: "serverA", port: "9090"),
+        Server(id: 1, host: "serverB", port: "9090", https: true),
+        Server(id: 2, host: "serverC", port: "9091", secret: "abc"),
+        Server(id: 3, host: "serverD", port: "9092", secret: "def", https: true)
+    ]
+}
+
 struct ContentView: View {
+    @ObservedObject var serverModel:ServerModel = ServerModel()
     @State private var showSheet = false
-    var servers:[Server]
+    @State private var currentIndex: Int = 0
+//    var servers:[Server]
     var menus:[MenuItem] = [
         MenuItem(title: "OverView", image: "tablecells.fill"),
         MenuItem(title: "Proxies",  image: "network"),
@@ -38,8 +51,12 @@ struct ContentView: View {
             VStack {
                 ScrollView(.horizontal) {
                     LazyHStack {
-                        ForEach(servers) { (server) in
-                            ServerCard(server: server)
+                        ForEach(0..<serverModel.servers.count) { i in
+//                        ForEach(serverModel.servers) { (server) in
+                            ServerCard(server: serverModel.servers[i], selected: currentIndex == i)
+                                .gesture(TapGesture().onEnded({ _ in
+                                    currentIndex = i
+                                }))
                         }
                         .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 0))
                     }
@@ -47,7 +64,7 @@ struct ContentView: View {
                 .frame(height: 60)
                 List {
                     ForEach(menus) { (menu) in
-                        NavigationLink(destination: ProxiesView()) {
+                        NavigationLink(destination: ConfigView(config: previewConfigData)) {
                             Image(systemName: menu.image)
                                 .foregroundColor(.blue)
                             Text(menu.title)
@@ -64,7 +81,7 @@ struct ContentView: View {
             }) {
                 Image(systemName: "slider.horizontal.3")
             }.sheet(isPresented: $showSheet) {
-                ManageServerPanel(servers: servers)
+                ManageServerPanel().environmentObject(serverModel)
             })
         }
     }
@@ -72,19 +89,18 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            ContentView(servers: [
-                Server(id: 0, host: "serverA", port: "9090"),
-                Server(id: 1, host: "serverB", port: "9091", secret: "abc"),
-                Server(id: 2, host: "serverC", port: "9092")
-                ])
+        let serverModel = ServerModel()
+        serverModel.servers = [
+            Server(id: 0, host: "serverA", port: "9090"),
+            Server(id: 1, host: "serverB", port: "9090", https: true),
+            Server(id: 2, host: "serverC", port: "9091", secret: "abc"),
+            Server(id: 3, host: "serverD", port: "9092", secret: "def", https: true)
+        ]
+        return Group {
+            ContentView(serverModel: serverModel)
                 .previewInterfaceOrientation(.portrait)
                 .previewDevice(PreviewDevice(rawValue: "iPhone 13 Pro"))
-            ContentView(servers: [
-                Server(id: 0, host: "serverA", port: "9090"),
-                Server(id: 1, host: "serverB", port: "9091"),
-                Server(id: 2, host: "serverC", port: "9092", secret: "password")
-                ])
+            ContentView(serverModel: serverModel)
                 .preferredColorScheme(.dark)
                 .previewInterfaceOrientation(.portrait)
         }
