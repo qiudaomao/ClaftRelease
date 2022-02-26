@@ -11,8 +11,8 @@ struct ServerCard: View {
     var server:Server
     var selected:Bool
     var body: some View {
-        ZStack {
-            HStack {
+        HStack {
+            ZStack {
                 VStack {
                     HStack {
                         if server.secret != nil {
@@ -62,16 +62,16 @@ struct ServerCard: View {
                 .padding(EdgeInsets(top: 5, leading: 6, bottom: 5, trailing: 0))
                 .frame(width: 100)
             }
-            .frame(width: 100, height: 40)
-    //        .border(.secondary, width: 1)
-            .overlay(SpecificCornerShape(
-                topLeft: 8, bottomLeft: 8, topRight: 8, bottomRight: 8
-            ).stroke(selected ? .blue : .gray, lineWidth: 1))
             Image(systemName: "circle.fill")
-                .font(Font.system(size: 10))
-                .position(x: 100, y: 20)
+                .font(Font.system(size: 8))
+                .position(x: -12, y: 8)
                 .foregroundColor(.red)
         }
+        .frame(width: 100, height: 40)
+//        .border(.secondary, width: 1)
+        .overlay(SpecificCornerShape(
+            topLeft: 8, bottomLeft: 8, topRight: 8, bottomRight: 8
+        ).stroke(selected ? .blue : .gray, lineWidth: 1))
     }
 }
 

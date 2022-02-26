@@ -8,6 +8,13 @@
 import SwiftUI
 import Combine
 
+enum ConnectStatus: Int, Codable {
+    case none
+    case connectting
+    case connected
+    case failed
+}
+
 struct Server: Hashable, Codable, Identifiable {
     var id: Int
     var host:String = ""
@@ -16,6 +23,7 @@ struct Server: Hashable, Codable, Identifiable {
     var down:Float = 0.0
     var secret:String? = nil
     var https:Bool = false
+    var connectStatus: ConnectStatus = .none
 }
 
 struct MenuItem: Identifiable {
@@ -51,24 +59,45 @@ struct ContentView: View {
             VStack {
                 ScrollView(.horizontal) {
                     LazyHStack {
-                        ForEach(0..<serverModel.servers.count) { i in
+                        ForEach(0..<serverModel.servers.count, id: \.self) { i in
 //                        ForEach(serverModel.servers) { (server) in
                             ServerCard(server: serverModel.servers[i], selected: currentIndex == i)
                                 .gesture(TapGesture().onEnded({ _ in
                                     currentIndex = i
                                 }))
                         }
+                        .onDelete(perform: { indexSet in
+                            serverModel.servers.remove(atOffsets: indexSet)
+                        })
                         .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 0))
                     }
                 }
                 .frame(height: 60)
                 List {
-                    ForEach(menus) { (menu) in
-                        NavigationLink(destination: ConfigView(config: previewConfigData)) {
-                            Image(systemName: menu.image)
-                                .foregroundColor(.blue)
-                            Text(menu.title)
-                                .padding()
+                    ForEach(0..<menus.count) { idx in
+//                    ForEach(menus) { (menu) in
+                        switch idx {
+                        case 0:
+                            NavigationLink(destination: ConfigView(config: previewConfigData)) {
+                                Image(systemName: menus[idx].image)
+                                    .foregroundColor(.blue)
+                                Text(menus[idx].title)
+                                    .padding()
+                            }
+                        case 1:
+                            NavigationLink(destination: ProxiesView()) {
+                                Image(systemName: menus[idx].image)
+                                    .foregroundColor(.blue)
+                                Text(menus[idx].title)
+                                    .padding()
+                            }
+                        default:
+                            NavigationLink(destination: ProxiesView()) {
+                                Image(systemName: menus[idx].image)
+                                    .foregroundColor(.blue)
+                                Text(menus[idx].title)
+                                    .padding()
+                            }
                         }
                     }
                 }
@@ -103,6 +132,10 @@ struct ContentView_Previews: PreviewProvider {
             ContentView(serverModel: serverModel)
                 .preferredColorScheme(.dark)
                 .previewInterfaceOrientation(.portrait)
+                .previewDevice(PreviewDevice(rawValue: "iPhone 13 Pro"))
+            ContentView(serverModel: serverModel)
+                .previewInterfaceOrientation(.landscapeLeft)
+                .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
         }
     }
 }
