@@ -10,6 +10,9 @@
 		E925832227588FC4002B0F49 /* NetWorkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925832127588FC4002B0F49 /* NetWorkManager.swift */; };
 		E9258325275895B2002B0F49 /* ConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9258324275895B2002B0F49 /* ConfigView.swift */; };
 		E935F3042759EF78001CD0BC /* SpecificCornerShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */; };
+		E958E37127CB9F37001197A9 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E958E37027CB9F37001197A9 /* BottomSheetView.swift */; };
+		E958E37327CBA9C6001197A9 /* ConnectionOrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E958E37227CBA9C6001197A9 /* ConnectionOrderModel.swift */; };
+		E958E37527CBB290001197A9 /* proxies.json in Resources */ = {isa = PBXBuildFile; fileRef = E958E37427CBB290001197A9 /* proxies.json */; };
 		E9C99BBE27588E6A009EF515 /* ConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C99BBD27588E6A009EF515 /* ConfigModel.swift */; };
 		E9D75DCB2754C106008E20F0 /* claftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DCA2754C106008E20F0 /* claftApp.swift */; };
 		E9D75DCD2754C106008E20F0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DCC2754C106008E20F0 /* ContentView.swift */; };
@@ -71,6 +74,9 @@
 		E925832127588FC4002B0F49 /* NetWorkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkManager.swift; sourceTree = "<group>"; };
 		E9258324275895B2002B0F49 /* ConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigView.swift; sourceTree = "<group>"; };
 		E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificCornerShape.swift; sourceTree = "<group>"; };
+		E958E37027CB9F37001197A9 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
+		E958E37227CBA9C6001197A9 /* ConnectionOrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionOrderModel.swift; sourceTree = "<group>"; };
+		E958E37427CBB290001197A9 /* proxies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = proxies.json; sourceTree = "<group>"; };
 		E9C99BBD27588E6A009EF515 /* ConfigModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigModel.swift; sourceTree = "<group>"; };
 		E9D75DC72754C106008E20F0 /* claft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = claft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9D75DCA2754C106008E20F0 /* claftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = claftApp.swift; sourceTree = "<group>"; };
@@ -149,6 +155,7 @@
 				E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */,
 				E9E7D8CA27CB36D800F3A1D2 /* ConnectionsView.swift */,
 				E9E7D8CC27CB371200F3A1D2 /* ConnectionCardView.swift */,
+				E958E37027CB9F37001197A9 /* BottomSheetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -160,6 +167,7 @@
 				E9E7D8B627C9F82100F3A1D2 /* ServerModel.swift */,
 				E9E7D8BE27CA4B6E00F3A1D2 /* WebSocketModel.swift */,
 				E9E7D8C827CB15DF00F3A1D2 /* Model.swift */,
+				E958E37227CBA9C6001197A9 /* ConnectionOrderModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -204,6 +212,7 @@
 			children = (
 				E9EA0FE42760E0D800F9AAB4 /* config.json */,
 				E9D75DD12754C109008E20F0 /* Preview Assets.xcassets */,
+				E958E37427CBB290001197A9 /* proxies.json */,
 				E9E7D8CE27CB477F00F3A1D2 /* connection.json */,
 			);
 			path = "Preview Content";
@@ -340,6 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9D75DD22754C109008E20F0 /* Preview Assets.xcassets in Resources */,
+				E958E37527CBB290001197A9 /* proxies.json in Resources */,
 				E9E7D8C127CA71A800F3A1D2 /* Assets.xcassets in Resources */,
 				E9EA0FE52760E0D800F9AAB4 /* config.json in Resources */,
 				E9E7D8CF27CB477F00F3A1D2 /* connection.json in Resources */,
@@ -377,9 +387,11 @@
 				E9E7D8C927CB15DF00F3A1D2 /* Model.swift in Sources */,
 				E9E7D8B727C9F82100F3A1D2 /* ServerModel.swift in Sources */,
 				E9C99BBE27588E6A009EF515 /* ConfigModel.swift in Sources */,
+				E958E37127CB9F37001197A9 /* BottomSheetView.swift in Sources */,
 				E9E7D8CD27CB371200F3A1D2 /* ConnectionCardView.swift in Sources */,
 				E925832227588FC4002B0F49 /* NetWorkManager.swift in Sources */,
 				E9E7D8CB27CB36D800F3A1D2 /* ConnectionsView.swift in Sources */,
+				E958E37327CBA9C6001197A9 /* ConnectionOrderModel.swift in Sources */,
 				E9EA0FE72760E46E00F9AAB4 /* LocalFileReader.swift in Sources */,
 				E9D75DCB2754C106008E20F0 /* claftApp.swift in Sources */,
 				E9D75DF52754CE26008E20F0 /* ProxiesView.swift in Sources */,
