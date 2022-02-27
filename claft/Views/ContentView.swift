@@ -8,44 +8,16 @@
 import SwiftUI
 import Combine
 
-enum ConnectStatus: Int, Codable {
-    case none
-    case connectting
-    case connected
-    case failed
-}
-
-struct Server: Hashable, Codable, Identifiable {
-    var id: Int
-    var host:String = ""
-    var port:String = ""
-    var up:Float = 0.0
-    var down:Float = 0.0
-    var secret:String? = nil
-    var https:Bool = false
-    var connectStatus: ConnectStatus = .none
-}
-
 struct MenuItem: Identifiable {
     var id = UUID()
     var title: String = "NA"
     var image: String = ""
 }
 
-class ServerModel: ObservableObject {
-    @Published var servers:[Server] = [
-        Server(id: 0, host: "serverA", port: "9090"),
-        Server(id: 1, host: "serverB", port: "9090", https: true),
-        Server(id: 2, host: "serverC", port: "9091", secret: "abc"),
-        Server(id: 3, host: "serverD", port: "9092", secret: "def", https: true)
-    ]
-}
-
 struct ContentView: View {
     @ObservedObject var serverModel:ServerModel = ServerModel()
     @State private var showSheet = false
     @State private var currentIndex: Int = 0
-//    var servers:[Server]
     var menus:[MenuItem] = [
         MenuItem(title: "OverView", image: "tablecells.fill"),
         MenuItem(title: "Proxies",  image: "network"),
@@ -57,11 +29,10 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                ScrollView(.horizontal) {
+                ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack {
                         ForEach(0..<serverModel.servers.count, id: \.self) { i in
-//                        ForEach(serverModel.servers) { (server) in
-                            ServerCard(server: serverModel.servers[i], selected: currentIndex == i)
+                            ServerCard(server: serverModel.servers[i], trafficData: TrafficData(), selected: currentIndex == i)
                                 .gesture(TapGesture().onEnded({ _ in
                                     currentIndex = i
                                 }))
@@ -69,49 +40,67 @@ struct ContentView: View {
                         .onDelete(perform: { indexSet in
                             serverModel.servers.remove(atOffsets: indexSet)
                         })
-                        .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 0))
+                        .padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
+                    }
+                    .padding(EdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8))
+                }
+                .frame(height: 62)
+                if serverModel.servers.count > 0 {
+                List {
+                    NavigationLink(destination: ProxiesView()) {
+                        Image(systemName: menus[0].image)
+                            .foregroundColor(.blue)
+                        Text(menus[0].title)
+                            .padding()
+                    }
+                    NavigationLink(destination: ProxiesView()) {
+                        Image(systemName: menus[1].image)
+                            .foregroundColor(.blue)
+                        Text(menus[1].title)
+                            .padding()
+                    }
+                    NavigationLink(destination: ProxiesView()) {
+                        Image(systemName: menus[2].image)
+                            .foregroundColor(.blue)
+                        Text(menus[2].title)
+                            .padding()
+                    }
+                    NavigationLink(destination: ConnectionsView(server: serverModel.servers[currentIndex])) {
+                        Image(systemName: menus[3].image)
+                            .foregroundColor(.blue)
+                        Text(menus[3].title)
+                            .padding()
+                    }
+                    NavigationLink(destination: ConfigView(server: serverModel.servers[currentIndex])) {
+                        Image(systemName: menus[4].image)
+                            .foregroundColor(.blue)
+                        Text(menus[4].title)
+                            .padding()
+                    }
+                    NavigationLink(destination: ProxiesView()) {
+                        Image(systemName: menus[5].image)
+                            .foregroundColor(.blue)
+                        Text(menus[5].title)
+                            .padding()
                     }
                 }
-                .frame(height: 60)
-                List {
-                    ForEach(0..<menus.count) { idx in
-//                    ForEach(menus) { (menu) in
-                        switch idx {
-                        case 0:
-                            NavigationLink(destination: ConfigView(config: previewConfigData)) {
-                                Image(systemName: menus[idx].image)
-                                    .foregroundColor(.blue)
-                                Text(menus[idx].title)
-                                    .padding()
-                            }
-                        case 1:
-                            NavigationLink(destination: ProxiesView()) {
-                                Image(systemName: menus[idx].image)
-                                    .foregroundColor(.blue)
-                                Text(menus[idx].title)
-                                    .padding()
-                            }
-                        default:
-                            NavigationLink(destination: ProxiesView()) {
-                                Image(systemName: menus[idx].image)
-                                    .foregroundColor(.blue)
-                                Text(menus[idx].title)
-                                    .padding()
-                            }
-                        }
-                    }
                 }
             }
             .navigationTitle("Claft")
             .navigationBarTitleDisplayMode(.inline)
             .navigationViewStyle(StackNavigationViewStyle())
+            .listStyle(SidebarListStyle())
             .navigationBarItems(trailing: Button(action: {
                 showSheet.toggle()
             }) {
                 Image(systemName: "slider.horizontal.3")
             }.sheet(isPresented: $showSheet) {
-                ManageServerPanel().environmentObject(serverModel)
+                ManageServerPanel(servers: $serverModel.servers).environmentObject(serverModel)
             })
+        }
+        .onAppear {
+            print("onAppear")
+            serverModel.loadServers()
         }
     }
 }
@@ -120,8 +109,8 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let serverModel = ServerModel()
         serverModel.servers = [
-            Server(id: 0, host: "serverA", port: "9090"),
-            Server(id: 1, host: "serverB", port: "9090", https: true),
+            Server(id: 0, host: "192.168.23.1", port: "9191", secret: "061x09bg33"),
+            Server(id: 1, host: "127.0.0.1", port: "9090", https: true),
             Server(id: 2, host: "serverC", port: "9091", secret: "abc"),
             Server(id: 3, host: "serverD", port: "9092", secret: "def", https: true)
         ]

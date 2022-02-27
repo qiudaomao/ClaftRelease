@@ -69,7 +69,7 @@ struct CreateServer: View {
             }, trailing: Button(action: {
                 print("save")
                 let secret:String? = inputValue[2].lengthOfBytes(using: .utf8) > 0 ? inputValue[2] : nil
-                let server = Server(id: serverModel.servers.count, host: inputValue[0], port: inputValue[1], up: 0.0, down: 0.0, secret: secret, https: https)
+                let server = Server(id: serverModel.servers.count, host: inputValue[0], port: inputValue[1], secret: secret, https: https)
                 serverModel.servers.append(server)
                 self.presentationMode.wrappedValue.dismiss()
             }) {

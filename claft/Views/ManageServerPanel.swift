@@ -10,13 +10,14 @@ import Combine
 
 struct ManageServerPanel: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @EnvironmentObject var serverModel: ServerModel
     @State private var showSheet = false
+    @Binding var servers:[Server]
     var body: some View {
-        NavigationView {
+        print(Self._printChanges())
+        return NavigationView {
             VStack {
                 List() {
-                    ForEach(serverModel.servers) { server in
+                    ForEach(servers, id: \.id) { server in
                         HStack {
                             if server.secret != nil {
                                 if server.https {
@@ -43,8 +44,8 @@ struct ManageServerPanel: View {
                         .swipeActions {
                             Button(role:.destructive, action: {
                                 print("delete")
-                                serverModel.servers = serverModel.servers.filter({ server_ in
-                                    server != server_
+                                servers = servers.filter({ server_ in
+                                    server.id != server_.id
                                 })
                             }) {
                                 Label("Delete", systemImage: "trash")
@@ -66,7 +67,7 @@ struct ManageServerPanel: View {
                 Image(systemName: "plus")
             })
             .sheet(isPresented: $showSheet) {
-                CreateServer().environmentObject(serverModel)
+                CreateServer()//.environmentObject(serverModel)
             }
         }
     }
@@ -74,13 +75,12 @@ struct ManageServerPanel: View {
 
 struct ManageServerPanel_Previews: PreviewProvider {
     static var previews: some View {
-        let serverModel = ServerModel()
-        serverModel.servers = [
+        let servers = [
             Server(id: 0, host: "serverA", port: "9090"),
             Server(id: 1, host: "serverB", port: "9090", https: true),
             Server(id: 2, host: "serverC", port: "9091", secret: "abc"),
             Server(id: 3, host: "serverD", port: "9092", secret: "def", https: true)
         ]
-        return ManageServerPanel().environmentObject(serverModel)
+        return ManageServerPanel(servers: .constant(servers))//.environmentObject(serverModel)
     }
 }

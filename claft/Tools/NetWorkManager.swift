@@ -18,13 +18,18 @@ class NetworkManager {
     static let shared = NetworkManager()
     private var cancellables = Set<AnyCancellable>()
     
-    func getData<T: Decodable>(url: String, type: T.Type) -> Future<T, Error> {
+    func getData<T: Decodable>(url: String, type: T.Type, headers: [String:String] = [:]) -> Future<T, Error> {
         return Future<T, Error> { [weak self] promise in
             guard let self = self, let url = URL(string: url) else {
                 return promise(.failure(NetworkError.invalidURL))
             }
             print("request from url \(url)")
-            URLSession.shared.dataTaskPublisher(for: url)
+            var request = URLRequest(url: url)
+            for header in headers {
+                request.setValue(header.value, forHTTPHeaderField: header.key)
+                print("set header \(header.key) => \(header.value)")
+            }
+            URLSession.shared.dataTaskPublisher(for: request)
                 .tryMap { (data: Data, response: URLResponse) in
                     guard let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode else {
                         throw NetworkError.responseError

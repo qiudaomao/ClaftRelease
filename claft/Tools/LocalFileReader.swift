@@ -7,7 +7,8 @@
 
 import Foundation
 
-var previewConfigData: Config = getLocalData("config")
+//var previewConfigData: ConfigData = getLocalData("config")
+var previewConnectionData: ConnectionData = getLocalData("connection")
 
 func getLocalData<T: Decodable>(_ fileName: String) -> T {
     let data: Data

@@ -1,0 +1,56 @@
+{
+  "downloadTotal": 7848185750,
+  "uploadTotal": 5098459,
+  "connections": [
+    {
+      "id": "4b3520f8-c585-450a-8bbb-82571171e12f",
+      "metadata": {
+        "network": "tcp",
+        "type": "TProxy",
+        "sourceIP": "192.168.23.13",
+        "destinationIP": "",
+        "sourcePort": "50772",
+        "destinationPort": "443",
+        "host": "rr1---sn-i3b7knlk.googlevideo.com",
+        "dnsMode": "fake-ip"
+      },
+      "upload": 232,
+      "download": 53308791,
+      "start": "2022-02-26T18:19:47.686906378+08:00",
+      "chains": [
+        "HK-ALI-TROJAN",
+        "♻️  自动选择-zfu",
+        "🚀 节点选择-zfu",
+        "🚀 节点选择",
+        "🌍 国外媒体"
+      ],
+      "rule": "DomainSuffix",
+      "rulePayload": "googlevideo.com"
+    },
+    {
+      "id": "4b3520f8-c585-450a-8bbb-82571171e12e",
+      "metadata": {
+        "network": "udp",
+        "type": "socks5",
+        "sourceIP": "192.168.23.1",
+        "destinationIP": "",
+        "sourcePort": "1772",
+        "destinationPort": "4433",
+        "host": "www.googlevideo.com",
+        "dnsMode": "fake-ip"
+      },
+      "upload": 232858000,
+      "download": 53308791,
+      "start": "2022-02-26T18:19:47.686906378+08:00",
+      "chains": [
+        "HK-ALI-TROJAN",
+        "♻️  自动选择-zfu",
+        "🚀 节点选择-zfu",
+        "🚀 节点选择",
+        "🌍 国外媒体"
+      ],
+      "rule": "DomainSuffix",
+      "rulePayload": "youtube.com"
+    },
+  ]
+}

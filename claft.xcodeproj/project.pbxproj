@@ -10,16 +10,25 @@
 		E925832227588FC4002B0F49 /* NetWorkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925832127588FC4002B0F49 /* NetWorkManager.swift */; };
 		E9258325275895B2002B0F49 /* ConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9258324275895B2002B0F49 /* ConfigView.swift */; };
 		E935F3042759EF78001CD0BC /* SpecificCornerShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */; };
-		E9C99BBE27588E6A009EF515 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C99BBD27588E6A009EF515 /* Config.swift */; };
+		E9C99BBE27588E6A009EF515 /* ConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C99BBD27588E6A009EF515 /* ConfigModel.swift */; };
 		E9D75DCB2754C106008E20F0 /* claftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DCA2754C106008E20F0 /* claftApp.swift */; };
 		E9D75DCD2754C106008E20F0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DCC2754C106008E20F0 /* ContentView.swift */; };
-		E9D75DCF2754C109008E20F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9D75DCE2754C109008E20F0 /* Assets.xcassets */; };
 		E9D75DD22754C109008E20F0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9D75DD12754C109008E20F0 /* Preview Assets.xcassets */; };
 		E9D75DDC2754C109008E20F0 /* claftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DDB2754C109008E20F0 /* claftTests.swift */; };
 		E9D75DE62754C109008E20F0 /* claftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DE52754C109008E20F0 /* claftUITests.swift */; };
 		E9D75DE82754C109008E20F0 /* claftUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DE72754C109008E20F0 /* claftUITestsLaunchTests.swift */; };
 		E9D75DF52754CE26008E20F0 /* ProxiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DF42754CE26008E20F0 /* ProxiesView.swift */; };
 		E9D75DF72755CA62008E20F0 /* ServerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DF62755CA62008E20F0 /* ServerCard.swift */; };
+		E9E7D8B727C9F82100F3A1D2 /* ServerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8B627C9F82100F3A1D2 /* ServerModel.swift */; };
+		E9E7D8BD27CA3DB800F3A1D2 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8BC27CA3DB800F3A1D2 /* WebSocket.swift */; };
+		E9E7D8BF27CA4B6E00F3A1D2 /* WebSocketModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8BE27CA4B6E00F3A1D2 /* WebSocketModel.swift */; };
+		E9E7D8C127CA71A800F3A1D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9E7D8C027CA71A800F3A1D2 /* Assets.xcassets */; };
+		E9E7D8C527CA740E00F3A1D2 /* SocketRocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; };
+		E9E7D8C627CA740E00F3A1D2 /* SocketRocket.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E9E7D8C927CB15DF00F3A1D2 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8C827CB15DF00F3A1D2 /* Model.swift */; };
+		E9E7D8CB27CB36D800F3A1D2 /* ConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8CA27CB36D800F3A1D2 /* ConnectionsView.swift */; };
+		E9E7D8CD27CB371200F3A1D2 /* ConnectionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8CC27CB371200F3A1D2 /* ConnectionCardView.swift */; };
+		E9E7D8CF27CB477F00F3A1D2 /* connection.json in Resources */ = {isa = PBXBuildFile; fileRef = E9E7D8CE27CB477F00F3A1D2 /* connection.json */; };
 		E9EA0FE52760E0D800F9AAB4 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = E9EA0FE42760E0D800F9AAB4 /* config.json */; };
 		E9EA0FE72760E46E00F9AAB4 /* LocalFileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EA0FE62760E46E00F9AAB4 /* LocalFileReader.swift */; };
 		E9EA0FEA2760E5CC00F9AAB4 /* Formater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EA0FE92760E5CC00F9AAB4 /* Formater.swift */; };
@@ -44,15 +53,28 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		E9E7D8C727CA740E00F3A1D2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E9E7D8C627CA740E00F3A1D2 /* SocketRocket.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		E925832127588FC4002B0F49 /* NetWorkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkManager.swift; sourceTree = "<group>"; };
 		E9258324275895B2002B0F49 /* ConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigView.swift; sourceTree = "<group>"; };
 		E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificCornerShape.swift; sourceTree = "<group>"; };
-		E9C99BBD27588E6A009EF515 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		E9C99BBD27588E6A009EF515 /* ConfigModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigModel.swift; sourceTree = "<group>"; };
 		E9D75DC72754C106008E20F0 /* claft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = claft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9D75DCA2754C106008E20F0 /* claftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = claftApp.swift; sourceTree = "<group>"; };
 		E9D75DCC2754C106008E20F0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		E9D75DCE2754C109008E20F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E9D75DD12754C109008E20F0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E9D75DD72754C109008E20F0 /* claftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = claftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9D75DDB2754C109008E20F0 /* claftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = claftTests.swift; sourceTree = "<group>"; };
@@ -61,6 +83,16 @@
 		E9D75DE72754C109008E20F0 /* claftUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = claftUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E9D75DF42754CE26008E20F0 /* ProxiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxiesView.swift; sourceTree = "<group>"; };
 		E9D75DF62755CA62008E20F0 /* ServerCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCard.swift; sourceTree = "<group>"; };
+		E9E7D8B627C9F82100F3A1D2 /* ServerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerModel.swift; sourceTree = "<group>"; };
+		E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SocketRocket.xcframework; path = ../../github/tvos.mpv.player/contrib/cocoapods_xcframeworks/output/SocketRocket.xcframework; sourceTree = "<group>"; };
+		E9E7D8BC27CA3DB800F3A1D2 /* WebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
+		E9E7D8BE27CA4B6E00F3A1D2 /* WebSocketModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketModel.swift; sourceTree = "<group>"; };
+		E9E7D8C027CA71A800F3A1D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E9E7D8C427CA73FD00F3A1D2 /* claft.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = claft.entitlements; sourceTree = "<group>"; };
+		E9E7D8C827CB15DF00F3A1D2 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		E9E7D8CA27CB36D800F3A1D2 /* ConnectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsView.swift; sourceTree = "<group>"; };
+		E9E7D8CC27CB371200F3A1D2 /* ConnectionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCardView.swift; sourceTree = "<group>"; };
+		E9E7D8CE27CB477F00F3A1D2 /* connection.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = connection.json; sourceTree = "<group>"; };
 		E9EA0FE42760E0D800F9AAB4 /* config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		E9EA0FE62760E46E00F9AAB4 /* LocalFileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileReader.swift; sourceTree = "<group>"; };
 		E9EA0FE92760E5CC00F9AAB4 /* Formater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formater.swift; sourceTree = "<group>"; };
@@ -73,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9E7D8C527CA740E00F3A1D2 /* SocketRocket.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,8 +129,10 @@
 		E925832027588FB5002B0F49 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				E9EA0FE92760E5CC00F9AAB4 /* Formater.swift */,
 				E925832127588FC4002B0F49 /* NetWorkManager.swift */,
 				E9EA0FE62760E46E00F9AAB4 /* LocalFileReader.swift */,
+				E9E7D8BC27CA3DB800F3A1D2 /* WebSocket.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -112,6 +147,8 @@
 				E9F83ED72757A2B60022B6BC /* CreateServer.swift */,
 				E9258324275895B2002B0F49 /* ConfigView.swift */,
 				E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */,
+				E9E7D8CA27CB36D800F3A1D2 /* ConnectionsView.swift */,
+				E9E7D8CC27CB371200F3A1D2 /* ConnectionCardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -119,7 +156,10 @@
 		E9C99BBC27588E3A009EF515 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E9C99BBD27588E6A009EF515 /* Config.swift */,
+				E9C99BBD27588E6A009EF515 /* ConfigModel.swift */,
+				E9E7D8B627C9F82100F3A1D2 /* ServerModel.swift */,
+				E9E7D8BE27CA4B6E00F3A1D2 /* WebSocketModel.swift */,
+				E9E7D8C827CB15DF00F3A1D2 /* Model.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -131,6 +171,7 @@
 				E9D75DDA2754C109008E20F0 /* claftTests */,
 				E9D75DE42754C109008E20F0 /* claftUITests */,
 				E9D75DC82754C106008E20F0 /* Products */,
+				E9E7D8B927CA3D6E00F3A1D2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -147,12 +188,12 @@
 		E9D75DC92754C106008E20F0 /* claft */ = {
 			isa = PBXGroup;
 			children = (
-				E9EA0FE82760E5BE00F9AAB4 /* Components */,
+				E9E7D8C427CA73FD00F3A1D2 /* claft.entitlements */,
 				E92583232758957D002B0F49 /* Views */,
 				E925832027588FB5002B0F49 /* Tools */,
 				E9C99BBC27588E3A009EF515 /* Model */,
 				E9D75DCA2754C106008E20F0 /* claftApp.swift */,
-				E9D75DCE2754C109008E20F0 /* Assets.xcassets */,
+				E9E7D8C027CA71A800F3A1D2 /* Assets.xcassets */,
 				E9D75DD02754C109008E20F0 /* Preview Content */,
 			);
 			path = claft;
@@ -163,6 +204,7 @@
 			children = (
 				E9EA0FE42760E0D800F9AAB4 /* config.json */,
 				E9D75DD12754C109008E20F0 /* Preview Assets.xcassets */,
+				E9E7D8CE27CB477F00F3A1D2 /* connection.json */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -184,12 +226,12 @@
 			path = claftUITests;
 			sourceTree = "<group>";
 		};
-		E9EA0FE82760E5BE00F9AAB4 /* Components */ = {
+		E9E7D8B927CA3D6E00F3A1D2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E9EA0FE92760E5CC00F9AAB4 /* Formater.swift */,
+				E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */,
 			);
-			path = Components;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +244,7 @@
 				E9D75DC32754C106008E20F0 /* Sources */,
 				E9D75DC42754C106008E20F0 /* Frameworks */,
 				E9D75DC52754C106008E20F0 /* Resources */,
+				E9E7D8C727CA740E00F3A1D2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -297,8 +340,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9D75DD22754C109008E20F0 /* Preview Assets.xcassets in Resources */,
-				E9D75DCF2754C109008E20F0 /* Assets.xcassets in Resources */,
+				E9E7D8C127CA71A800F3A1D2 /* Assets.xcassets in Resources */,
 				E9EA0FE52760E0D800F9AAB4 /* config.json in Resources */,
+				E9E7D8CF27CB477F00F3A1D2 /* connection.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,16 +369,22 @@
 			files = (
 				E935F3042759EF78001CD0BC /* SpecificCornerShape.swift in Sources */,
 				E9D75DF72755CA62008E20F0 /* ServerCard.swift in Sources */,
+				E9E7D8BF27CA4B6E00F3A1D2 /* WebSocketModel.swift in Sources */,
 				E9D75DCD2754C106008E20F0 /* ContentView.swift in Sources */,
 				E9F83ED82757A2B60022B6BC /* CreateServer.swift in Sources */,
 				E9258325275895B2002B0F49 /* ConfigView.swift in Sources */,
 				E9EA0FEA2760E5CC00F9AAB4 /* Formater.swift in Sources */,
-				E9C99BBE27588E6A009EF515 /* Config.swift in Sources */,
+				E9E7D8C927CB15DF00F3A1D2 /* Model.swift in Sources */,
+				E9E7D8B727C9F82100F3A1D2 /* ServerModel.swift in Sources */,
+				E9C99BBE27588E6A009EF515 /* ConfigModel.swift in Sources */,
+				E9E7D8CD27CB371200F3A1D2 /* ConnectionCardView.swift in Sources */,
 				E925832227588FC4002B0F49 /* NetWorkManager.swift in Sources */,
+				E9E7D8CB27CB36D800F3A1D2 /* ConnectionsView.swift in Sources */,
 				E9EA0FE72760E46E00F9AAB4 /* LocalFileReader.swift in Sources */,
 				E9D75DCB2754C106008E20F0 /* claftApp.swift in Sources */,
 				E9D75DF52754CE26008E20F0 /* ProxiesView.swift in Sources */,
 				E9F83ED6275788350022B6BC /* ManageServerPanel.swift in Sources */,
+				E9E7D8BD27CA3DB800F3A1D2 /* WebSocket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,6 +542,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = claft/claft.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"claft/Preview Content\"";
@@ -510,6 +561,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiudaomao.claft;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -521,6 +573,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = claft/claft.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"claft/Preview Content\"";
@@ -539,6 +592,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiudaomao.claft;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
