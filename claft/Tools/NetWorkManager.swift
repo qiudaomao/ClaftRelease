@@ -34,8 +34,8 @@ class NetworkManager {
                     guard let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode else {
                         throw NetworkError.responseError
                     }
-                    let str = String(data: data, encoding: .utf8)
-                    print("str \(str ?? "NA")")
+//                    let str = String(data: data, encoding: .utf8)
+//                    print("str \(str ?? "NA")")
                     return data
                 }
                 .decode(type: T.self, decoder: JSONDecoder())

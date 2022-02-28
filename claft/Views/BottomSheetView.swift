@@ -52,7 +52,9 @@ struct BottomSheetView<Content: View>: View {
                 self.content
             }
             .frame(width: geometry.size.width, height: self.maxHeight, alignment: .top)
+            #if os(iOS)
             .background(Color(.secondarySystemBackground))
+            #endif
             .cornerRadius(Constants.radius)
             .frame(height: geometry.size.height, alignment: .bottom)
             .offset(y: max(self.offset + self.translation, 0))

@@ -46,6 +46,7 @@ struct ConnectionsView: View {
                     }), id: \.id) { connectionItem in
                         ConnectionCardView(connectionItem: connectionItem)
                             .frame(width: rect.size.width - 40, height: 96)
+                            .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
                     }
                 }
             }

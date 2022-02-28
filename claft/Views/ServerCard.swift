@@ -126,13 +126,26 @@ struct ServerCard: View {
                         .position(x: 110, y: 8)
                         .foregroundColor(.red)
                 }
+                #if os(macOS)
+                if selected {
+                    Image(systemName: "checkmark")
+                        .font(Font.system(size: 8))
+                        .position(x: 110, y: 50)
+                        .foregroundColor(.blue)
+                }
+                #endif
             }
         }
         .frame(width: 120, height: 60)
-//        .border(.secondary, width: 1)
+        #if os(iOS)
+        .border(.secondary, width: 1)
         .overlay(SpecificCornerShape(
             topLeft: 8, bottomLeft: 8, topRight: 8, bottomRight: 8
         ).stroke(selected ? .blue : .gray, lineWidth: 1))
+        #else
+        .background(Color("connectionCard"))
+        .cornerRadius(8)
+        #endif
         .onAppear {
             trafficDataCancellable = server.websockets?.trafficWebSocket.$trafficData.sink(receiveValue: {data in
                 trafficData = data
@@ -154,7 +167,7 @@ struct ServerCard_Previews: PreviewProvider {
                 .previewLayout(.fixed(width: 140, height: 80))
             ServerCard(server: Server(id: 0, host: "127.0.0.1", port: "9090", https: true), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .connected), selected: false)
                 .previewLayout(.fixed(width: 140, height: 80))
-            ServerCard(server: Server(id: 0, host: "127.0.0.1", port: "9090", secret: "abc", https: true), trafficData: TrafficData(up: 0, down: 0), selected: true)
+            ServerCard(server: Server(id: 0, host: "127.0.0.1", port: "9090", secret: "abc", https: true), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .failed), selected: true)
                 .previewLayout(.fixed(width: 140, height: 80))
         }
     }

@@ -39,12 +39,16 @@ struct CreateServer: View {
                         if entries[idx].isSecret {
                             SecureField(entries[idx].placeHolder, text: $inputValue[idx])
                                 .multilineTextAlignment(.leading)
+                            #if os(iOS)
                                 .autocapitalization(.none)
+                            #endif
                                 .disableAutocorrection(true)
                         } else {
                             TextField(entries[idx].placeHolder, text: $inputValue[idx])
                                 .multilineTextAlignment(.leading)
+                            #if os(iOS)
                                 .autocapitalization(.none)
+                            #endif
                                 .disableAutocorrection(true)
                         }
                     }
@@ -60,6 +64,7 @@ struct CreateServer: View {
                 }.padding()
             }
             .navigationTitle("New Server")
+            #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             .navigationViewStyle(StackNavigationViewStyle())
             .navigationBarItems(leading: Button(action: {
@@ -75,6 +80,7 @@ struct CreateServer: View {
             }) {
                 Image(systemName: "square.and.arrow.down")
             }.disabled(inputValue[0].lengthOfBytes(using: .utf8) == 0))
+            #endif
         }
     }
 }

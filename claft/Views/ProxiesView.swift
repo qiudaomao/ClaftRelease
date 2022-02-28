@@ -8,13 +8,33 @@
 import SwiftUI
 
 struct ProxiesView: View {
+    var server: Server
+    @ObservedObject var proxyModel:ProxyModel = ProxyModel()
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            ScrollView {
+                LazyVStack {
+                    ForEach(proxyModel.proxiesData.proxies.items.filter({ proxy in
+                        return proxy.type == "Selector" || proxy.type == "URLTest"
+                    }), id: \.name) { item in
+                        Text("\(item.name) - \(item.type)")
+                            .multilineTextAlignment(.leading)
+                    }
+                }
+            }
+        }
+        .onAppear {
+            proxyModel.update(server)
+        }
     }
 }
 
 struct ProxiesView_Previews: PreviewProvider {
     static var previews: some View {
-        ProxiesView()
+//        let proxies = previewProxyData
+        let server = Server(id: 0, host: "127.0.0.1", port: "9090", secret: nil, https: false)
+        let proxyModel = ProxyModel()
+        proxyModel.proxiesData = previewProxyData
+        return ProxiesView(server:server, proxyModel: proxyModel)
     }
 }

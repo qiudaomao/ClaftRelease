@@ -56,8 +56,10 @@ struct ConfigView: View {
                         TextField("NA", text:$config.port)
                             .frame(width: 120)
                             .multilineTextAlignment(.trailing)
+                        #if os(iOS)
                             .keyboardType(.decimalPad)
                             .font(.system(size: 17, design: .monospaced))
+                        #endif
                     }
                 }
                 VStack {
@@ -67,8 +69,10 @@ struct ConfigView: View {
                         TextField("NA", text:$config.httpPort)
                             .frame(width: 120)
                             .multilineTextAlignment(.trailing)
+                        #if os(iOS)
                             .keyboardType(.decimalPad)
                             .font(.system(size: 17, design: .monospaced))
+                        #endif
                     }
                 }
                 VStack {
@@ -78,8 +82,10 @@ struct ConfigView: View {
                         TextField("NA", text:$config.socksPort)
                             .frame(width: 120)
                             .multilineTextAlignment(.trailing)
+                        #if os(iOS)
                             .keyboardType(.decimalPad)
                             .font(.system(size: 17, design: .monospaced))
+                        #endif
                     }
                 }
                 VStack {
@@ -89,8 +95,10 @@ struct ConfigView: View {
                         TextField("NA", text:$config.mixedPort)
                             .frame(width: 120)
                             .multilineTextAlignment(.trailing)
+                        #if os(iOS)
                             .keyboardType(.decimalPad)
                             .font(.system(size: 17, design: .monospaced))
+                        #endif
                     }
                 }
                 VStack {
@@ -100,8 +108,10 @@ struct ConfigView: View {
                         TextField("NA", text:$config.redirPort)
                             .frame(width: 120)
                             .multilineTextAlignment(.trailing)
+                        #if os(iOS)
                             .keyboardType(.decimalPad)
                             .font(.system(size: 17, design: .monospaced))
+                        #endif
                     }
                 }
                 VStack {
@@ -111,8 +121,10 @@ struct ConfigView: View {
                         TextField("NA", text:$config.tproxyPort)
                             .frame(width: 120)
                             .multilineTextAlignment(.trailing)
+                        #if os(iOS)
                             .keyboardType(.decimalPad)
                             .font(.system(size: 17, design: .monospaced))
+                        #endif
                     }
                 }
                 VStack {

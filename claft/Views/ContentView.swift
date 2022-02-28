@@ -18,6 +18,7 @@ struct ContentView: View {
     @ObservedObject var serverModel:ServerModel = ServerModel()
     @State private var showSheet = false
     @State private var currentIndex: Int = 0
+    var proxyData = previewProxyData
     var menus:[MenuItem] = [
         MenuItem(title: "OverView", image: "tablecells.fill"),
         MenuItem(title: "Proxies",  image: "network"),
@@ -42,54 +43,63 @@ struct ContentView: View {
                         })
                         .padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
                     }
+                    #if os(iOS)
                     .padding(EdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8))
+                    #else
+                    .padding(EdgeInsets(top: 16, leading: 8, bottom: 2, trailing: 0))
+                    #endif
                 }
+                #if os(iOS)
                 .frame(height: 62)
+                #else
+                .frame(height: 78)
+                #endif
                 if serverModel.servers.count > 0 {
-                List {
-                    NavigationLink(destination: ProxiesView()) {
-                        Image(systemName: menus[0].image)
-                            .foregroundColor(.blue)
-                        Text(menus[0].title)
-                            .padding()
+                    List {
+                        NavigationLink(destination: PlaceHoldView()) {
+                            Image(systemName: menus[0].image)
+                                .foregroundColor(.blue)
+                            Text(menus[0].title)
+                                .padding()
+                        }
+                        NavigationLink(destination: ProxiesView(server: serverModel.servers[currentIndex])) {
+                            Image(systemName: menus[1].image)
+                                .foregroundColor(.blue)
+                            Text(menus[1].title)
+                                .padding()
+                        }
+                        NavigationLink(destination: PlaceHoldView()) {
+                            Image(systemName: menus[2].image)
+                                .foregroundColor(.blue)
+                            Text(menus[2].title)
+                                .padding()
+                        }
+                        NavigationLink(destination: ConnectionsView(server: serverModel.servers[currentIndex])) {
+                            Image(systemName: menus[3].image)
+                                .foregroundColor(.blue)
+                            Text(menus[3].title)
+                                .padding()
+                        }
+                        NavigationLink(destination: ConfigView(server: serverModel.servers[currentIndex])) {
+                            Image(systemName: menus[4].image)
+                                .foregroundColor(.blue)
+                            Text(menus[4].title)
+                                .padding()
+                        }
+                        NavigationLink(destination: PlaceHoldView()) {
+                            Image(systemName: menus[5].image)
+                                .foregroundColor(.blue)
+                            Text(menus[5].title)
+                                .padding()
+                        }
                     }
-                    NavigationLink(destination: ProxiesView()) {
-                        Image(systemName: menus[1].image)
-                            .foregroundColor(.blue)
-                        Text(menus[1].title)
-                            .padding()
-                    }
-                    NavigationLink(destination: ProxiesView()) {
-                        Image(systemName: menus[2].image)
-                            .foregroundColor(.blue)
-                        Text(menus[2].title)
-                            .padding()
-                    }
-                    NavigationLink(destination: ConnectionsView(server: serverModel.servers[currentIndex])) {
-                        Image(systemName: menus[3].image)
-                            .foregroundColor(.blue)
-                        Text(menus[3].title)
-                            .padding()
-                    }
-                    NavigationLink(destination: ConfigView(server: serverModel.servers[currentIndex])) {
-                        Image(systemName: menus[4].image)
-                            .foregroundColor(.blue)
-                        Text(menus[4].title)
-                            .padding()
-                    }
-                    NavigationLink(destination: ProxiesView()) {
-                        Image(systemName: menus[5].image)
-                            .foregroundColor(.blue)
-                        Text(menus[5].title)
-                            .padding()
-                    }
-                }
                 }
             }
             .navigationTitle("Claft")
+            .listStyle(SidebarListStyle())
+            #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             .navigationViewStyle(StackNavigationViewStyle())
-            .listStyle(SidebarListStyle())
             .navigationBarItems(trailing: Button(action: {
                 showSheet.toggle()
             }) {
@@ -97,6 +107,19 @@ struct ContentView: View {
             }.sheet(isPresented: $showSheet) {
                 ManageServerPanel(servers: $serverModel.servers).environmentObject(serverModel)
             })
+            #else
+            .toolbar {
+                Spacer()
+                Button(action: {
+                    showSheet.toggle()
+                }) {
+                    Label("ManageServers", systemImage: "slider.horizontal.3")
+                }.sheet(isPresented: $showSheet) {
+                    ManageServerPanel(servers: $serverModel.servers).environmentObject(serverModel)
+                        .frame(width: 600, height: 360)
+                }
+            }
+            #endif
         }
         .onAppear {
             print("onAppear")

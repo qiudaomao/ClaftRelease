@@ -55,6 +55,7 @@ struct ManageServerPanel: View {
                 }
             }
             .navigationTitle("Servers")
+            #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             .navigationViewStyle(StackNavigationViewStyle())
             .navigationBarItems(leading: Button(action: {
@@ -66,6 +67,7 @@ struct ManageServerPanel: View {
             }) {
                 Image(systemName: "plus")
             })
+            #endif
             .sheet(isPresented: $showSheet) {
                 CreateServer()//.environmentObject(serverModel)
             }
