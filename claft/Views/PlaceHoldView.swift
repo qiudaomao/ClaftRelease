@@ -8,8 +8,29 @@
 import SwiftUI
 
 struct PlaceHoldView: View {
+    @EnvironmentObject var serverModel:ServerModel
+#if os(iOS)
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+#endif
     var body: some View {
-        Text("PlaceHold view")
+        #if os(iOS)
+        if horizontalSizeClass == .compact {
+            VStack(alignment: .leading) {
+                ServerListView().environmentObject(serverModel)
+                Text("PlaceHoldView")
+            }
+        } else {
+            Text("PlaceHoldView")
+        }
+        #else
+        VStack(alignment: .leading) {
+            ScrollView {
+                ServerListView().environmentObject(serverModel)
+                Text("PlaceHoldView")
+            }
+        }
+        .navigationTitle("PlaceHolder")
+        #endif
     }
 }
 

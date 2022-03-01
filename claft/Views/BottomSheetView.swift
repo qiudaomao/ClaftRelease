@@ -54,6 +54,8 @@ struct BottomSheetView<Content: View>: View {
             .frame(width: geometry.size.width, height: self.maxHeight, alignment: .top)
             #if os(iOS)
             .background(Color(.secondarySystemBackground))
+            #else
+            .background(Color("windowBackground"))
             #endif
             .cornerRadius(Constants.radius)
             .frame(height: geometry.size.height, alignment: .bottom)

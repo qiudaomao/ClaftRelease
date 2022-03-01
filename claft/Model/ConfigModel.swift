@@ -38,24 +38,29 @@ struct ConfigData: Decodable {
     }
 }
 
+struct ConfigDataModel {
+    var allowLan: Bool = false
+    var authentication: [String] = []
+    var bindAddress: String = ""
+    var ipv6: Bool = false
+    var logLevel: Int = 0
+    var httpPort: String = ""
+    var mixedPort: String = ""
+    var mode: Int = 0
+    var port: String = ""
+    var redirPort: String = ""
+    var socksPort: String = ""
+    var tproxyPort: String = ""
+    var testURL: String = ""
+}
+
 class ConfigModel: ObservableObject {
+    @Published var configData: ConfigDataModel = ConfigDataModel()
     @Published var allowLan: Bool = false {
         didSet {
             print("allowLan Changed to \(allowLan)")
         }
     }
-    @Published var authentication: [String] = []
-    @Published var bindAddress: String = ""
-    @Published var ipv6: Bool = false
-    @Published var logLevel: Int = 0
-    @Published var httpPort: String = ""
-    @Published var mixedPort: String = ""
-    @Published var mode: Int = 0
-    @Published var port: String = ""
-    @Published var redirPort: String = ""
-    @Published var socksPort: String = ""
-    @Published var tproxyPort: String = ""
-    @Published var testURL: String = ""
     var finishInit: Bool = false
 
     private var cancellables = Set<AnyCancellable>()
@@ -76,66 +81,68 @@ class ConfigModel: ObservableObject {
                 }
             }
             receiveValue: { [weak self] config in
-                self?.allowLan = config.allowLan ?? false
-                self?.authentication = config.authentication
-                self?.bindAddress = config.bindAddress ?? ""
-                self?.ipv6 = config.ipv6 ?? false
+                var configData = ConfigDataModel()
+                configData.allowLan = config.allowLan ?? false
+                configData.authentication = config.authentication
+                configData.bindAddress = config.bindAddress ?? ""
+                configData.ipv6 = config.ipv6 ?? false
                 if let mode = config.mode {
                     if mode == "global" {
-                        self?.mode = 0
+                        configData.mode = 0
                     } else if mode == "rule" {
-                        self?.mode = 1
+                        configData.mode = 1
                     } else if mode == "script" {
-                        self?.mode = 2
+                        configData.mode = 2
                     } else if mode == "direct" {
-                        self?.mode = 3
+                        configData.mode = 3
                     }
                 }
                 if let logLevel = config.logLevel {
                     if logLevel == "info" {
-                        self?.logLevel = 0
+                        configData.logLevel = 0
                     } else if logLevel == "warning" {
-                        self?.logLevel = 1
+                        configData.logLevel = 1
                     } else if logLevel == "error" {
-                        self?.logLevel = 2
+                        configData.logLevel = 2
                     } else if logLevel == "debug" {
-                        self?.logLevel = 3
+                        configData.logLevel = 3
                     } else if logLevel == "silent" {
-                        self?.logLevel = 4
+                        configData.logLevel = 4
                     }
                 }
                 if let httpPort = config.httpPort {
-                    self?.httpPort = "\(httpPort)"
+                    configData.httpPort = "\(httpPort)"
                 } else {
-                    self?.httpPort = ""
+                    configData.httpPort = ""
                 }
                 if let mixedPort = config.mixedPort {
-                    self?.mixedPort = "\(mixedPort)"
+                    configData.mixedPort = "\(mixedPort)"
                 } else {
-                    self?.mixedPort = ""
+                    configData.mixedPort = ""
                 }
                 if let port = config.port {
-                    self?.port = "\(port)"
+                    configData.port = "\(port)"
                 } else {
-                    self?.port = ""
+                    configData.port = ""
                 }
                 if let redirPort = config.redirPort {
-                    self?.redirPort = "\(redirPort)"
+                    configData.redirPort = "\(redirPort)"
                 } else {
-                    self?.redirPort = ""
+                    configData.redirPort = ""
                 }
                 if let socksPort = config.socksPort {
-                    self?.socksPort = "\(socksPort)"
+                    configData.socksPort = "\(socksPort)"
                 } else {
-                    self?.socksPort = ""
+                    configData.socksPort = ""
                 }
                 if let tproxyPort = config.tproxyPort {
-                    self?.tproxyPort = "\(tproxyPort)"
+                    configData.tproxyPort = "\(tproxyPort)"
                 } else {
-                    self?.tproxyPort = ""
+                    configData.tproxyPort = ""
                 }
                 print("update finish")
                 self?.finishInit = true
+                self?.configData = configData
             }
             .store(in: &cancellables)
     }

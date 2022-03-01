@@ -14,6 +14,7 @@ protocol WebSocketDelegate:AnyObject {
     func onOpen(_ delegate:WebSocket)
     func onClose(_ delegate:WebSocket)
     func onFail(_ delegate:WebSocket, _ str:String)
+    func onPong(_ delegate:WebSocket)
 }
 
 class WebSocket: NSObject, SRWebSocketDelegate {
@@ -50,7 +51,7 @@ class WebSocket: NSObject, SRWebSocketDelegate {
             }
         }
         if let url = url {
-            print("final url is \(url)")
+            print("final url is \(url) path \(path ?? "no path")")
         }
         self.startWebSocket()
     }
@@ -96,6 +97,10 @@ class WebSocket: NSObject, SRWebSocketDelegate {
             return
         }
         delegate.onFail(self, error.localizedDescription)
+    }
+    
+    func webSocket(_ webSocket: SRWebSocket, didReceivePong pongData: Data?) {
+        delegate?.onPong(self)
     }
     
     func webSocket(_ webSocket: SRWebSocket, didCloseWithCode code: Int, reason: String?, wasClean: Bool) {

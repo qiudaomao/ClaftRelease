@@ -8,11 +8,22 @@
 import SwiftUI
 
 struct ProxiesView: View {
+    @EnvironmentObject var serverModel:ServerModel
+#if os(iOS)
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+#endif
     var server: Server
     @ObservedObject var proxyModel:ProxyModel = ProxyModel()
     var body: some View {
         VStack {
             ScrollView {
+                #if os(iOS)
+                if horizontalSizeClass == .compact {
+                    ServerListView().environmentObject(serverModel)
+                }
+                #else
+                ServerListView().environmentObject(serverModel)
+                #endif
                 LazyVStack {
                     ForEach(proxyModel.proxiesData.proxies.items.filter({ proxy in
                         return proxy.type == "Selector" || proxy.type == "URLTest"
@@ -23,6 +34,7 @@ struct ProxiesView: View {
                 }
             }
         }
+        .navigationTitle("Proxies")
         .onAppear {
             proxyModel.update(server)
         }

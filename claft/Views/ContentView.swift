@@ -15,9 +15,14 @@ struct MenuItem: Identifiable {
 }
 
 struct ContentView: View {
-    @ObservedObject var serverModel:ServerModel = ServerModel()
+//    @ObservedObject var serverModel:ServerModel = ServerModel()
     @State private var showSheet = false
-    @State private var currentIndex: Int = 0
+    @State private var selection: Int? = 0
+//    @State private var currentIndex: Int = 0
+    #if os(iOS)
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    #endif
+    @EnvironmentObject var serverModel:ServerModel
     var proxyData = previewProxyData
     var menus:[MenuItem] = [
         MenuItem(title: "OverView", image: "tablecells.fill"),
@@ -30,63 +35,44 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack {
-                        ForEach(0..<serverModel.servers.count, id: \.self) { i in
-                            ServerCard(server: serverModel.servers[i], trafficData: TrafficData(), selected: currentIndex == i)
-                                .gesture(TapGesture().onEnded({ _ in
-                                    currentIndex = i
-                                }))
-                        }
-                        .onDelete(perform: { indexSet in
-                            serverModel.servers.remove(atOffsets: indexSet)
-                        })
-                        .padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
-                    }
-                    #if os(iOS)
-                    .padding(EdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8))
-                    #else
-                    .padding(EdgeInsets(top: 16, leading: 8, bottom: 2, trailing: 0))
-                    #endif
-                }
                 #if os(iOS)
-                .frame(height: 62)
-                #else
-                .frame(height: 78)
+                if horizontalSizeClass == .compact {
+                    ServerListView()
+                }
                 #endif
                 if serverModel.servers.count > 0 {
                     List {
-                        NavigationLink(destination: PlaceHoldView()) {
+                        NavigationLink(destination: PlaceHoldView(), tag: 0, selection: $selection) {
                             Image(systemName: menus[0].image)
                                 .foregroundColor(.blue)
                             Text(menus[0].title)
                                 .padding()
                         }
-                        NavigationLink(destination: ProxiesView(server: serverModel.servers[currentIndex])) {
+                        NavigationLink(destination: ProxiesView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 1, selection: $selection) {
                             Image(systemName: menus[1].image)
                                 .foregroundColor(.blue)
                             Text(menus[1].title)
                                 .padding()
                         }
-                        NavigationLink(destination: PlaceHoldView()) {
+                        NavigationLink(destination: RuleView(), tag: 2, selection: $selection) {
                             Image(systemName: menus[2].image)
                                 .foregroundColor(.blue)
                             Text(menus[2].title)
                                 .padding()
                         }
-                        NavigationLink(destination: ConnectionsView(server: serverModel.servers[currentIndex])) {
+                        NavigationLink(destination: ConnectionsView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 3, selection: $selection) {
                             Image(systemName: menus[3].image)
                                 .foregroundColor(.blue)
                             Text(menus[3].title)
                                 .padding()
                         }
-                        NavigationLink(destination: ConfigView(server: serverModel.servers[currentIndex])) {
+                        NavigationLink(destination: ConfigView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 4, selection: $selection) {
                             Image(systemName: menus[4].image)
                                 .foregroundColor(.blue)
                             Text(menus[4].title)
                                 .padding()
                         }
-                        NavigationLink(destination: PlaceHoldView()) {
+                        NavigationLink(destination: PlaceHoldView(), tag: 5, selection: $selection) {
                             Image(systemName: menus[5].image)
                                 .foregroundColor(.blue)
                             Text(menus[5].title)
@@ -105,25 +91,25 @@ struct ContentView: View {
             }) {
                 Image(systemName: "slider.horizontal.3")
             }.sheet(isPresented: $showSheet) {
-                ManageServerPanel(servers: $serverModel.servers).environmentObject(serverModel)
+                ManageServerPanel(servers: $serverModel.servers)
             })
-            #else
-            .toolbar {
-                Spacer()
-                Button(action: {
-                    showSheet.toggle()
-                }) {
-                    Label("ManageServers", systemImage: "slider.horizontal.3")
-                }.sheet(isPresented: $showSheet) {
-                    ManageServerPanel(servers: $serverModel.servers).environmentObject(serverModel)
-                        .frame(width: 600, height: 360)
-                }
-            }
             #endif
         }
+#if os(macOS)
+        .toolbar {
+//            ServerListView().environmentObject(serverModel)
+            Button(action: {
+                showSheet.toggle()
+            }) {
+                Label("ManageServers", systemImage: "slider.horizontal.3")
+            }.sheet(isPresented: $showSheet) {
+                ManageServerPanel(servers: $serverModel.servers)
+                    .frame(width: 600, height: 360)
+            }
+        }
+#endif
         .onAppear {
             print("onAppear")
-            serverModel.loadServers()
         }
     }
 }
@@ -138,14 +124,14 @@ struct ContentView_Previews: PreviewProvider {
             Server(id: 3, host: "serverD", port: "9092", secret: "def", https: true)
         ]
         return Group {
-            ContentView(serverModel: serverModel)
+            ContentView().environmentObject(serverModel)
                 .previewInterfaceOrientation(.portrait)
                 .previewDevice(PreviewDevice(rawValue: "iPhone 13 Pro"))
-            ContentView(serverModel: serverModel)
+            ContentView().environmentObject(serverModel)
                 .preferredColorScheme(.dark)
                 .previewInterfaceOrientation(.portrait)
                 .previewDevice(PreviewDevice(rawValue: "iPhone 13 Pro"))
-            ContentView(serverModel: serverModel)
+            ContentView().environmentObject(serverModel)
                 .previewInterfaceOrientation(.landscapeLeft)
                 .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
         }

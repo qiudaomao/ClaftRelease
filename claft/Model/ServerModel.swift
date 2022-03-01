@@ -19,10 +19,11 @@ enum WebSocketType {
     case traffic
     case connections
     case logs
+    case ping
 }
 
 struct Server {
-    var id: Int
+    var id: Int = 0
     var host:String = ""
     var port:String = ""
     var secret:String? = nil
@@ -35,23 +36,27 @@ class WebSockets: NSObject {
     var trafficWebSocket:WebSocketModel
     var connectionWebSocket:WebSocketModel
     var logWebSocket:WebSocketModel
+    var pingWebSocket:WebSocketModel
     init(_ server:Server) {
         self.server = server
         self.trafficWebSocket = WebSocketModel(.traffic, server)
         self.connectionWebSocket = WebSocketModel(.connections, server)
         self.logWebSocket = WebSocketModel(.logs, server)
+        self.pingWebSocket = WebSocketModel(.ping, server)
     }
     
     func connectAll() {
         connect(.traffic)
         connect(.connections)
         connect(.log)
+        connect(.ping)
     }
     
     func disconnectAll() {
         disconnect(.traffic)
         disconnect(.connections)
         disconnect(.log)
+        disconnect(.ping)
     }
     
     func connect(_ type:SocketType) {
@@ -62,6 +67,8 @@ class WebSockets: NSObject {
             self.connectionWebSocket.connect()
         case .log:
             self.logWebSocket.connect()
+        case .ping:
+            self.pingWebSocket.connect()
         }
     }
     func disconnect(_ type:SocketType) {
@@ -72,17 +79,27 @@ class WebSockets: NSObject {
             self.connectionWebSocket.disconnect()
         case .log:
             self.logWebSocket.disconnect()
+        case .ping:
+            self.pingWebSocket.disconnect()
         }
     }
 }
 
 class ServerModel: ObservableObject {
     @Published var servers:[Server] = []
+    @Published var currentServerIndex:Int = 0
 
     public func connectServer(_ idx:Int) {
         servers[idx].websockets?.connect(.traffic)
+//        servers[idx].websockets?.connect(.ping)
     }
 
+    func changeCurrentServer(_ idx:Int) {
+        if idx >= 0 && idx < servers.count {
+            self.currentServerIndex = idx
+        }
+    }
+    
     public func loadServers() {
         /*
         let userDefault = UserDefaults.standard

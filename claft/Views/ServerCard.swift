@@ -138,11 +138,11 @@ struct ServerCard: View {
         }
         .frame(width: 120, height: 60)
         #if os(iOS)
-        .border(.secondary, width: 1)
         .overlay(SpecificCornerShape(
             topLeft: 8, bottomLeft: 8, topRight: 8, bottomRight: 8
         ).stroke(selected ? .blue : .gray, lineWidth: 1))
         #else
+//        .border(.secondary, width: 1)
         .background(Color("connectionCard"))
         .cornerRadius(8)
         #endif

@@ -13,6 +13,7 @@ enum SocketType {
     case traffic
     case connections
     case log
+    case ping
 }
 
 struct TrafficData: Hashable, Codable {
@@ -60,17 +61,30 @@ struct LogData: Hashable, Codable {
 
 class WebSocketModel: ObservableObject, WebSocketDelegate {
     private var websocket: WebSocket? = nil
+    private var pingTimerCancellable:AnyCancellable? = nil
     @Published var trafficData:TrafficData = TrafficData()
     @Published var connectionData:ConnectionData = ConnectionData()
     @Published var logs:[LogData] = [LogData]()
+    @Published var pingOK: Bool = false
     var type: WebSocketType = .traffic
     var server: Server
+    private var failedTimes = 0
     init(_ type: WebSocketType, _ server: Server) {
         self.type = type
         self.server = server
     }
     
     private func connectTo(_ path:String?) -> WebSocket {
+        if path == "ping" {
+            let websocket = WebSocket()
+            websocket.host = server.host
+            websocket.port = server.port
+            websocket.secret = server.secret
+            websocket.https = server.https
+            websocket.delegate = self
+            websocket.open()
+            return websocket
+        }
         let websocket = WebSocket()
         websocket.host = server.host
         websocket.port = server.port
@@ -91,6 +105,8 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
             websocket = connectTo("connections")
         case .logs:
             websocket = connectTo("log")
+        case .ping:
+            websocket = connectTo("ping")
         }
     }
     
@@ -114,10 +130,20 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
                 case .logs:
                     let logData = try JSONDecoder().decode(LogData.self, from: data)
                     self.logs.append(logData)
+                case .ping:
+                    self.pingOK = true
+//                    self.pingOK = true
                 }
             } catch let error {
                 print("error decode \(error)")
             }
+        }
+    }
+    
+    func onPong(_ delegate: WebSocket) {
+        print("onPong")
+        if type == .ping {
+            self.pingOK = true
         }
     }
     
@@ -129,9 +155,22 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
     }
     
     func onOpen(_ delegate:WebSocket) {
-        print("onOpen")
+        print("onOpen \(type)")
         if type == .traffic {
             trafficData.connectionStatus = .connected
+        } else if type == .ping {
+            pingTimerCancellable = Timer.publish(every: 5, tolerance: nil, on: .main, in: .default)
+                .autoconnect()
+                .receive(on: DispatchQueue.main)
+                .sink(receiveValue: { [weak self] _ in
+                    guard let failedTimes = self?.failedTimes else {
+                        return
+                    }
+                    print("timerout ping")
+                    if failedTimes < 5 {
+                        self?.websocket?.ping()
+                    }
+                })
         }
     }
     

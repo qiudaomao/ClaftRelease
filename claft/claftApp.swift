@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct claftApp: App {
+    @ObservedObject var serverModel:ServerModel = ServerModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(serverModel)
+                .onAppear {
+                    serverModel.loadServers()
+                }
         }
     }
 }

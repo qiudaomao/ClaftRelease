@@ -35,7 +35,6 @@
 		E958E3B527CC6750001197A9 /* Formater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EA0FE92760E5CC00F9AAB4 /* Formater.swift */; };
 		E958E3B627CC6750001197A9 /* LocalFileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EA0FE62760E46E00F9AAB4 /* LocalFileReader.swift */; };
 		E958E3B727CC6750001197A9 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8BC27CA3DB800F3A1D2 /* WebSocket.swift */; };
-		E958E3B827CC6754001197A9 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8C827CB15DF00F3A1D2 /* Model.swift */; };
 		E958E3B927CC6754001197A9 /* ConnectionOrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E958E37227CBA9C6001197A9 /* ConnectionOrderModel.swift */; };
 		E958E3BA27CC6754001197A9 /* ServerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8B627C9F82100F3A1D2 /* ServerModel.swift */; };
 		E958E3BB27CC6754001197A9 /* ProxyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E958E37627CBB43B001197A9 /* ProxyModel.swift */; };
@@ -48,6 +47,16 @@
 		E958E3C327CC6792001197A9 /* SocketRocket.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E958E3C727CC6CE6001197A9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DCC2754C106008E20F0 /* ContentView.swift */; };
 		E9C99BBE27588E6A009EF515 /* ConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C99BBD27588E6A009EF515 /* ConfigModel.swift */; };
+		E9CA47AB27CCEF7F008640F9 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CA47AA27CCEF7F008640F9 /* LogView.swift */; };
+		E9CA47AC27CCEF7F008640F9 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CA47AA27CCEF7F008640F9 /* LogView.swift */; };
+		E9CA47AE27CDC8A8008640F9 /* ServerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CA47AD27CDC8A8008640F9 /* ServerListView.swift */; };
+		E9CA47AF27CDC8A8008640F9 /* ServerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CA47AD27CDC8A8008640F9 /* ServerListView.swift */; };
+		E9D29F8127CE6118002E5088 /* RuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D29F8027CE6118002E5088 /* RuleView.swift */; };
+		E9D29F8227CE6118002E5088 /* RuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D29F8027CE6118002E5088 /* RuleView.swift */; };
+		E9D29F8427CE6137002E5088 /* RuleCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D29F8327CE6137002E5088 /* RuleCardView.swift */; };
+		E9D29F8527CE6137002E5088 /* RuleCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D29F8327CE6137002E5088 /* RuleCardView.swift */; };
+		E9D29F8727CE614D002E5088 /* RuleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D29F8627CE614D002E5088 /* RuleModel.swift */; };
+		E9D29F8827CE614D002E5088 /* RuleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D29F8627CE614D002E5088 /* RuleModel.swift */; };
 		E9D75DCB2754C106008E20F0 /* claftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DCA2754C106008E20F0 /* claftApp.swift */; };
 		E9D75DCD2754C106008E20F0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DCC2754C106008E20F0 /* ContentView.swift */; };
 		E9D75DD22754C109008E20F0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9D75DD12754C109008E20F0 /* Preview Assets.xcassets */; };
@@ -62,7 +71,6 @@
 		E9E7D8C127CA71A800F3A1D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9E7D8C027CA71A800F3A1D2 /* Assets.xcassets */; };
 		E9E7D8C527CA740E00F3A1D2 /* SocketRocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; };
 		E9E7D8C627CA740E00F3A1D2 /* SocketRocket.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E9E7D8C927CB15DF00F3A1D2 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8C827CB15DF00F3A1D2 /* Model.swift */; };
 		E9E7D8CB27CB36D800F3A1D2 /* ConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8CA27CB36D800F3A1D2 /* ConnectionsView.swift */; };
 		E9E7D8CD27CB371200F3A1D2 /* ConnectionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8CC27CB371200F3A1D2 /* ConnectionCardView.swift */; };
 		E9E7D8CF27CB477F00F3A1D2 /* connection.json in Resources */ = {isa = PBXBuildFile; fileRef = E9E7D8CE27CB477F00F3A1D2 /* connection.json */; };
@@ -150,6 +158,11 @@
 		E958E39E27CC66F2001197A9 /* ClaftMacUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaftMacUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E958E3C527CC67E7001197A9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E9C99BBD27588E6A009EF515 /* ConfigModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigModel.swift; sourceTree = "<group>"; };
+		E9CA47AA27CCEF7F008640F9 /* LogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogView.swift; sourceTree = "<group>"; };
+		E9CA47AD27CDC8A8008640F9 /* ServerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerListView.swift; sourceTree = "<group>"; };
+		E9D29F8027CE6118002E5088 /* RuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleView.swift; sourceTree = "<group>"; };
+		E9D29F8327CE6137002E5088 /* RuleCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleCardView.swift; sourceTree = "<group>"; };
+		E9D29F8627CE614D002E5088 /* RuleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleModel.swift; sourceTree = "<group>"; };
 		E9D75DC72754C106008E20F0 /* claft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = claft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9D75DCA2754C106008E20F0 /* claftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = claftApp.swift; sourceTree = "<group>"; };
 		E9D75DCC2754C106008E20F0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -167,7 +180,6 @@
 		E9E7D8BE27CA4B6E00F3A1D2 /* WebSocketModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketModel.swift; sourceTree = "<group>"; };
 		E9E7D8C027CA71A800F3A1D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E9E7D8C427CA73FD00F3A1D2 /* claft.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = claft.entitlements; sourceTree = "<group>"; };
-		E9E7D8C827CB15DF00F3A1D2 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		E9E7D8CA27CB36D800F3A1D2 /* ConnectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsView.swift; sourceTree = "<group>"; };
 		E9E7D8CC27CB371200F3A1D2 /* ConnectionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCardView.swift; sourceTree = "<group>"; };
 		E9E7D8CE27CB477F00F3A1D2 /* connection.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = connection.json; sourceTree = "<group>"; };
@@ -240,8 +252,8 @@
 		E92583232758957D002B0F49 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E9D75DF62755CA62008E20F0 /* ServerCard.swift */,
 				E9D75DCC2754C106008E20F0 /* ContentView.swift */,
+				E9D75DF62755CA62008E20F0 /* ServerCard.swift */,
 				E9D75DF42754CE26008E20F0 /* ProxiesView.swift */,
 				E9F83ED5275788350022B6BC /* ManageServerPanel.swift */,
 				E9F83ED72757A2B60022B6BC /* CreateServer.swift */,
@@ -251,6 +263,10 @@
 				E9E7D8CC27CB371200F3A1D2 /* ConnectionCardView.swift */,
 				E958E37027CB9F37001197A9 /* BottomSheetView.swift */,
 				E958E37827CBC09D001197A9 /* PlaceHoldView.swift */,
+				E9CA47AA27CCEF7F008640F9 /* LogView.swift */,
+				E9CA47AD27CDC8A8008640F9 /* ServerListView.swift */,
+				E9D29F8027CE6118002E5088 /* RuleView.swift */,
+				E9D29F8327CE6137002E5088 /* RuleCardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -298,9 +314,9 @@
 				E9C99BBD27588E6A009EF515 /* ConfigModel.swift */,
 				E9E7D8B627C9F82100F3A1D2 /* ServerModel.swift */,
 				E9E7D8BE27CA4B6E00F3A1D2 /* WebSocketModel.swift */,
-				E9E7D8C827CB15DF00F3A1D2 /* Model.swift */,
 				E958E37227CBA9C6001197A9 /* ConnectionOrderModel.swift */,
 				E958E37627CBB43B001197A9 /* ProxyModel.swift */,
+				E9D29F8627CE614D002E5088 /* RuleModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -615,23 +631,27 @@
 				E958E3AD27CC674C001197A9 /* ConnectionCardView.swift in Sources */,
 				E958E3AA27CC6742001197A9 /* ServerCard.swift in Sources */,
 				E958E3B727CC6750001197A9 /* WebSocket.swift in Sources */,
+				E9CA47AF27CDC8A8008640F9 /* ServerListView.swift in Sources */,
 				E958E3AF27CC674C001197A9 /* SpecificCornerShape.swift in Sources */,
 				E958E3BD27CC6754001197A9 /* WebSocketModel.swift in Sources */,
 				E958E3B427CC6750001197A9 /* NetWorkManager.swift in Sources */,
 				E958E3B527CC6750001197A9 /* Formater.swift in Sources */,
 				E958E38127CC66EF001197A9 /* ClaftMacApp.swift in Sources */,
-				E958E3B827CC6754001197A9 /* Model.swift in Sources */,
 				E958E3B227CC674C001197A9 /* ManageServerPanel.swift in Sources */,
 				E958E3B127CC674C001197A9 /* ConnectionsView.swift in Sources */,
 				E958E3BB27CC6754001197A9 /* ProxyModel.swift in Sources */,
 				E958E3BA27CC6754001197A9 /* ServerModel.swift in Sources */,
+				E9D29F8827CE614D002E5088 /* RuleModel.swift in Sources */,
+				E9CA47AC27CCEF7F008640F9 /* LogView.swift in Sources */,
 				E958E3B927CC6754001197A9 /* ConnectionOrderModel.swift in Sources */,
 				E958E3B327CC674C001197A9 /* BottomSheetView.swift in Sources */,
 				E958E3C727CC6CE6001197A9 /* ContentView.swift in Sources */,
 				E958E3B027CC674C001197A9 /* CreateServer.swift in Sources */,
 				E958E3AE27CC674C001197A9 /* PlaceHoldView.swift in Sources */,
+				E9D29F8527CE6137002E5088 /* RuleCardView.swift in Sources */,
 				E958E3AB27CC6748001197A9 /* ProxiesView.swift in Sources */,
 				E958E3B627CC6750001197A9 /* LocalFileReader.swift in Sources */,
+				E9D29F8227CE6118002E5088 /* RuleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,9 +681,9 @@
 				E9E7D8BF27CA4B6E00F3A1D2 /* WebSocketModel.swift in Sources */,
 				E9D75DCD2754C106008E20F0 /* ContentView.swift in Sources */,
 				E9F83ED82757A2B60022B6BC /* CreateServer.swift in Sources */,
+				E9CA47AE27CDC8A8008640F9 /* ServerListView.swift in Sources */,
 				E9258325275895B2002B0F49 /* ConfigView.swift in Sources */,
 				E9EA0FEA2760E5CC00F9AAB4 /* Formater.swift in Sources */,
-				E9E7D8C927CB15DF00F3A1D2 /* Model.swift in Sources */,
 				E9E7D8B727C9F82100F3A1D2 /* ServerModel.swift in Sources */,
 				E958E37927CBC09D001197A9 /* PlaceHoldView.swift in Sources */,
 				E9C99BBE27588E6A009EF515 /* ConfigModel.swift in Sources */,
@@ -671,13 +691,17 @@
 				E9E7D8CD27CB371200F3A1D2 /* ConnectionCardView.swift in Sources */,
 				E958E37727CBB43B001197A9 /* ProxyModel.swift in Sources */,
 				E925832227588FC4002B0F49 /* NetWorkManager.swift in Sources */,
+				E9D29F8727CE614D002E5088 /* RuleModel.swift in Sources */,
+				E9CA47AB27CCEF7F008640F9 /* LogView.swift in Sources */,
 				E9E7D8CB27CB36D800F3A1D2 /* ConnectionsView.swift in Sources */,
 				E958E37327CBA9C6001197A9 /* ConnectionOrderModel.swift in Sources */,
 				E9EA0FE72760E46E00F9AAB4 /* LocalFileReader.swift in Sources */,
 				E9D75DCB2754C106008E20F0 /* claftApp.swift in Sources */,
 				E9D75DF52754CE26008E20F0 /* ProxiesView.swift in Sources */,
+				E9D29F8427CE6137002E5088 /* RuleCardView.swift in Sources */,
 				E9F83ED6275788350022B6BC /* ManageServerPanel.swift in Sources */,
 				E9E7D8BD27CA3DB800F3A1D2 /* WebSocket.swift in Sources */,
+				E9D29F8127CE6118002E5088 /* RuleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,6 +759,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ClaftMac/Preview Content\"";
+				DEVELOPMENT_TEAM = SGZE33W2XX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
