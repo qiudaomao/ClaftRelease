@@ -44,37 +44,37 @@ struct ContentView: View {
                     List {
                         NavigationLink(destination: PlaceHoldView(), tag: 0, selection: $selection) {
                             Image(systemName: menus[0].image)
-                                .foregroundColor(.blue)
+                                .foregroundColor(self.selection == 0 ? .white : .blue)
                             Text(menus[0].title)
                                 .padding()
                         }
                         NavigationLink(destination: ProxiesView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 1, selection: $selection) {
                             Image(systemName: menus[1].image)
-                                .foregroundColor(.blue)
+                                .foregroundColor(self.selection == 1 ? .white : .blue)
                             Text(menus[1].title)
                                 .padding()
                         }
                         NavigationLink(destination: RuleView(), tag: 2, selection: $selection) {
                             Image(systemName: menus[2].image)
-                                .foregroundColor(.blue)
+                                .foregroundColor(self.selection == 2 ? .white : .blue)
                             Text(menus[2].title)
                                 .padding()
                         }
                         NavigationLink(destination: ConnectionsView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 3, selection: $selection) {
                             Image(systemName: menus[3].image)
-                                .foregroundColor(.blue)
+                                .foregroundColor(self.selection == 3 ? .white : .blue)
                             Text(menus[3].title)
                                 .padding()
                         }
                         NavigationLink(destination: ConfigView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 4, selection: $selection) {
                             Image(systemName: menus[4].image)
-                                .foregroundColor(.blue)
+                                .foregroundColor(self.selection == 4 ? .white : .blue)
                             Text(menus[4].title)
                                 .padding()
                         }
-                        NavigationLink(destination: PlaceHoldView(), tag: 5, selection: $selection) {
+                        NavigationLink(destination: LogView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 5, selection: $selection) {
                             Image(systemName: menus[5].image)
-                                .foregroundColor(.blue)
+                                .foregroundColor(self.selection == 5 ? .white : .blue)
                             Text(menus[5].title)
                                 .padding()
                         }

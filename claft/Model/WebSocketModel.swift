@@ -104,7 +104,7 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
         case .connections:
             websocket = connectTo("connections")
         case .logs:
-            websocket = connectTo("log")
+            websocket = connectTo("logs")
         case .ping:
             websocket = connectTo("ping")
         }
