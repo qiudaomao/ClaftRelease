@@ -17,10 +17,11 @@ struct MenuItem: Identifiable {
 struct ContentView: View {
 //    @ObservedObject var serverModel:ServerModel = ServerModel()
     @State private var showSheet = false
-    @State private var selection: Int? = 0
-//    @State private var currentIndex: Int = 0
     #if os(iOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @State private var selection: Int? = -1
+    #else
+    @State private var selection: Int? = 0
     #endif
     @EnvironmentObject var serverModel:ServerModel
     var proxyData = previewProxyData
@@ -28,7 +29,7 @@ struct ContentView: View {
         MenuItem(title: "OverView", image: "tablecells.fill"),
         MenuItem(title: "Proxies",  image: "network"),
         MenuItem(title: "Rules",    image: "list.bullet"),
-        MenuItem(title: "Conns",    image: "point.3.filled.connected.trianglepath.dotted"),
+        MenuItem(title: "Connections",    image: "point.3.filled.connected.trianglepath.dotted"),
         MenuItem(title: "Config",   image: "gearshape"),
         MenuItem(title: "Logs",     image: "terminal"),
     ]
@@ -42,40 +43,52 @@ struct ContentView: View {
                 #endif
                 if serverModel.servers.count > 0 {
                     List {
-                        NavigationLink(destination: PlaceHoldView(), tag: 0, selection: $selection) {
-                            Image(systemName: menus[0].image)
-                                .foregroundColor(self.selection == 0 ? .white : .blue)
-                            Text(menus[0].title)
+                        NavigationLink(destination: OverView(), tag: 0, selection: $selection) {
+//                            Image(systemName: menus[0].image)
+//                                .foregroundColor(self.selection == 0 ? .white : .blue)
+//                            Text(menus[0].title)
+//                                .padding()
+                            Label(menus[0].title, systemImage: menus[0].image)
                                 .padding()
                         }
                         NavigationLink(destination: ProxiesView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 1, selection: $selection) {
-                            Image(systemName: menus[1].image)
-                                .foregroundColor(self.selection == 1 ? .white : .blue)
-                            Text(menus[1].title)
+//                            Image(systemName: menus[1].image)
+//                                .foregroundColor(self.selection == 1 ? .white : .blue)
+//                            Text(menus[1].title)
+//                                .padding()
+                            Label(menus[1].title, systemImage: menus[1].image)
                                 .padding()
                         }
                         NavigationLink(destination: RuleView(), tag: 2, selection: $selection) {
-                            Image(systemName: menus[2].image)
-                                .foregroundColor(self.selection == 2 ? .white : .blue)
-                            Text(menus[2].title)
+//                            Image(systemName: menus[2].image)
+//                                .foregroundColor(self.selection == 2 ? .white : .blue)
+//                            Text(menus[2].title)
+//                                .padding()
+                            Label(menus[2].title, systemImage: menus[2].image)
                                 .padding()
                         }
                         NavigationLink(destination: ConnectionsView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 3, selection: $selection) {
-                            Image(systemName: menus[3].image)
-                                .foregroundColor(self.selection == 3 ? .white : .blue)
-                            Text(menus[3].title)
+//                            Image(systemName: menus[3].image)
+//                                .foregroundColor(self.selection == 3 ? .white : .blue)
+//                            Text(menus[3].title)
+//                                .padding()
+                            Label(menus[3].title, systemImage: menus[3].image)
                                 .padding()
                         }
                         NavigationLink(destination: ConfigView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 4, selection: $selection) {
-                            Image(systemName: menus[4].image)
-                                .foregroundColor(self.selection == 4 ? .white : .blue)
-                            Text(menus[4].title)
+//                            Image(systemName: menus[4].image)
+//                                .foregroundColor(self.selection == 4 ? .white : .blue)
+//                            Text(menus[4].title)
+//                                .padding()
+                            Label(menus[4].title, systemImage: menus[4].image)
                                 .padding()
                         }
                         NavigationLink(destination: LogView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 5, selection: $selection) {
-                            Image(systemName: menus[5].image)
-                                .foregroundColor(self.selection == 5 ? .white : .blue)
-                            Text(menus[5].title)
+//                            Image(systemName: menus[5].image)
+//                                .foregroundColor(self.selection == 5 ? .white : .blue)
+//                            Text(menus[5].title)
+//                                .padding()
+                            Label(menus[5].title, systemImage: menus[5].image)
                                 .padding()
                         }
                     }

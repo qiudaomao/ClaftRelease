@@ -46,6 +46,10 @@
 		E958E3C227CC6792001197A9 /* SocketRocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; };
 		E958E3C327CC6792001197A9 /* SocketRocket.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E958E3C727CC6CE6001197A9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DCC2754C106008E20F0 /* ContentView.swift */; };
+		E9BDD23827CFC2C300A171B5 /* OverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BDD23727CFC2C300A171B5 /* OverView.swift */; };
+		E9BDD23927CFC2C300A171B5 /* OverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BDD23727CFC2C300A171B5 /* OverView.swift */; };
+		E9BDD23B27CFC33D00A171B5 /* NetworkSpeedDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BDD23A27CFC33D00A171B5 /* NetworkSpeedDraw.swift */; };
+		E9BDD23C27CFC33D00A171B5 /* NetworkSpeedDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BDD23A27CFC33D00A171B5 /* NetworkSpeedDraw.swift */; };
 		E9C99BBE27588E6A009EF515 /* ConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C99BBD27588E6A009EF515 /* ConfigModel.swift */; };
 		E9CA47AB27CCEF7F008640F9 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CA47AA27CCEF7F008640F9 /* LogView.swift */; };
 		E9CA47AC27CCEF7F008640F9 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CA47AA27CCEF7F008640F9 /* LogView.swift */; };
@@ -157,6 +161,8 @@
 		E958E39C27CC66F2001197A9 /* ClaftMacUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaftMacUITests.swift; sourceTree = "<group>"; };
 		E958E39E27CC66F2001197A9 /* ClaftMacUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaftMacUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E958E3C527CC67E7001197A9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E9BDD23727CFC2C300A171B5 /* OverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverView.swift; sourceTree = "<group>"; };
+		E9BDD23A27CFC33D00A171B5 /* NetworkSpeedDraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSpeedDraw.swift; sourceTree = "<group>"; };
 		E9C99BBD27588E6A009EF515 /* ConfigModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigModel.swift; sourceTree = "<group>"; };
 		E9CA47AA27CCEF7F008640F9 /* LogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogView.swift; sourceTree = "<group>"; };
 		E9CA47AD27CDC8A8008640F9 /* ServerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerListView.swift; sourceTree = "<group>"; };
@@ -238,6 +244,72 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E90276C927D201F00010985B /* OverView */ = {
+			isa = PBXGroup;
+			children = (
+				E9BDD23A27CFC33D00A171B5 /* NetworkSpeedDraw.swift */,
+				E9BDD23727CFC2C300A171B5 /* OverView.swift */,
+			);
+			path = OverView;
+			sourceTree = "<group>";
+		};
+		E90276CA27D201FE0010985B /* Proxies */ = {
+			isa = PBXGroup;
+			children = (
+				E9D75DF42754CE26008E20F0 /* ProxiesView.swift */,
+			);
+			path = Proxies;
+			sourceTree = "<group>";
+		};
+		E90276CB27D202090010985B /* Rules */ = {
+			isa = PBXGroup;
+			children = (
+				E9D29F8327CE6137002E5088 /* RuleCardView.swift */,
+				E9D29F8027CE6118002E5088 /* RuleView.swift */,
+			);
+			path = Rules;
+			sourceTree = "<group>";
+		};
+		E90276CC27D2020F0010985B /* Connections */ = {
+			isa = PBXGroup;
+			children = (
+				E958E37027CB9F37001197A9 /* BottomSheetView.swift */,
+				E9E7D8CA27CB36D800F3A1D2 /* ConnectionsView.swift */,
+				E9E7D8CC27CB371200F3A1D2 /* ConnectionCardView.swift */,
+			);
+			path = Connections;
+			sourceTree = "<group>";
+		};
+		E90276CD27D202210010985B /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				E9258324275895B2002B0F49 /* ConfigView.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		E90276CE27D202270010985B /* Logs */ = {
+			isa = PBXGroup;
+			children = (
+				E9CA47AA27CCEF7F008640F9 /* LogView.swift */,
+			);
+			path = Logs;
+			sourceTree = "<group>";
+		};
+		E90276CF27D202330010985B /* Manage */ = {
+			isa = PBXGroup;
+			children = (
+				E9D75DCC2754C106008E20F0 /* ContentView.swift */,
+				E9CA47AD27CDC8A8008640F9 /* ServerListView.swift */,
+				E9D75DF62755CA62008E20F0 /* ServerCard.swift */,
+				E9F83ED5275788350022B6BC /* ManageServerPanel.swift */,
+				E9F83ED72757A2B60022B6BC /* CreateServer.swift */,
+				E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */,
+				E958E37827CBC09D001197A9 /* PlaceHoldView.swift */,
+			);
+			path = Manage;
+			sourceTree = "<group>";
+		};
 		E925832027588FB5002B0F49 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -252,21 +324,13 @@
 		E92583232758957D002B0F49 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E9D75DCC2754C106008E20F0 /* ContentView.swift */,
-				E9D75DF62755CA62008E20F0 /* ServerCard.swift */,
-				E9D75DF42754CE26008E20F0 /* ProxiesView.swift */,
-				E9F83ED5275788350022B6BC /* ManageServerPanel.swift */,
-				E9F83ED72757A2B60022B6BC /* CreateServer.swift */,
-				E9258324275895B2002B0F49 /* ConfigView.swift */,
-				E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */,
-				E9E7D8CA27CB36D800F3A1D2 /* ConnectionsView.swift */,
-				E9E7D8CC27CB371200F3A1D2 /* ConnectionCardView.swift */,
-				E958E37027CB9F37001197A9 /* BottomSheetView.swift */,
-				E958E37827CBC09D001197A9 /* PlaceHoldView.swift */,
-				E9CA47AA27CCEF7F008640F9 /* LogView.swift */,
-				E9CA47AD27CDC8A8008640F9 /* ServerListView.swift */,
-				E9D29F8027CE6118002E5088 /* RuleView.swift */,
-				E9D29F8327CE6137002E5088 /* RuleCardView.swift */,
+				E90276CF27D202330010985B /* Manage */,
+				E90276C927D201F00010985B /* OverView */,
+				E90276CA27D201FE0010985B /* Proxies */,
+				E90276CB27D202090010985B /* Rules */,
+				E90276CC27D2020F0010985B /* Connections */,
+				E90276CD27D202210010985B /* Config */,
+				E90276CE27D202270010985B /* Logs */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -627,6 +691,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E958E3AC27CC674C001197A9 /* ConfigView.swift in Sources */,
+				E9BDD23927CFC2C300A171B5 /* OverView.swift in Sources */,
+				E9BDD23C27CFC33D00A171B5 /* NetworkSpeedDraw.swift in Sources */,
 				E958E3BC27CC6754001197A9 /* ConfigModel.swift in Sources */,
 				E958E3AD27CC674C001197A9 /* ConnectionCardView.swift in Sources */,
 				E958E3AA27CC6742001197A9 /* ServerCard.swift in Sources */,
@@ -677,6 +743,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E935F3042759EF78001CD0BC /* SpecificCornerShape.swift in Sources */,
+				E9BDD23827CFC2C300A171B5 /* OverView.swift in Sources */,
+				E9BDD23B27CFC33D00A171B5 /* NetworkSpeedDraw.swift in Sources */,
 				E9D75DF72755CA62008E20F0 /* ServerCard.swift in Sources */,
 				E9E7D8BF27CA4B6E00F3A1D2 /* WebSocketModel.swift in Sources */,
 				E9D75DCD2754C106008E20F0 /* ContentView.swift in Sources */,
@@ -1013,6 +1081,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1044,6 +1113,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

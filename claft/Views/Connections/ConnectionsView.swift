@@ -45,7 +45,7 @@ struct ConnectionsView: View {
                 ScrollView {
                     LazyVStack {
                         #if os(iOS)
-                        if horizontalSizeClass == .compact {
+                        if horizontalSizeClass != .compact {
                             ServerListView().environmentObject(serverModel)
                         }
                         #else
@@ -65,13 +65,16 @@ struct ConnectionsView: View {
                                 return true
                             }), id: \.id) { connectionItem in
                                 ConnectionCardView(connectionItem: connectionItem)
-                                    .frame(width: rect.size.width - 40, height: 96)
+                                    .frame(width: (rect.size.width > 960) ? 960 - 40 : rect.size.width - 40)
                                     .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
                             }
                         }
                     }
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 140, trailing: 0))
                 }
+                #if os(iOS)
 //                .background(Color("windowBackground"))
+                #endif
             }
             let name:String = self.pause ? "play.circle.fill":"pause.circle.fill"
             Image(systemName: name)

@@ -125,6 +125,12 @@ class ServerModel: ObservableObject {
         }
     }
     
+    public func disconnectAll() {
+        for i in 0..<servers.count {
+            servers[i].websockets?.disconnectAll()
+        }
+    }
+    
     public func saveServers() {
         let userDefault = UserDefaults.standard
         userDefault.set(servers, forKey: "servers")

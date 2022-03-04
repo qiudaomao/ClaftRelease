@@ -26,18 +26,17 @@ struct ServerListView: View {
                 })
                 .padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
             }
-                    #if os(iOS)
+            #if os(iOS)
             .padding(EdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8))
-                    #else
-                    .padding(EdgeInsets(top: 0, leading: 22, bottom: 2, trailing: 0))
-                    #endif
+            #else
+            .padding(EdgeInsets(top: 0, leading: 22, bottom: 2, trailing: 0))
+            #endif
         }
 #if os(iOS)
         .frame(height: 62)
 #else
         .frame(height: 78)
 #endif
-//        }
     }
 }
 

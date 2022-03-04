@@ -63,6 +63,7 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
     private var websocket: WebSocket? = nil
     private var pingTimerCancellable:AnyCancellable? = nil
     @Published var trafficData:TrafficData = TrafficData()
+    @Published var trafficHistory:[TrafficData] = []
     @Published var connectionData:ConnectionData = ConnectionData()
     @Published var logs:[LogData] = [LogData]()
     @Published var pingOK: Bool = false
@@ -124,6 +125,11 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
 //                    print("server up \(trafficData.up) down \(trafficData.down)")
                     self.trafficData.up = trafficData.up
                     self.trafficData.down = trafficData.down
+                    
+                    if self.trafficHistory.count > 99 {
+                        self.trafficHistory.removeFirst()
+                    }
+                    self.trafficHistory.append(trafficData)
                 case .connections:
                     let connectionData = try JSONDecoder().decode(ConnectionData.self, from: data)
                     self.connectionData = connectionData

@@ -54,10 +54,15 @@ struct LogView: View {
                                 Spacer()
                             }
                             .frame(width: rect.size.width - 40, height: 26)
+                            .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4))
+                            .background(Material.thickMaterial)
+                            .cornerRadius(8)
                         }
                     }
                 }
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 140, trailing: 0))
             }
+            .frame(maxWidth: 1024)
 //                .background(Color("windowBackground"))
         }
         .onAppear {

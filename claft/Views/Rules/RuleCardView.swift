@@ -39,7 +39,7 @@ struct RuleCardView: View {
             }
         }
         .frame(height: 36)
-        .background(Color("connectionCard"))
+        .background(Material.thickMaterial)
         .cornerRadius(8)
         .padding(EdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2))
     }
