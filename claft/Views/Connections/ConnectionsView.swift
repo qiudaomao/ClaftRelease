@@ -44,15 +44,7 @@ struct ConnectionsView: View {
             VStack {
                 ScrollView {
                     LazyVStack {
-                        #if os(iOS)
-                        if horizontalSizeClass != .compact {
-                            ServerListView().environmentObject(serverModel)
-                        }
-                        #else
-                        if rect.size.width > 30 {
-                            ServerListView().environmentObject(serverModel)
-                        }
-                        #endif
+                        ServerListView()
                         if (rect.size.width > 40) {
                             ForEach(connectionData.connections.sorted(by: { a, b in
                                 if orderMode == .time {
@@ -195,6 +187,7 @@ struct ConnectionsView: View {
     }
 }
 
+#if DEBUG
 struct ConnectionsView_Previews: PreviewProvider {
     static var connectionData = previewConnectionData
     static var previews: some View {
@@ -207,3 +200,5 @@ struct ConnectionsView_Previews: PreviewProvider {
         }
     }
 }
+#endif
+

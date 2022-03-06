@@ -9,17 +9,22 @@ import Foundation
 import Combine
 
 struct ProxyHistoryData: Codable {
-    var time: String
-    var delay: Int
+    var time: String = ""
+    var delay: Int = 0
 }
 
 struct ProxyItemData: Codable {
-    var all: [String] /* proxy didn't have this, only selector/URLTest has it */
-    var history: [ProxyHistoryData]
+    var all: [String] = []/* proxy didn't have this, only selector/URLTest has it */
+    var history: [ProxyHistoryData] = []
     var name: String = ""
     var now: String = ""
     var type: String = ""
     var udp: Bool = false
+    var uuid: UUID = UUID()
+    var expanded: Bool = false
+
+    init() {
+    }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -41,7 +46,9 @@ struct ProxyItemData: Codable {
 }
 
 struct ProxyData: Codable {
-    var items:[ProxyItemData]
+    var items:[ProxyItemData] = []
+    var datas:[String:ProxyItemData] = [:]
+    var orderedSelections:[ProxyItemData] = []
     
     private struct DynamicCodingKeys: CodingKey {
         var stringValue: String
@@ -61,14 +68,31 @@ struct ProxyData: Codable {
         var array = [ProxyItemData]()
         for key in container.allKeys {
             let decodedObject = try container.decode(ProxyItemData.self, forKey: DynamicCodingKeys(stringValue: key.stringValue)!)
+            datas[key.stringValue] = decodedObject
             array.append(decodedObject)
         }
         items = array
+        if let all = datas["GLOBAL"]?.all {
+            for i in 0..<all.count {
+                if let item = datas[all[i]] {
+                    if item.type == "Selector" || item.type == "URLTest" {
+                        orderedSelections.append(item)
+                    }
+                }
+            }
+        }
+        for i in 0..<orderedSelections.count {
+            print("ordered \(i) \(orderedSelections[i].name)")
+        }
+    }
+    
+    init(items: [ProxyItemData]) {
+        self.items = items
     }
 }
 
 struct ProxiesData: Codable {
-    var proxies:ProxyData
+    var proxies:ProxyData = ProxyData(items: [])
 }
 
 class ProxyModel: ObservableObject {
@@ -105,4 +129,6 @@ class ProxyModel: ObservableObject {
     }
 }
 
+#if DEBUG
 var previewProxyData:ProxiesData = getLocalData("proxies")
+#endif

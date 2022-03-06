@@ -30,15 +30,7 @@ struct LogView: View {
         VStack {
             ScrollView {
                 LazyVStack {
-                    #if os(iOS)
-                    if horizontalSizeClass == .compact {
-                        ServerListView().environmentObject(serverModel)
-                    }
-                    #else
-                    if rect.size.width > 30 {
-                        ServerListView().environmentObject(serverModel)
-                    }
-                    #endif
+                    ServerListView()
                     if (rect.size.width > 40) {
                         ForEach(logs.reversed(), id: \.uuid) { logItem in
                             HStack {

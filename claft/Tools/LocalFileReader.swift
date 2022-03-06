@@ -8,6 +8,7 @@
 import Foundation
 
 //var previewConfigData: ConfigData = getLocalData("config")
+#if DEBUG
 var previewConnectionData: ConnectionData = getLocalData("connection")
 
 func getLocalData<T: Decodable>(_ fileName: String) -> T {
@@ -28,3 +29,4 @@ func getLocalData<T: Decodable>(_ fileName: String) -> T {
         fatalError("Couldn't parse JSON file \(fileName) error: \(error)")
     }
 }
+#endif

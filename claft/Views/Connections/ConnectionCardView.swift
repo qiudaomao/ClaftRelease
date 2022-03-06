@@ -131,6 +131,7 @@ struct ConnectionCardView: View {
     }
 }
 
+#if DEBUG
 struct ConnectionCardView_Previews: PreviewProvider {
     static var connectionData = previewConnectionData
     static var previews: some View {
@@ -143,3 +144,4 @@ struct ConnectionCardView_Previews: PreviewProvider {
         }
     }
 }
+#endif

@@ -19,27 +19,60 @@ struct ConfigView: View {
 #endif
     
     func onChanged() {
-        print("onChanged")
+        guard configData.initialized else {
+            return
+        }
+        if configModel.configData.allowLan != configData.allowLan {
+            print("onChanged \(configData.initialized) allowLan \(configModel.configData.allowLan) => \(configData.allowLan)")
+        }
+        if configModel.configData.mode != configData.mode {
+            print("onChanged \(configData.initialized) mode \(configModel.configData.mode) => \(configData.mode)")
+        }
+        if configModel.configData.logLevel != configData.logLevel {
+            print("onChanged \(configData.initialized) logLevel \(configModel.configData.logLevel) => \(configData.logLevel)")
+        }
+        if configModel.configData.port != configData.port {
+            print("onChanged \(configData.initialized) port \(configModel.configData.port) => \(configData.port)")
+        }
+        if configModel.configData.httpPort != configData.httpPort {
+            print("onChanged \(configData.initialized) httpPort \(configModel.configData.httpPort) => \(configData.httpPort)")
+        }
+        if configModel.configData.socksPort != configData.socksPort {
+            print("onChanged \(configData.initialized) socksPort \(configModel.configData.socksPort) => \(configData.socksPort)")
+        }
+        if configModel.configData.mixedPort != configData.mixedPort {
+            print("onChanged \(configData.initialized) mixedPort \(configModel.configData.mixedPort) => \(configData.mixedPort)")
+        }
+        if configModel.configData.redirPort != configData.redirPort {
+            print("onChanged \(configData.initialized) redirPort \(configModel.configData.redirPort) => \(configData.redirPort)")
+        }
+        if configModel.configData.tproxyPort != configData.tproxyPort {
+            print("onChanged \(configData.initialized) tproxyPort \(configModel.configData.tproxyPort) => \(configData.tproxyPort)")
+        }
+        if configModel.configData.testURL != configData.testURL {
+            print("onChanged \(configData.initialized) testURL \(configModel.configData.testURL) => \(configData.testURL)")
+        }
     }
     
     var body: some View {
         VStack {
             ScrollView {
-                #if os(iOS)
-                if horizontalSizeClass == .compact {
-                    ServerListView().environmentObject(serverModel)
-                }
-                #else
-                ServerListView().environmentObject(serverModel)
-                #endif
+                ServerListView()
                 VStack {
+                    if configData.initialized {
                     #if os(iOS)
                     Toggle("Allow LAN", isOn: $configData.allowLan)
+                        .onChange(of: configData.allowLan) { value in
+                            self.onChanged()
+                        }
                     #else
                     HStack {
                         Text("Allow LAN")
                         Spacer()
                         Toggle("", isOn: $configData.allowLan)
+                            .onChange(of: configData.allowLan) { value in
+                                self.onChanged()
+                            }
                     }
                     #endif
                     VStack {
@@ -56,8 +89,8 @@ struct ConfigView: View {
                             Text("Direct").tag(3)
                         }
                         .pickerStyle(.segmented)
-                        .onSubmit {
-                            onChanged()
+                        .onChange(of: configData.mode) { _ in
+                            self.onChanged()
                         }
                     }
                     VStack {
@@ -74,6 +107,9 @@ struct ConfigView: View {
                             Text("debug").tag(3)
                             Text("silent").tag(4)
                         }.pickerStyle(.segmented)
+                            .onChange(of: configData.logLevel) { _ in
+                                self.onChanged()
+                            }
                     }
                     VStack {
                         HStack {
@@ -82,6 +118,9 @@ struct ConfigView: View {
                             TextField("NA", text:$configData.port)
                                 .frame(width: 120)
                                 .multilineTextAlignment(.trailing)
+                                .onChange(of: configData.port) { _ in
+                                    self.onChanged()
+                                }
                             #if os(iOS)
                                 .keyboardType(.decimalPad)
                                 .font(.system(size: 17, design: .monospaced))
@@ -95,6 +134,9 @@ struct ConfigView: View {
                             TextField("NA", text:$configData.httpPort)
                                 .frame(width: 120)
                                 .multilineTextAlignment(.trailing)
+                                .onChange(of: configData.httpPort) { _ in
+                                    self.onChanged()
+                                }
                             #if os(iOS)
                                 .keyboardType(.decimalPad)
                                 .font(.system(size: 17, design: .monospaced))
@@ -108,6 +150,9 @@ struct ConfigView: View {
                             TextField("NA", text:$configData.socksPort)
                                 .frame(width: 120)
                                 .multilineTextAlignment(.trailing)
+                                .onChange(of: configData.socksPort) { _ in
+                                    self.onChanged()
+                                }
                             #if os(iOS)
                                 .keyboardType(.decimalPad)
                                 .font(.system(size: 17, design: .monospaced))
@@ -121,6 +166,9 @@ struct ConfigView: View {
                             TextField("NA", text:$configData.mixedPort)
                                 .frame(width: 120)
                                 .multilineTextAlignment(.trailing)
+                                .onChange(of: configData.mixedPort) { _ in
+                                    self.onChanged()
+                                }
                             #if os(iOS)
                                 .keyboardType(.decimalPad)
                                 .font(.system(size: 17, design: .monospaced))
@@ -134,6 +182,9 @@ struct ConfigView: View {
                             TextField("NA", text:$configData.redirPort)
                                 .frame(width: 120)
                                 .multilineTextAlignment(.trailing)
+                                .onChange(of: configData.redirPort) { _ in
+                                    self.onChanged()
+                                }
                             #if os(iOS)
                                 .keyboardType(.decimalPad)
                                 .font(.system(size: 17, design: .monospaced))
@@ -147,6 +198,9 @@ struct ConfigView: View {
                             TextField("NA", text:$configData.tproxyPort)
                                 .frame(width: 120)
                                 .multilineTextAlignment(.trailing)
+                                .onChange(of: configData.tproxyPort) { _ in
+                                    self.onChanged()
+                                }
                             #if os(iOS)
                                 .keyboardType(.decimalPad)
                                 .font(.system(size: 17, design: .monospaced))
@@ -159,7 +213,11 @@ struct ConfigView: View {
                             Spacer()
                             TextField("Test URL", text:$configData.testURL)
                                 .multilineTextAlignment(.trailing)
+                                .onChange(of: configData.testURL) { _ in
+                                    self.onChanged()
+                                }
                         }
+                    }
                     }
                 }
                 .padding()
@@ -167,11 +225,13 @@ struct ConfigView: View {
         }
         .navigationTitle("Config")
         .onAppear {
-            self.configData = configModel.configData
             configModel.$configData.sink(receiveValue: { configData in
-                self.configData = configData
+                var cd = configData
+                cd.initialized = true
+                self.configData = cd
             }).store(in: &cancelables)
             serverModel.$currentServerIndex.sink { idx in
+                self.configData = ConfigDataModel()
                 let server = serverModel.servers[idx]
                 configModel.getDataFromServer(server)
             }.store(in: &cancelables)

@@ -18,17 +18,12 @@ struct OverView: View {
     @State private var trafficCancellable: AnyCancellable? = nil
     var body: some View {
         VStack(alignment: .leading) {
-            #if os(iOS)
-            if horizontalSizeClass == .compact {
-                ServerListView().environmentObject(serverModel)
-                .frame(height: 62)
-            }
-            #else
-            ServerListView().environmentObject(serverModel)
-            .frame(height: 78)
-            #endif
+            ServerListView()
             VStack {
+                Spacer()
                 NetworkSpeedDraw(trafficHistory: trafficHistory)
+                    .frame(maxHeight: 200)
+                Spacer()
             }
             .padding(EdgeInsets(top: 0, leading: 30, bottom: 30, trailing: 30))
         }

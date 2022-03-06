@@ -6,47 +6,86 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ProxiesView: View {
     @EnvironmentObject var serverModel:ServerModel
 #if os(iOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 #endif
-    var server: Server
     @ObservedObject var proxyModel:ProxyModel = ProxyModel()
+    @State var expanded:[Bool] = []
+    @State var proxiesData:ProxiesData = ProxiesData()
+    @State var cancellables: Set<AnyCancellable> = Set<AnyCancellable>()
+    @State var changeProxyCancellable:AnyCancellable? = nil
     var body: some View {
         VStack {
             ScrollView {
-                #if os(iOS)
-                if horizontalSizeClass == .compact {
-                    ServerListView().environmentObject(serverModel)
-                }
-                #else
-                ServerListView().environmentObject(serverModel)
-                #endif
-                LazyVStack {
-                    ForEach(proxyModel.proxiesData.proxies.items.filter({ proxy in
-                        return proxy.type == "Selector" || proxy.type == "URLTest"
-                    }), id: \.name) { item in
-                        Text("\(item.name) - \(item.type)")
-                            .multilineTextAlignment(.leading)
+                ServerListView()
+                LazyVStack(alignment: .leading) {
+                    ForEach(0..<proxiesData.proxies.orderedSelections.count, id:\.self) { idx in
+                        let item = proxiesData.proxies.orderedSelections[idx]
+//                    ForEach(proxiesData.proxies.orderedSelections, id: \.uuid) { item in
+                        DisclosureGroup("\(item.name)", isExpanded: $expanded[idx]) {
+                            #if os(iOS)
+                            let columns:[GridItem] = Array(repeating: .init(.flexible()), count: horizontalSizeClass == .compact ? 2:3)
+                            #else
+                            let columns:[GridItem] = Array(repeating: .init(.flexible()), count: 3)
+                            #endif
+                            ScrollView {
+                                LazyVGrid(columns: columns, spacing: 4) {
+                                    ForEach(item.all, id: \.self) { proxy in
+                                        ProxyCardView(proxy: proxiesData.proxies.datas[proxy]!, selected: item.now == proxy)
+                                            .gesture(TapGesture().onEnded({ _ in
+                                                print("change \(item.name) => \(proxy)")
+                                                changeProxyCancellable = serverModel.changeProxy(item.name, proxy)?.sink(receiveCompletion: { error in
+                                                    print("complete \(error)")
+                                                    let server = serverModel.servers[serverModel.currentServerIndex]
+                                                    proxyModel.proxiesData = ProxiesData()
+                                                    proxyModel.update(server)
+                                                }, receiveValue: { value in
+                                                    if let value = value {
+                                                        print("\(value)")
+                                                    }
+                                                })
+                                            }))
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
+                .padding()
             }
         }
         .navigationTitle("Proxies")
         .onAppear {
-            proxyModel.update(server)
+            proxyModel.$proxiesData.sink { data in
+                if data.proxies.orderedSelections.count > 0 {
+                    if expanded.count != data.proxies.orderedSelections.count {
+                        expanded = data.proxies.orderedSelections.map({ _ in
+                            return false
+                        })
+                    }
+                }
+                proxiesData = data
+            }.store(in: &cancellables)
+            serverModel.$currentServerIndex.sink { idx in
+                let server = serverModel.servers[idx]
+                proxyModel.proxiesData = ProxiesData()
+                expanded = []
+                proxyModel.update(server)
+            }.store(in: &cancellables)
         }
     }
 }
 
+#if DEBUG
 struct ProxiesView_Previews: PreviewProvider {
     static var previews: some View {
-//        let proxies = previewProxyData
-        let server = Server(id: 0, host: "127.0.0.1", port: "9090", secret: nil, https: false)
         let proxyModel = ProxyModel()
         proxyModel.proxiesData = previewProxyData
-        return ProxiesView(server:server, proxyModel: proxyModel)
+        return ProxiesView(proxyModel: proxyModel).environmentObject(ServerModel())
     }
 }
+#endif

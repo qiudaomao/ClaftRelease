@@ -85,9 +85,14 @@ class WebSockets: NSObject {
     }
 }
 
+struct ChangeProxyBody: Codable {
+    var name: String = ""
+}
+
 class ServerModel: ObservableObject {
     @Published var servers:[Server] = []
     @Published var currentServerIndex:Int = 0
+    private var cancelables:Set<AnyCancellable> = Set<AnyCancellable>()
 
     public func connectServer(_ idx:Int) {
         servers[idx].websockets?.connect(.traffic)
@@ -134,5 +139,20 @@ class ServerModel: ObservableObject {
     public func saveServers() {
         let userDefault = UserDefaults.standard
         userDefault.set(servers, forKey: "servers")
+    }
+    
+    public func changeProxy(_ selector:String, _ target:String) -> Future<String?, Error>? {
+//        NetworkManager.putData(url)
+        let server = servers[currentServerIndex]
+        guard let encodedURL = selector.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+            return nil
+        }
+        let url = "\(server.https ? "https":"http")://\(server.host):\(server.port)/proxies/\(encodedURL)"
+        let body = ChangeProxyBody(name: target)
+        var headers:[String:String] = [:]
+        if let secret = server.secret {
+            headers["Authorization"] = "Bearer \(secret)"
+        }
+        return NetworkManager.shared.putData(url: url, type: ChangeProxyBody.self, body: body, headers: headers)
     }
 }

@@ -21,13 +21,7 @@ struct RuleView: View {
         VStack {
             ScrollView {
                 LazyVStack {
-                    #if os(iOS)
-                    if horizontalSizeClass == .compact {
-                        ServerListView()
-                    }
-                    #else
                     ServerListView()
-                    #endif
                     if rect.size.width > 40 {
                         ForEach(rules, id:\.uuid) { rule in
                             RuleCardView(rule: rule)

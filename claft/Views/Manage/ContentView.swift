@@ -24,7 +24,6 @@ struct ContentView: View {
     @State private var selection: Int? = 0
     #endif
     @EnvironmentObject var serverModel:ServerModel
-    var proxyData = previewProxyData
     var menus:[MenuItem] = [
         MenuItem(title: "OverView", image: "tablecells.fill"),
         MenuItem(title: "Proxies",  image: "network"),
@@ -51,7 +50,7 @@ struct ContentView: View {
                             Label(menus[0].title, systemImage: menus[0].image)
                                 .padding()
                         }
-                        NavigationLink(destination: ProxiesView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 1, selection: $selection) {
+                        NavigationLink(destination: ProxiesView(), tag: 1, selection: $selection) {
 //                            Image(systemName: menus[1].image)
 //                                .foregroundColor(self.selection == 1 ? .white : .blue)
 //                            Text(menus[1].title)
@@ -123,6 +122,11 @@ struct ContentView: View {
 #endif
         .onAppear {
             print("onAppear")
+            #if os(iOS)
+            if horizontalSizeClass != .compact {
+                selection = 0
+            }
+            #endif
         }
     }
 }

@@ -52,6 +52,7 @@ struct ConfigDataModel {
     var socksPort: String = ""
     var tproxyPort: String = ""
     var testURL: String = ""
+    var initialized: Bool = false
 }
 
 class ConfigModel: ObservableObject {

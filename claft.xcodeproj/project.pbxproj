@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E90276D127D33AA80010985B /* ProxyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90276D027D33AA80010985B /* ProxyCardView.swift */; };
+		E90276D227D33AA80010985B /* ProxyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90276D027D33AA80010985B /* ProxyCardView.swift */; };
 		E925832227588FC4002B0F49 /* NetWorkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925832127588FC4002B0F49 /* NetWorkManager.swift */; };
 		E9258325275895B2002B0F49 /* ConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9258324275895B2002B0F49 /* ConfigView.swift */; };
 		E935F3042759EF78001CD0BC /* SpecificCornerShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */; };
@@ -142,6 +144,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E90276D027D33AA80010985B /* ProxyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyCardView.swift; sourceTree = "<group>"; };
 		E925832127588FC4002B0F49 /* NetWorkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkManager.swift; sourceTree = "<group>"; };
 		E9258324275895B2002B0F49 /* ConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigView.swift; sourceTree = "<group>"; };
 		E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificCornerShape.swift; sourceTree = "<group>"; };
@@ -257,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				E9D75DF42754CE26008E20F0 /* ProxiesView.swift */,
+				E90276D027D33AA80010985B /* ProxyCardView.swift */,
 			);
 			path = Proxies;
 			sourceTree = "<group>";
@@ -709,6 +713,7 @@
 				E958E3BA27CC6754001197A9 /* ServerModel.swift in Sources */,
 				E9D29F8827CE614D002E5088 /* RuleModel.swift in Sources */,
 				E9CA47AC27CCEF7F008640F9 /* LogView.swift in Sources */,
+				E90276D227D33AA80010985B /* ProxyCardView.swift in Sources */,
 				E958E3B927CC6754001197A9 /* ConnectionOrderModel.swift in Sources */,
 				E958E3B327CC674C001197A9 /* BottomSheetView.swift in Sources */,
 				E958E3C727CC6CE6001197A9 /* ContentView.swift in Sources */,
@@ -761,6 +766,7 @@
 				E925832227588FC4002B0F49 /* NetWorkManager.swift in Sources */,
 				E9D29F8727CE614D002E5088 /* RuleModel.swift in Sources */,
 				E9CA47AB27CCEF7F008640F9 /* LogView.swift in Sources */,
+				E90276D127D33AA80010985B /* ProxyCardView.swift in Sources */,
 				E9E7D8CB27CB36D800F3A1D2 /* ConnectionsView.swift in Sources */,
 				E958E37327CBA9C6001197A9 /* ConnectionOrderModel.swift in Sources */,
 				E9EA0FE72760E46E00F9AAB4 /* LocalFileReader.swift in Sources */,
