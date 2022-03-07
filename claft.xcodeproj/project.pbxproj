@@ -359,18 +359,13 @@
 			path = Logs;
 			sourceTree = "<group>";
 		};
-		E90276CF27D202330010985B /* Manage */ = {
+		E90276CF27D202330010985B /* Root */ = {
 			isa = PBXGroup;
 			children = (
 				E9D75DCC2754C106008E20F0 /* ContentView.swift */,
-				E9CA47AD27CDC8A8008640F9 /* ServerListView.swift */,
-				E9D75DF62755CA62008E20F0 /* ServerCard.swift */,
-				E9F83ED5275788350022B6BC /* ManageServerPanel.swift */,
-				E9F83ED72757A2B60022B6BC /* CreateServer.swift */,
-				E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */,
 				E958E37827CBC09D001197A9 /* PlaceHoldView.swift */,
 			);
-			path = Manage;
+			path = Root;
 			sourceTree = "<group>";
 		};
 		E925832027588FB5002B0F49 /* Tools */ = {
@@ -387,7 +382,8 @@
 		E92583232758957D002B0F49 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E90276CF27D202330010985B /* Manage */,
+				E90276CF27D202330010985B /* Root */,
+				E9B6C3F927D5E38A000D976C /* Server */,
 				E90276C927D201F00010985B /* OverView */,
 				E90276CA27D201FE0010985B /* Proxies */,
 				E90276CB27D202090010985B /* Rules */,
@@ -451,6 +447,18 @@
 				E976208127D4B121005290B3 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E9B6C3F927D5E38A000D976C /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				E9CA47AD27CDC8A8008640F9 /* ServerListView.swift */,
+				E9D75DF62755CA62008E20F0 /* ServerCard.swift */,
+				E9F83ED5275788350022B6BC /* ManageServerPanel.swift */,
+				E9F83ED72757A2B60022B6BC /* CreateServer.swift */,
+				E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */,
+			);
+			path = Server;
 			sourceTree = "<group>";
 		};
 		E9C99BBC27588E3A009EF515 /* Model */ = {

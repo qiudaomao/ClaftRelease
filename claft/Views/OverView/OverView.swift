@@ -22,7 +22,11 @@ struct OverView: View {
             VStack {
                 Spacer()
                 NetworkSpeedDraw(trafficHistory: trafficHistory)
+                #if os(tvOS)
+                    .frame(maxHeight: 400)
+                #else
                     .frame(maxHeight: 200)
+                #endif
                 Spacer()
             }
             .padding(EdgeInsets(top: 0, leading: 30, bottom: 30, trailing: 30))

@@ -26,13 +26,18 @@ struct NetworkSpeedDraw: View {
     }
     
     var body: some View {
-        HStack {
+        #if os(tvOS)
+        let scale = 2.0
+        #else
+        let scale = 1.0
+        #endif
+        return HStack {
             VStack(alignment: .trailing) {
                 ForEach(1..<4) { i in
                     HStack {
                         Spacer()
                         Text("\((self.maxSize()/i).humanReadableByteCountInt())/s")
-                            .font(.system(size: 10))
+                            .font(.system(size: 10 * scale))
                             .foregroundColor(.secondary)
                     }
                     Spacer()
@@ -40,7 +45,7 @@ struct NetworkSpeedDraw: View {
                 HStack {
                     Spacer()
                     Text("0 B/s")
-                        .font(.system(size: 10))
+                        .font(.system(size: 10 * scale))
                             .foregroundColor(.secondary)
                 }
                 ForEach(1..<4) { i in
@@ -48,12 +53,16 @@ struct NetworkSpeedDraw: View {
                     HStack {
                         Spacer()
                         Text("\((self.maxSize()/(4-i)).humanReadableByteCountInt())/s")
-                            .font(.system(size: 10))
+                            .font(.system(size: 10 * scale))
                             .foregroundColor(.secondary)
                     }
                 }
             }
-            .frame(width: 60)
+            #if os(tvOS)
+            .frame(width: 140)
+            #else
+            .frame(width: 60 * scale)
+            #endif
 //            .background(Color.red)
             ZStack {
                 Path() { path in

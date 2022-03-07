@@ -58,6 +58,7 @@ struct ConnectionsView: View {
                             }), id: \.id) { connectionItem in
                                 #if os(tvOS)
                                 Button {
+                                    self.showBottomSheet.toggle()
                                 } label: {
                                     ConnectionCardView(connectionItem: connectionItem)
                                         .frame(width: rect.size.width - 40)
@@ -79,6 +80,7 @@ struct ConnectionsView: View {
 //                .background(Color("windowBackground"))
                 #endif
             }
+            #if os(iOS) || os(macOS)
             let name:String = self.pause ? "play.circle.fill":"pause.circle.fill"
             Image(systemName: name)
                 .resizable()
@@ -125,6 +127,7 @@ struct ConnectionsView: View {
                     print("touched reorder")
                     self.showBottomSheet.toggle()
                 }))
+            #endif
             #endif
             
             if showBottomSheet {

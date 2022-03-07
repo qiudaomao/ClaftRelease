@@ -103,6 +103,9 @@ class ServerModel: ObservableObject {
         if idx >= 0 && idx < servers.count {
             self.currentServerIndex = idx
         }
+        //save here
+        let userDefault = UserDefaults.standard
+        userDefault.set(self.currentServerIndex, forKey: "currentServerIndex")
     }
     
     public func loadServers() {
@@ -127,6 +130,12 @@ class ServerModel: ObservableObject {
             connectServer(0)
             connectServer(1)
             connectServer(2)
+        }
+        let userDefault = UserDefaults.standard
+        if let idx = userDefault.object(forKey: "currentServerIndex") as? Int {
+            if servers.count > idx {
+                self.currentServerIndex = idx
+            }
         }
     }
     
