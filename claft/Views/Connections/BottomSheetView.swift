@@ -33,9 +33,16 @@ struct BottomSheetView<Content: View>: View {
             .frame(
                 width: Constants.indicatorWidth,
                 height: Constants.indicatorHeight
-        ).onTapGesture {
+        )
+        #if os(tvOS)
+        .onLongPressGesture(minimumDuration: 0.01, pressing: { _ in }) {
             self.isOpen.toggle()
         }
+        #else
+        .onTapGesture {
+            self.isOpen.toggle()
+        }
+        #endif
     }
 
     init(isOpen: Binding<Bool>, maxHeight: CGFloat, @ViewBuilder content: () -> Content) {

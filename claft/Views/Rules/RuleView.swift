@@ -27,6 +27,9 @@ struct RuleView: View {
                             RuleCardView(rule: rule)
                                 .frame(width: (rect.size.width > 960) ? 960 - 40 : rect.size.width - 40, height: 40)
                                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 4, trailing: 0))
+                            #if os(tvOS)
+                                .focusable(true)
+                            #endif
                         }
                     }
                 }

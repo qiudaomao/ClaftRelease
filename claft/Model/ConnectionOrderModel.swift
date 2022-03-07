@@ -28,7 +28,8 @@ class ConnectionOrderModel: ObservableObject {
     
     func saveOrder(_ mode:ConnectionOrder) {
         let userDefault = UserDefaults.standard
-        userDefault.set(orderMode.rawValue, forKey: "ConnectionOrder")
+        let raw = Int(mode.rawValue)
+        userDefault.set(raw, forKey: "ConnectionOrder")
         print("saveOrder => \(mode)")
         self.orderMode = mode
     }

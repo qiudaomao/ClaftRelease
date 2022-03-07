@@ -56,9 +56,20 @@ struct ConnectionsView: View {
                                 }
                                 return true
                             }), id: \.id) { connectionItem in
+                                #if os(tvOS)
+                                Button {
+                                } label: {
+                                    ConnectionCardView(connectionItem: connectionItem)
+                                        .frame(width: rect.size.width - 40)
+//                                        .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
+                                }
+                                .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
+                                .buttonStyle(CardButtonStyle())
+                                #else
                                 ConnectionCardView(connectionItem: connectionItem)
                                     .frame(width: (rect.size.width > 960) ? 960 - 40 : rect.size.width - 40)
                                     .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
+                                #endif
                             }
                         }
                     }
@@ -81,10 +92,17 @@ struct ConnectionsView: View {
                 .background(Circle().foregroundColor(.white).frame(width: 30, height: 30))
                 .position(x: rect.size.width - 46, y: rect.size.height - 50)
             #endif
+            #if os(tvOS)
+                .onLongPressGesture(minimumDuration: 0.01, pressing: { _ in }) {
+                    print("touched")
+                    self.pause.toggle()
+                }
+            #else
                 .gesture(TapGesture().onEnded({ () in
                     print("touched")
                     self.pause.toggle()
                 }))
+            #endif
             Image(systemName: "arrow.clockwise.circle.fill")
                 .resizable()
                 .foregroundColor(.blue)
@@ -97,10 +115,17 @@ struct ConnectionsView: View {
                 .background(Circle().foregroundColor(.white).frame(width: 30, height: 30))
                 .position(x: rect.size.width - 46, y: rect.size.height - 100)
             #endif
+            #if os(tvOS)
+                .onLongPressGesture(minimumDuration: 0.01, pressing: { _ in }) {
+                    print("touched reorder")
+                    self.showBottomSheet.toggle()
+                }
+            #else
                 .gesture(TapGesture().onEnded({ () in
                     print("touched reorder")
                     self.showBottomSheet.toggle()
                 }))
+            #endif
             
             if showBottomSheet {
                 BottomSheetView(isOpen: self.$isOpenBottomSheet, maxHeight: 540) {

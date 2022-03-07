@@ -41,6 +41,7 @@ struct ManageServerPanel: View {
                                 .foregroundColor(.secondary)
                                 .padding()
                         }
+                        #if os(iOS) || os(macOS)
                         .swipeActions {
                             Button(role:.destructive, action: {
                                 print("delete")
@@ -51,6 +52,7 @@ struct ManageServerPanel: View {
                                 Label("Delete", systemImage: "trash")
                             }
                         }
+                        #endif
                     }
                 }
             }

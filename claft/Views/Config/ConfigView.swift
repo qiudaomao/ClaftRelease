@@ -60,164 +60,171 @@ struct ConfigView: View {
                 ServerListView()
                 VStack {
                     if configData.initialized {
-                    #if os(iOS)
-                    Toggle("Allow LAN", isOn: $configData.allowLan)
-                        .onChange(of: configData.allowLan) { value in
-                            self.onChanged()
-                        }
-                    #else
-                    HStack {
-                        Text("Allow LAN")
-                        Spacer()
-                        Toggle("", isOn: $configData.allowLan)
+                        #if os(iOS)
+                        Toggle("Allow LAN", isOn: $configData.allowLan)
                             .onChange(of: configData.allowLan) { value in
                                 self.onChanged()
                             }
-                    }
-                    #endif
-                    VStack {
-                        #if os(iOS)
+                        #else
                         HStack {
-                            Text("Mode")
+                            Text("Allow LAN")
                             Spacer()
+                            Toggle("", isOn: $configData.allowLan)
+                                .onChange(of: configData.allowLan) { value in
+                                    self.onChanged()
+                                }
                         }
                         #endif
-                        Picker("Mode", selection: $configData.mode) {
-                            Text("Global").tag(0)
-                            Text("Rule").tag(1)
-                            Text("Script").tag(2)
-                            Text("Direct").tag(3)
-                        }
-                        .pickerStyle(.segmented)
-                        .onChange(of: configData.mode) { _ in
-                            self.onChanged()
-                        }
-                    }
-                    VStack {
-                        #if os(iOS)
-                        HStack {
-                            Text("Log Level")
-                            Spacer()
-                        }
-                        #endif
-                        Picker("Log Level", selection: $configData.logLevel) {
-                            Text("info").tag(0)
-                            Text("warning").tag(1)
-                            Text("error").tag(2)
-                            Text("debug").tag(3)
-                            Text("silent").tag(4)
-                        }.pickerStyle(.segmented)
-                            .onChange(of: configData.logLevel) { _ in
+                        VStack {
+                            #if os(iOS)
+                            HStack {
+                                Text("Mode")
+                                Spacer()
+                            }
+                            #endif
+                            Picker("Mode", selection: $configData.mode) {
+                                Text("Global").tag(0)
+                                Text("Rule").tag(1)
+                                Text("Script").tag(2)
+                                Text("Direct").tag(3)
+                            }
+                            .pickerStyle(.segmented)
+                            .onChange(of: configData.mode) { _ in
                                 self.onChanged()
                             }
-                    }
-                    VStack {
-                        HStack {
-                            Text("Web Port")
-                            Spacer()
-                            TextField("NA", text:$configData.port)
-                                .frame(width: 120)
-                                .multilineTextAlignment(.trailing)
-                                .onChange(of: configData.port) { _ in
-                                    self.onChanged()
-                                }
+                        }
+                        VStack {
                             #if os(iOS)
-                                .keyboardType(.decimalPad)
-                                .font(.system(size: 17, design: .monospaced))
+                            HStack {
+                                Text("Log Level")
+                                Spacer()
+                            }
                             #endif
-                        }
-                    }
-                    VStack {
-                        HStack {
-                            Text("HTTP Port")
-                            Spacer()
-                            TextField("NA", text:$configData.httpPort)
-                                .frame(width: 120)
-                                .multilineTextAlignment(.trailing)
-                                .onChange(of: configData.httpPort) { _ in
-                                    self.onChanged()
-                                }
-                            #if os(iOS)
-                                .keyboardType(.decimalPad)
-                                .font(.system(size: 17, design: .monospaced))
-                            #endif
-                        }
-                    }
-                    VStack {
-                        HStack {
-                            Text("Socks Port")
-                            Spacer()
-                            TextField("NA", text:$configData.socksPort)
-                                .frame(width: 120)
-                                .multilineTextAlignment(.trailing)
-                                .onChange(of: configData.socksPort) { _ in
-                                    self.onChanged()
-                                }
-                            #if os(iOS)
-                                .keyboardType(.decimalPad)
-                                .font(.system(size: 17, design: .monospaced))
-                            #endif
-                        }
-                    }
-                    VStack {
-                        HStack {
-                            Text("Mixed Port")
-                            Spacer()
-                            TextField("NA", text:$configData.mixedPort)
-                                .frame(width: 120)
-                                .multilineTextAlignment(.trailing)
-                                .onChange(of: configData.mixedPort) { _ in
-                                    self.onChanged()
-                                }
-                            #if os(iOS)
-                                .keyboardType(.decimalPad)
-                                .font(.system(size: 17, design: .monospaced))
-                            #endif
-                        }
-                    }
-                    VStack {
-                        HStack {
-                            Text("Redir Port")
-                            Spacer()
-                            TextField("NA", text:$configData.redirPort)
-                                .frame(width: 120)
-                                .multilineTextAlignment(.trailing)
-                                .onChange(of: configData.redirPort) { _ in
-                                    self.onChanged()
-                                }
-                            #if os(iOS)
-                                .keyboardType(.decimalPad)
-                                .font(.system(size: 17, design: .monospaced))
-                            #endif
-                        }
-                    }
-                    VStack {
-                        HStack {
-                            Text("TProxy Port")
-                            Spacer()
-                            TextField("NA", text:$configData.tproxyPort)
-                                .frame(width: 120)
-                                .multilineTextAlignment(.trailing)
-                                .onChange(of: configData.tproxyPort) { _ in
-                                    self.onChanged()
-                                }
-                            #if os(iOS)
-                                .keyboardType(.decimalPad)
-                                .font(.system(size: 17, design: .monospaced))
-                            #endif
-                        }
-                    }
-                    VStack {
-                        HStack {
-                            Text("Test URL")
-                            Spacer()
-                            TextField("Test URL", text:$configData.testURL)
-                                .multilineTextAlignment(.trailing)
-                                .onChange(of: configData.testURL) { _ in
+                            Picker("Log Level", selection: $configData.logLevel) {
+                                Text("info").tag(0)
+                                Text("warning").tag(1)
+                                Text("error").tag(2)
+                                Text("debug").tag(3)
+                                Text("silent").tag(4)
+                            }.pickerStyle(.segmented)
+                                .onChange(of: configData.logLevel) { _ in
                                     self.onChanged()
                                 }
                         }
-                    }
+                        VStack {
+                            HStack {
+                                Text("Web Port")
+                                Spacer()
+                                Text("\(configData.port)")
+                                    .foregroundColor(.secondary)
+                                    .frame(width: 120)
+                                    .multilineTextAlignment(.trailing)
+                                    .onChange(of: configData.port) { _ in
+                                        self.onChanged()
+                                    }
+                                #if os(iOS)
+                                    .keyboardType(.decimalPad)
+                                    .font(.system(size: 17, design: .monospaced))
+                                #endif
+                            }
+                        }.padding([.top], 5)
+                        VStack {
+                            HStack {
+                                Text("HTTP Port")
+                                Spacer()
+                                Text("\(configData.httpPort)")
+                                    .frame(width: 120)
+                                    .multilineTextAlignment(.trailing)
+                                    .foregroundColor(.secondary)
+                                    .onChange(of: configData.httpPort) { _ in
+                                        self.onChanged()
+                                    }
+                                #if os(iOS)
+                                    .keyboardType(.decimalPad)
+                                    .font(.system(size: 17, design: .monospaced))
+                                #endif
+                            }
+                        }.padding([.top], 5)
+                        VStack {
+                            HStack {
+                                Text("Socks Port")
+                                Spacer()
+                                Text("\(configData.socksPort)")
+                                    .frame(width: 120)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.trailing)
+                                    .onChange(of: configData.socksPort) { _ in
+                                        self.onChanged()
+                                    }
+                                #if os(iOS)
+                                    .keyboardType(.decimalPad)
+                                    .font(.system(size: 17, design: .monospaced))
+                                #endif
+                            }
+                        }.padding([.top], 5)
+                        VStack {
+                            HStack {
+                                Text("Mixed Port")
+                                Spacer()
+                                Text("\(configData.mixedPort)")
+                                    .frame(width: 120)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.trailing)
+                                    .onChange(of: configData.mixedPort) { _ in
+                                        self.onChanged()
+                                    }
+                                #if os(iOS)
+                                    .keyboardType(.decimalPad)
+                                    .font(.system(size: 17, design: .monospaced))
+                                #endif
+                            }
+                        }.padding([.top], 5)
+                        VStack {
+                            HStack {
+                                Text("Redir Port")
+                                Spacer()
+                                Text("\(configData.redirPort)")
+                                    .frame(width: 120)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.trailing)
+                                    .onChange(of: configData.redirPort) { _ in
+                                        self.onChanged()
+                                    }
+                                #if os(iOS)
+                                    .keyboardType(.decimalPad)
+                                    .font(.system(size: 17, design: .monospaced))
+                                #endif
+                            }
+                        }.padding([.top], 5)
+                        VStack {
+                            HStack {
+                                Text("TProxy Port")
+                                Spacer()
+                                Text("\(configData.tproxyPort)")
+                                    .frame(width: 120)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.trailing)
+                                    .onChange(of: configData.tproxyPort) { _ in
+                                        self.onChanged()
+                                    }
+                                #if os(iOS)
+                                    .keyboardType(.decimalPad)
+                                    .font(.system(size: 17, design: .monospaced))
+                                #endif
+                            }
+                        }.padding([.top], 5)
+                        VStack {
+                            HStack {
+                                Text("Test URL")
+                                Spacer()
+                                Text("\(configData.testURL)")
+                                    .multilineTextAlignment(.trailing)
+                                    .foregroundColor(.secondary)
+                                    .onChange(of: configData.testURL) { _ in
+                                        self.onChanged()
+                                    }
+                            }
+                        }.padding([.top], 5)
                     }
                 }
                 .padding()

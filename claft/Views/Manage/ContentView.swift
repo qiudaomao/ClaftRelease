@@ -20,6 +20,8 @@ struct ContentView: View {
     #if os(iOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @State private var selection: Int? = -1
+    #elseif os(tvOS)
+    @State private var selection: Int? = -1
     #else
     @State private var selection: Int? = 0
     #endif
@@ -94,7 +96,9 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Claft")
+            #if !os(tvOS)
             .listStyle(SidebarListStyle())
+            #endif
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             .navigationViewStyle(StackNavigationViewStyle())

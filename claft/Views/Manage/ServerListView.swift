@@ -7,19 +7,36 @@
 
 import SwiftUI
 
+enum Focusable: Hashable {
+    case none
+    case row(id: Int)
+}
+
 struct ServerListView: View {
     @EnvironmentObject var serverModel:ServerModel
 #if os(iOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 #endif
+    #if os(tvOS)
+    @FocusState var focused: Focusable?
+    #endif
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack {
                 ForEach(0..<serverModel.servers.count, id: \.self) { i in
+                    #if os(tvOS)
+                    Button {
+                        serverModel.changeCurrentServer(i)
+                    } label: {
+                        ServerCard(server: serverModel.servers[i], trafficData: TrafficData(), selected: serverModel.currentServerIndex == i)
+                    }
+                    .buttonStyle(CardButtonStyle())
+                    #else
                     ServerCard(server: serverModel.servers[i], trafficData: TrafficData(), selected: serverModel.currentServerIndex == i)
                         .gesture(TapGesture().onEnded({ _ in
                             serverModel.changeCurrentServer(i)
                         }))
+                    #endif
                 }
                 .onDelete(perform: { indexSet in
                     serverModel.servers.remove(atOffsets: indexSet)
@@ -34,9 +51,24 @@ struct ServerListView: View {
         }
 #if os(iOS)
         .frame(height: 62)
-#else
+#elseif os(macOS)
         .frame(height: 78)
+#else
+        .frame(height: 240)
 #endif
+        #if os(tvOS)
+        .onAppear() {
+//            if serverModel.servers.count > 0 {
+//                focused = .row(id: 0)
+//            }
+        }
+        .onChange(of: focused) { value in
+            guard let value = value else {
+                return
+            }
+            print("focused changed to \(value)")
+        }
+        #endif
     }
 }
 

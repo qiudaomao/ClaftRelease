@@ -8,6 +8,11 @@
 import SwiftUI
 import Combine
 
+enum ProxiesFocusable: Hashable {
+    case none
+    case item(section: Int, proxy: String)
+}
+
 struct ProxiesView: View {
     @EnvironmentObject var serverModel:ServerModel
 #if os(iOS)
@@ -18,6 +23,9 @@ struct ProxiesView: View {
     @State var proxiesData:ProxiesData = ProxiesData()
     @State var cancellables: Set<AnyCancellable> = Set<AnyCancellable>()
     @State var changeProxyCancellable:AnyCancellable? = nil
+    #if os(tvOS)
+    @FocusState var focused: ProxiesFocusable?
+    #endif
     var body: some View {
         VStack {
             ScrollView {
@@ -26,6 +34,34 @@ struct ProxiesView: View {
                     ForEach(0..<proxiesData.proxies.orderedSelections.count, id:\.self) { idx in
                         let item = proxiesData.proxies.orderedSelections[idx]
 //                    ForEach(proxiesData.proxies.orderedSelections, id: \.uuid) { item in
+                        #if os(tvOS)
+//                        Text("\(item.name)")
+                        Section("\(item.name)") {
+                            let columns:[GridItem] = Array(repeating: .init(.flexible()), count: 4)
+                            ScrollView {
+                                LazyVGrid(columns: columns, spacing: 20) {
+                                    ForEach(item.all, id: \.self) { proxy in
+                                        Button {
+                                            changeProxyCancellable = serverModel.changeProxy(item.name, proxy)?.sink(receiveCompletion: { error in
+                                                print("complete \(error)")
+                                                let server = serverModel.servers[serverModel.currentServerIndex]
+                                                proxyModel.proxiesData = ProxiesData()
+                                                proxyModel.update(server)
+                                            }, receiveValue: { value in
+                                                if let value = value {
+                                                    print("\(value)")
+                                                }
+                                            })
+                                        } label: {
+                                            ProxyCardView(proxy: proxiesData.proxies.datas[proxy]!, selected: item.now == proxy)
+                                        }
+                                        .buttonStyle(CardButtonStyle())
+                                    }
+                                }
+                                .padding()
+                            }
+                        }
+                        #else
                         DisclosureGroup("\(item.name)", isExpanded: $expanded[idx]) {
                             #if os(iOS)
                             let columns:[GridItem] = Array(repeating: .init(.flexible()), count: horizontalSizeClass == .compact ? 2:3)
@@ -53,6 +89,7 @@ struct ProxiesView: View {
                                 }
                             }
                         }
+                        #endif
                     }
                 }
                 .padding()
@@ -69,6 +106,13 @@ struct ProxiesView: View {
                     }
                 }
                 proxiesData = data
+                #if os(tvOS)
+                if proxiesData.proxies.orderedSelections.count > 0 {
+                    if let proxy = proxiesData.proxies.orderedSelections.first {
+                        focused = .item(section: 0, proxy: proxy.name)
+                    }
+                }
+                #endif
             }.store(in: &cancellables)
             serverModel.$currentServerIndex.sink { idx in
                 let server = serverModel.servers[idx]

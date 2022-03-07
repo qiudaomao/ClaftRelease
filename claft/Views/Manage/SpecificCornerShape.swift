@@ -68,7 +68,7 @@ struct SpecificCornerShape: Shape {
         let maxX = rect.maxX
         let maxY = rect.maxY
 
-        #if os(iOS)
+        #if os(iOS) || os(tvOS)
         let path = UIBezierPath()
         path.move(to: CGPoint(x: minX + topLeft, y: minY))
         path.addLine(to: CGPoint(x: maxX - topRight, y: minY))

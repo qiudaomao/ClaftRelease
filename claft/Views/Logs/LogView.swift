@@ -45,6 +45,9 @@ struct LogView: View {
                                     .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
                                 Spacer()
                             }
+                            #if os(tvOS)
+                            .focusable(true)
+                            #endif
                             .frame(width: rect.size.width - 40, height: 26)
                             .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4))
                             .background(Material.thickMaterial)
