@@ -38,6 +38,30 @@ struct ConfigData: Decodable {
     }
 }
 
+struct AllowLanConfig: Codable {
+    var allowLan: Bool = false
+    enum CodingKeys: String, CodingKey {
+        case allowLan = "allow-lan"
+    }
+}
+
+struct ModeConfig: Codable {
+    var mode: String = "rule"
+}
+
+struct LogLevelConfig: Codable {
+    var logLevel: String = "info"
+    enum CodingKeys: String, CodingKey {
+        case logLevel = "log-level"
+    }
+}
+
+enum PatchConfigType {
+    case allowLan
+    case mode
+    case logLevel
+}
+
 struct ConfigDataModel {
     var allowLan: Bool = false
     var authentication: [String] = []
@@ -146,5 +170,14 @@ class ConfigModel: ObservableObject {
                 self?.configData = configData
             }
             .store(in: &cancellables)
+    }
+    
+    func patchData<T: Encodable>(server: Server, value: T) -> Future<String?, Error>? {
+        let url = "\(server.https ? "https":"http")://\(server.host):\(server.port)/configs"
+        var headers:[String:String] = [:]
+        if let secret = server.secret {
+            headers["Authorization"] = "Bearer \(secret)"
+        }
+        return NetworkManager.shared.patchData(url: url, type: T.self, body: value, headers: headers)
     }
 }

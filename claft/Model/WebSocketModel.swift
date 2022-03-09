@@ -70,6 +70,7 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
     var type: WebSocketType = .traffic
     var server: Server
     private var failedTimes = 0
+    private var clean: Bool = false
     init(_ type: WebSocketType, _ server: Server) {
         self.type = type
         self.server = server
@@ -98,6 +99,7 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
     }
     
     func connect() {
+        print("connect \(type)")
         switch type {
         case .traffic:
             trafficData.connectionStatus = .connecting
@@ -112,6 +114,8 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
     }
     
     func disconnect() {
+        print("disconnect \(type)")
+        clean = true
         websocket?.close()
     }
     
@@ -147,21 +151,30 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
     }
     
     func onPong(_ delegate: WebSocket) {
-        print("onPong")
+        print("onPong \(type)")
         if type == .ping {
             self.pingOK = true
         }
     }
     
     func onError(_ delegate:WebSocket, _ str: String) {
-        print("onError \(str)")
+        print("onError \(type) \(str)")
         if type == .traffic {
             trafficData.connectionStatus = .failed
         }
     }
     
+    func date() -> String {
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss.SSSS"
+        return formatter.string(from: date)
+    }
+    
     func onOpen(_ delegate:WebSocket) {
-        print("onOpen \(type)")
+        clean = false
+        print("onOpen \(type) \(server.host):\(server.port) at \(date())")
+        failedTimes = 0
         if type == .traffic {
             trafficData.connectionStatus = .connected
         } else if type == .ping {
@@ -180,17 +193,43 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
         }
     }
     
-    func onClose(_ delegate:WebSocket) {
-        print("onClose")
+    func onClose(_ delegate:WebSocket, _ clean:Bool) {
+        print("onClose \(type) \(server.host):\(server.port) clean \(clean) self.clean \(self.clean) at \(date())")
         if type == .traffic {
             trafficData.connectionStatus = .none
+        }
+        if !self.clean {
+            self.retry()
         }
     }
     
     func onFail(_ delegate:WebSocket, _ str: String) {
-        print("onFail \(str)")
+        print("onFail \(type) \(str)")
         if type == .traffic {
             trafficData.connectionStatus = .failed
+        }
+        self.retry()
+    }
+    
+    func retry() {
+        if failedTimes < 5 {
+            failedTimes += 1
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
+                print("sleep 5 retry \(self?.failedTimes ?? -1)")
+                self?.connect()
+            }
+        } else if failedTimes < 10 {
+            failedTimes += 1
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) { [weak self] in
+                print("sleep 5 retry \(self?.failedTimes ?? -1)")
+                self?.connect()
+            }
+        } else {
+            failedTimes += 1
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(30)) { [weak self] in
+                print("sleep 30 retry \(self?.failedTimes ?? -1)")
+                self?.connect()
+            }
         }
     }
 }

@@ -8,16 +8,17 @@
 import SwiftUI
 import Combine
 
+#if os(iOS) || os(tvOS)
 struct ManageServerPanel: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var showSheet = false
-    @Binding var servers:[Server]
+    @EnvironmentObject var serverModel:ServerModel
+//    @Binding var servers:[Server]
     var body: some View {
-        print(Self._printChanges())
         return NavigationView {
             VStack {
                 List() {
-                    ForEach(servers, id: \.id) { server in
+                    ForEach(serverModel.servers, id: \.id) { server in
                         HStack {
                             if server.secret != nil {
                                 if server.https {
@@ -48,6 +49,7 @@ struct ManageServerPanel: View {
                                 servers = servers.filter({ server_ in
                                     server.id != server_.id
                                 })
+                                serverModel.saveServers()
                             }) {
                                 Label("Delete", systemImage: "trash")
                             }
@@ -71,20 +73,87 @@ struct ManageServerPanel: View {
             })
             #endif
             .sheet(isPresented: $showSheet) {
-                CreateServer()//.environmentObject(serverModel)
+                CreateServer()
             }
         }
     }
 }
+#elseif os(macOS)
+struct ManageServerPanel: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @State private var showSheet = false
+//    @Binding var servers:[Server]
+    @EnvironmentObject var serverModel:ServerModel
+    @State var rect:CGRect = .zero
+    var body: some View {
+        return VStack {
+            HStack {
+                Button {
+                    self.presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Image(systemName: "arrowshape.turn.up.backward")
+                }
+                Spacer()
+                Text("Servers")
+                    .font(.headline)
+                Spacer()
+                Button {
+                    self.showSheet.toggle()
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+            .padding()
+            List() {
+                ForEach(serverModel.servers, id: \.id) { server in
+                    HStack {
+                        if server.secret != nil {
+                            if server.https {
+                                Image(systemName: "lock.fill")
+                                    .foregroundColor(Color.green)
+                            } else {
+                                Image(systemName: "lock.fill")
+                            }
+                        } else {
+                            if server.https {
+                                Image(systemName: "lock")
+                                    .foregroundColor(Color.green)
+                            } else {
+                                Image(systemName: "lock")
+                            }
+                        }
+                        Text("\(server.host)")
+                            .padding()
+                        Spacer()
+                        Text("\(server.port)")
+                            .foregroundColor(.secondary)
+                            .padding()
+                        Button {
+                            print("delete")
+                            serverModel.servers = serverModel.servers.filter({ server_ in
+                                server.id != server_.id
+                            })
+                            serverModel.saveServers()
+                        } label: {
+                            Image(systemName: "trash")
+                        }
+                    }
+                }
+            }
+        }
+//        .frame(width: 600, height: 480)
+        .sheet(isPresented: $showSheet) {
+            CreateServer()//.environmentObject(serverModel)
+                .frame(width: 400, height: 320)
+        }
+        .overlay(Color.clear.modifier(GeometryGetterMod(rect: $rect)))
+    }
+}
+#endif
 
 struct ManageServerPanel_Previews: PreviewProvider {
     static var previews: some View {
-        let servers = [
-            Server(id: 0, host: "serverA", port: "9090"),
-            Server(id: 1, host: "serverB", port: "9090", https: true),
-            Server(id: 2, host: "serverC", port: "9091", secret: "abc"),
-            Server(id: 3, host: "serverD", port: "9092", secret: "def", https: true)
-        ]
-        return ManageServerPanel(servers: .constant(servers))//.environmentObject(serverModel)
+        let serverModel = ServerModel()
+        return ManageServerPanel().environmentObject(serverModel)
     }
 }

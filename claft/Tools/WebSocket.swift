@@ -12,7 +12,7 @@ protocol WebSocketDelegate:AnyObject {
     func onMessage(_ delegate:WebSocket, _ str:String)
     func onError(_ delegate:WebSocket, _ str:String)
     func onOpen(_ delegate:WebSocket)
-    func onClose(_ delegate:WebSocket)
+    func onClose(_ delegate:WebSocket, _ clean:Bool)
     func onFail(_ delegate:WebSocket, _ str:String)
     func onPong(_ delegate:WebSocket)
 }
@@ -110,7 +110,7 @@ class WebSocket: NSObject, SRWebSocketDelegate {
         guard let delegate = delegate else {
             return
         }
-        delegate.onClose(self)
+        delegate.onClose(self, wasClean)
     }
     
     func webSocketDidOpen(_ webSocket: SRWebSocket) {

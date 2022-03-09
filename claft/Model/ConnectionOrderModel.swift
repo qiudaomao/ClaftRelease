@@ -17,6 +17,8 @@ enum ConnectionOrder: Int {
 
 class ConnectionOrderModel: ObservableObject {
     @Published var orderMode: ConnectionOrder = .none
+    @Published var pause: Bool = false
+    @Published var searchKeyword: String = ""
     
     func loadOrder() {
         let userDefault = UserDefaults.standard
@@ -31,6 +33,6 @@ class ConnectionOrderModel: ObservableObject {
         let raw = Int(mode.rawValue)
         userDefault.set(raw, forKey: "ConnectionOrder")
         print("saveOrder => \(mode)")
-        self.orderMode = mode
+//        self.orderMode = mode
     }
 }

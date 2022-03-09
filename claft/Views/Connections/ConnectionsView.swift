@@ -32,13 +32,17 @@ struct ConnectionsView: View {
     @State var isOpenBottomSheet = false
     @State var currentServerIdx = -1
     @State var orderMode:ConnectionOrder = .none
-    @ObservedObject var connectionOrderModel: ConnectionOrderModel = ConnectionOrderModel()
+    #if os(macOS)
+    @State var keyword: String = ""
+    @State var keywordCancellable: AnyCancellable? = nil
+    #endif
     #if os(iOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     #endif
     @EnvironmentObject var serverModel:ServerModel
+    @EnvironmentObject var connectionOrderModel:ConnectionOrderModel
     
-    var server:Server
+//    var server:Server
     var body: some View {
         ZStack {
             VStack {
@@ -46,7 +50,20 @@ struct ConnectionsView: View {
                     LazyVStack {
                         ServerListView()
                         if (rect.size.width > 40) {
-                            ForEach(connectionData.connections.sorted(by: { a, b in
+                            ForEach(connectionData.connections
+                                        .filter({ conn in
+                                if keyword.lengthOfBytes(using: .utf8) == 0 {
+                                    return true
+                                }
+                                let meta = conn.metadata
+                                for item in conn.chains {
+                                    if item.contains(keyword) {
+                                        return true
+                                    }
+                                }
+                                return "\(meta.network) \(meta.type) \(meta.sourceIP) \(meta.destinationIP) \(meta.sourcePort) \(meta.destinationPort) \(meta.host) \(meta.dnsMode)".lowercased().contains(keyword.lowercased())
+                            })
+                                        .sorted(by: { a, b in
                                 if orderMode == .time {
                                     return a.start < b.start
                                 } else if orderMode == .downloadSize {
@@ -74,13 +91,15 @@ struct ConnectionsView: View {
                             }
                         }
                     }
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 140, trailing: 0))
+                    #if os(iOS)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 160, trailing: 0))
+                    #endif
                 }
                 #if os(iOS)
 //                .background(Color("windowBackground"))
                 #endif
             }
-            #if os(iOS) || os(macOS)
+            #if os(iOS) || os(tvOS)
             let name:String = self.pause ? "play.circle.fill":"pause.circle.fill"
             Image(systemName: name)
                 .resizable()
@@ -130,6 +149,7 @@ struct ConnectionsView: View {
             #endif
             #endif
             
+            #if os(iOS)
             if showBottomSheet {
                 BottomSheetView(isOpen: self.$isOpenBottomSheet, maxHeight: 540) {
                     VStack {
@@ -177,14 +197,22 @@ struct ConnectionsView: View {
                     }
                 }.edgesIgnoringSafeArea(.all)
             }
+            #endif
         }
         .onAppear {
             orderCancellable = self.connectionOrderModel.$orderMode.sink(receiveValue: { order in
-                print("order changed to \(order)")
+                print("order change to \(order)")
                 self.orderMode = order
             })
-            self.connectionOrderModel.loadOrder()
+            keywordCancellable = self.connectionOrderModel.$searchKeyword
+                .debounce(for: 0.5, scheduler: RunLoop.main)
+                .removeDuplicates()
+                .sink(receiveValue: { keyword in
+                    print("keyword change to '\(keyword)'")
+                    self.keyword = keyword
+                })
             currentServerIdxCancellable = serverModel.$currentServerIndex.sink(receiveValue: { idx in
+                print("connectionsview current server index changed to \(idx)")
                 if currentServerIdx >= 0 {
                     if !self.pause {
                         self.connectionData = ConnectionData()
@@ -219,13 +247,29 @@ struct ConnectionsView: View {
 struct ConnectionsView_Previews: PreviewProvider {
     static var connectionData = previewConnectionData
     static var previews: some View {
-        let server = Server(id: 0, host: "127.0.0.1", port: "9090", secret: nil, https: false)
+        let connectionOrderModel = ConnectionOrderModel()
+        let serverModel = ServerModel()
+        #if os(macOS)
+        ConnectionsView(connectionData: connectionData)
+            .environmentObject(serverModel)
+            .environmentObject(connectionOrderModel)
+        ConnectionsView(connectionData: connectionData)
+            .environmentObject(serverModel)
+            .environmentObject(connectionOrderModel)
+            .previewInterfaceOrientation(.landscapeLeft)
+            .preferredColorScheme(.dark)
+        #else
         Group {
-            ConnectionsView(connectionData: connectionData, server: server)
-            ConnectionsView(connectionData: connectionData, server: server)
+            ConnectionsView(connectionData: connectionData)
+                .environmentObject(serverModel)
+                .environmentObject(connectionOrderModel)
+            ConnectionsView(connectionData: connectionData)
+                .environmentObject(serverModel)
+                .environmentObject(connectionOrderModel)
                 .previewInterfaceOrientation(.landscapeLeft)
                 .preferredColorScheme(.dark)
         }
+        #endif
     }
 }
 #endif

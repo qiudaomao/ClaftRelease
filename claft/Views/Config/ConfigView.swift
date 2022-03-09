@@ -14,6 +14,9 @@ struct ConfigView: View {
     @EnvironmentObject var serverModel:ServerModel
     @State private var cancelables = Set<AnyCancellable>()
     @State var configData: ConfigDataModel = ConfigDataModel()
+    @State var changeAllowLanCancellable: AnyCancellable? = nil
+    @State var changeModeCancellable: AnyCancellable? = nil
+    @State var changeLogLevelCancellable: AnyCancellable? = nil
 #if os(iOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 #endif
@@ -24,12 +27,59 @@ struct ConfigView: View {
         }
         if configModel.configData.allowLan != configData.allowLan {
             print("onChanged \(configData.initialized) allowLan \(configModel.configData.allowLan) => \(configData.allowLan)")
+            //patch allow lan
+            let data = AllowLanConfig(allowLan: configData.allowLan)
+            changeAllowLanCancellable = configModel.patchData(server: server, value: data)?.sink(receiveCompletion: { error in
+                print("error \(error)")
+                configModel.getDataFromServer(server)
+            }, receiveValue: { _ in
+            })
         }
         if configModel.configData.mode != configData.mode {
             print("onChanged \(configData.initialized) mode \(configModel.configData.mode) => \(configData.mode)")
+            /*
+            if let mode = config.mode {
+                if mode == "global" {
+                    configData.mode = 0
+                } else if mode == "rule" {
+                    configData.mode = 1
+                } else if mode == "script" {
+                    configData.mode = 2
+                } else if mode == "direct" {
+                    configData.mode = 3
+                }
+            }
+            if let logLevel = config.logLevel {
+                if logLevel == "info" {
+                    configData.logLevel = 0
+                } else if logLevel == "warning" {
+                    configData.logLevel = 1
+                } else if logLevel == "error" {
+                    configData.logLevel = 2
+                } else if logLevel == "debug" {
+                    configData.logLevel = 3
+                } else if logLevel == "silent" {
+                    configData.logLevel = 4
+                }
+            }
+             */
+            let strs = ["global", "rule", "script", "direct"]
+            let data = ModeConfig(mode: strs[configData.mode])
+            changeModeCancellable = configModel.patchData(server: server, value: data)?.sink(receiveCompletion: { error in
+                print("error \(error)")
+                configModel.getDataFromServer(server)
+            }, receiveValue: { _ in
+            })
         }
         if configModel.configData.logLevel != configData.logLevel {
             print("onChanged \(configData.initialized) logLevel \(configModel.configData.logLevel) => \(configData.logLevel)")
+            let strs = ["info", "warning", "error", "debug", "silent"]
+            let data = LogLevelConfig(logLevel: strs[configData.logLevel])
+            changeLogLevelCancellable = configModel.patchData(server: server, value: data)?.sink(receiveCompletion: { error in
+                print("error \(error)")
+                configModel.getDataFromServer(server)
+            }, receiveValue: { _ in
+            })
         }
         if configModel.configData.port != configData.port {
             print("onChanged \(configData.initialized) port \(configModel.configData.port) => \(configData.port)")
@@ -248,7 +298,7 @@ struct ConfigView: View {
 
 struct ConfigView_Previews: PreviewProvider {
     static var previews: some View {
-        let server = Server(id: 0, host: "127.0.0.1", port: "9090", secret: nil, https: false)
+        let server = Server(id: UUID(), host: "127.0.0.1", port: "9090", secret: nil, https: false)
         ConfigView(server: server, configModel: ConfigModel()).environmentObject(ServerModel())
     }
 }

@@ -70,6 +70,30 @@ struct NetworkSpeedDraw: View {
                     path.addLine(to: CGPoint(x: rect.width, y: rect.height/2))
                 }.stroke(Color.gray)
                 Path() { path in
+                    path.move(to: CGPoint(x: 0, y:rect.height*0/6+5))
+                    path.addLine(to: CGPoint(x: rect.width, y: rect.height*0/6+5))
+                }.stroke(Color.gray)
+                Path() { path in
+                    path.move(to: CGPoint(x: 0, y:rect.height*1/6+5))
+                    path.addLine(to: CGPoint(x: rect.width, y: rect.height*1/6+5))
+                }.stroke(Color.gray)
+                Path() { path in
+                    path.move(to: CGPoint(x: 0, y:rect.height*2/6+5))
+                    path.addLine(to: CGPoint(x: rect.width, y: rect.height*2/6+5))
+                }.stroke(Color.gray)
+                Path() { path in
+                    path.move(to: CGPoint(x: 0, y:rect.height*4/6-5))
+                    path.addLine(to: CGPoint(x: rect.width, y: rect.height*4/6-5))
+                }.stroke(Color.gray)
+                Path() { path in
+                    path.move(to: CGPoint(x: 0, y:rect.height*5/6-5))
+                    path.addLine(to: CGPoint(x: rect.width, y: rect.height*5/6-5))
+                }.stroke(Color.gray)
+                Path() { path in
+                    path.move(to: CGPoint(x: 0, y:rect.height*6/6-5))
+                    path.addLine(to: CGPoint(x: rect.width, y: rect.height*6/6-5))
+                }.stroke(Color.gray)
+                Path() { path in
                     let downs = trafficHistory.map() { $0.down }
                     let ups = trafficHistory.map() { $0.up }
                     guard let downMax = downs.max(), let upMax = ups.max() else {
@@ -86,11 +110,11 @@ struct NetworkSpeedDraw: View {
                         return y
                     }
                     for i in 0..<lines.count {
-                        let x = rect.width - CGFloat(i)/CGFloat(COUNT) * rect.width
+                        let x = rect.width - CGFloat(i)/CGFloat(COUNT-1) * rect.width
                         let y = lines[i]
                         path.addLine(to: CGPoint(x: x, y: y))
                     }
-                    let x = rect.width - CGFloat(lines.count-1)/CGFloat(COUNT) * rect.width
+                    let x = rect.width - CGFloat(lines.count-1)/CGFloat(COUNT-1) * rect.width
                     path.addLine(to: CGPoint(x: x, y:rect.height/2))
                 }.fill(Color.green)
                 Path() { path in
@@ -110,11 +134,11 @@ struct NetworkSpeedDraw: View {
                         return y
                     }
                     for i in 0..<lines.count {
-                        let x = rect.width - CGFloat(i)/CGFloat(COUNT) * rect.width
+                        let x = rect.width - CGFloat(i)/CGFloat(COUNT-1) * rect.width
                         let y = lines[i]
                         path.addLine(to: CGPoint(x: x, y: y))
                     }
-                    let x = rect.width - CGFloat(lines.count-1)/CGFloat(COUNT) * rect.width
+                    let x = rect.width - CGFloat(lines.count-1)/CGFloat(COUNT-1) * rect.width
                     path.addLine(to: CGPoint(x: x, y:rect.height/2))
                 }.fill(Color.blue)
             }

@@ -22,13 +22,58 @@ enum WebSocketType {
     case ping
 }
 
-struct Server {
-    var id: Int = 0
+struct Server: Codable {
+    var id: UUID = UUID()
     var host:String = ""
     var port:String = ""
     var secret:String? = nil
     var https:Bool = false
     var websockets:WebSockets? = nil
+
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case host = "host"
+        case port = "port"
+        case secret = "secret"
+        case https = "https"
+        case websockets = "websockets"
+    }
+    
+    init() {}
+    init(id: UUID, host: String, port: String, secret: String? = nil, https: Bool = false) {
+        self.id = id
+        self.host = host
+        self.port = port
+        self.secret = secret
+        self.https = https
+    }
+//        let server = Server(id: 0, host: "127.0.0.1", port: "9090", secret: nil, https: false)
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let idstr = try container.decodeIfPresent(String.self, forKey: .id)
+        if let idstr = idstr, let id = UUID(uuidString: idstr) {
+            self.id = id
+        } else {
+            id = UUID()
+        }
+        host = try container.decodeIfPresent(String.self, forKey: .host) ?? ""
+        port = try container.decodeIfPresent(String.self, forKey: .port) ?? ""
+        secret = try container.decodeIfPresent(String.self, forKey: .secret)
+        https = try container.decodeIfPresent(Bool.self, forKey: .https) ?? false
+        websockets = nil
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(host, forKey: .host)
+        try container.encode(port, forKey: .port)
+        if let secret = secret {
+            try container.encode(secret, forKey: .secret)
+        }
+        try container.encode(https, forKey: .https)
+    }
 }
 
 class WebSockets: NSObject {
@@ -71,6 +116,7 @@ class WebSockets: NSObject {
             self.pingWebSocket.connect()
         }
     }
+    
     func disconnect(_ type:SocketType) {
         switch type {
         case .traffic:
@@ -95,6 +141,9 @@ class ServerModel: ObservableObject {
     private var cancelables:Set<AnyCancellable> = Set<AnyCancellable>()
 
     public func connectServer(_ idx:Int) {
+        if servers[idx].websockets == nil {
+            servers[idx].websockets = WebSockets(servers[idx])
+        }
         servers[idx].websockets?.connect(.traffic)
 //        servers[idx].websockets?.connect(.ping)
     }
@@ -109,33 +158,50 @@ class ServerModel: ObservableObject {
     }
     
     public func loadServers() {
-        /*
         let userDefault = UserDefaults.standard
-        guard let servers = userDefault.object(forKey: "servers") as? [Server] else {
+        guard let serverstr = userDefault.object(forKey: "servers") as? String else {
             return
         }
+        guard let serverdata = serverstr.data(using: .utf8) else {
+            return
+        }
+        var servers:[Server]? = nil
+        do {
+            servers = try JSONDecoder().decode([Server].self, from: serverdata)
+        } catch {
+            print("error \(error)")
+        }
+        guard let servers = servers else {
+            return
+        }
+
         self.servers = servers
-         */
+        /*
         self.servers = [
             Server(id: 0, host: "192.168.23.1", port: "9191", secret: "061x09bg33"),
             Server(id: 1, host: "127.0.0.1", port: "9090", https: false),
             Server(id: 2, host: "192.168.111.2", port: "9191", secret: "061x09bg33"),
             Server(id: 3, host: "serverD", port: "9092", secret: "def", https: true)
         ]
-        for i in 0..<servers.count {
-            servers[i].websockets = WebSockets(servers[i])
+         */
+        for i in 0..<self.servers.count {
+            self.servers[i].websockets = WebSockets(servers[i])
             connectServer(i)
         }
-        if servers.count > 1 {
-            connectServer(0)
-            connectServer(1)
-            connectServer(2)
-        }
-        let userDefault = UserDefaults.standard
+//        if servers.count > 1 {
+//            connectServer(0)
+//            connectServer(1)
+//            connectServer(2)
+//        }
+//        let userDefault = UserDefaults.standard
         if let idx = userDefault.object(forKey: "currentServerIndex") as? Int {
             if servers.count > idx {
                 self.currentServerIndex = idx
+                return
             }
+        }
+        if servers.count > 0 {
+            self.currentServerIndex = 0
         }
     }
     
@@ -147,7 +213,17 @@ class ServerModel: ObservableObject {
     
     public func saveServers() {
         let userDefault = UserDefaults.standard
-        userDefault.set(servers, forKey: "servers")
+        let encoder = JSONEncoder()
+        do {
+            let data = try encoder.encode(servers)
+            guard let str = String(data: data, encoding: .utf8) else {
+                return
+            }
+            print("str \(str)")
+            userDefault.set(str, forKey: "servers")
+        } catch {
+            print("error \(error)")
+        }
     }
     
     public func changeProxy(_ selector:String, _ target:String) -> Future<String?, Error>? {

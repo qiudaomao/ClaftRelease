@@ -156,11 +156,7 @@ struct ServerCard: View {
                 if selected {
                     Image(systemName: "checkmark")
                         .font(Font.system(size: 8 * scale))
-#if os(tvOS)
-    .position(x: 290, y: 8 * scale)
-#else
-    .position(x: 110 * scale, y: 8 * scale)
-#endif
+                        .position(x: 111, y: 50)
                         .foregroundColor(.blue)
                 }
                 #elseif os(tvOS)
@@ -203,24 +199,24 @@ struct ServerCard_Previews: PreviewProvider {
     static var previews: some View {
         #if os(tvOS)
         Group {
-            ServerCard(server: Server(id: 0, host: "192.168.23.1", port: "9090"), trafficData: TrafficData(up: 2314, down: 71645, connectionStatus: .none), selected: false)
+            ServerCard(server: Server(id: UUID(), host: "192.168.23.1", port: "9090"), trafficData: TrafficData(up: 2314, down: 71645, connectionStatus: .none), selected: false)
                 .previewLayout(.fixed(width: 300, height: 120))
-            ServerCard(server: Server(id: 0, host: "127.0.0.1", port: "9090", secret: "abc"), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .connecting), selected: true)
+            ServerCard(server: Server(id: UUID(), host: "127.0.0.1", port: "9090", secret: "abc"), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .connecting), selected: true)
                 .previewLayout(.fixed(width: 300, height: 120))
-            ServerCard(server: Server(id: 0, host: "127.0.0.1", port: "9090", https: true), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .connected), selected: false)
+            ServerCard(server: Server(id: UUID(), host: "127.0.0.1", port: "9090", https: true), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .connected), selected: false)
                 .previewLayout(.fixed(width: 300, height: 120))
-            ServerCard(server: Server(id: 0, host: "127.0.0.1", port: "9090", secret: "abc", https: true), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .failed), selected: true)
+            ServerCard(server: Server(id: UUID(), host: "127.0.0.1", port: "9090", secret: "abc", https: true), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .failed), selected: true)
                 .previewLayout(.fixed(width: 300, height: 120))
         }
         #else
         Group {
-            ServerCard(server: Server(id: 0, host: "127.0.0.1", port: "9090"), trafficData: TrafficData(up: 2314, down: 71645, connectionStatus: .none), selected: false)
+            ServerCard(server: Server(id: UUID(), host: "127.0.0.1", port: "9090"), trafficData: TrafficData(up: 2314, down: 71645, connectionStatus: .none), selected: false)
                 .previewLayout(.fixed(width: 140, height: 80))
-            ServerCard(server: Server(id: 0, host: "127.0.0.1", port: "9090", secret: "abc"), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .connecting), selected: true)
+            ServerCard(server: Server(id: UUID(), host: "127.0.0.1", port: "9090", secret: "abc"), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .connecting), selected: true)
                 .previewLayout(.fixed(width: 140, height: 80))
-            ServerCard(server: Server(id: 0, host: "127.0.0.1", port: "9090", https: true), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .connected), selected: false)
+            ServerCard(server: Server(id: UUID(), host: "127.0.0.1", port: "9090", https: true), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .connected), selected: false)
                 .previewLayout(.fixed(width: 140, height: 80))
-            ServerCard(server: Server(id: 0, host: "127.0.0.1", port: "9090", secret: "abc", https: true), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .failed), selected: true)
+            ServerCard(server: Server(id: UUID(), host: "127.0.0.1", port: "9090", secret: "abc", https: true), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .failed), selected: true)
                 .previewLayout(.fixed(width: 140, height: 80))
         }
         #endif

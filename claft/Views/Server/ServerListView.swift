@@ -76,10 +76,10 @@ struct ServerListView_Previews: PreviewProvider {
     static var previews: some View {
         let serverModel = ServerModel()
         serverModel.servers = [
-            Server(id: 0, host: "192.168.23.1", port: "9191", secret: "061x09bg33"),
-            Server(id: 1, host: "127.0.0.1", port: "9090", https: true),
-            Server(id: 2, host: "serverC", port: "9091", secret: "abc"),
-            Server(id: 3, host: "serverD", port: "9092", secret: "def", https: true)
+            Server(id: UUID(), host: "192.168.23.1", port: "9191", secret: "061x09bg33"),
+            Server(id: UUID(), host: "127.0.0.1", port: "9090", https: true),
+            Server(id: UUID(), host: "serverC", port: "9091", secret: "abc"),
+            Server(id: UUID(), host: "serverD", port: "9092", secret: "def", https: true)
         ]
         return ServerListView().environmentObject(serverModel)
     }

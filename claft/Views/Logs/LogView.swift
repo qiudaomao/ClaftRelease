@@ -89,10 +89,10 @@ struct LogView: View {
 
 struct LogView_Previews: PreviewProvider {
     static var previews: some View {
-        let server = Server(id: 0, host: "127.0.0.1", port: "9090", secret: nil, https: false)
+        let server = Server(id: UUID(), host: "127.0.0.1", port: "9090", secret: nil, https: false)
         Group {
-            ConnectionsView(server: server)
-            ConnectionsView(server: server)
+            LogView(server: server)
+            LogView(server: server)
                 .previewInterfaceOrientation(.landscapeLeft)
                 .preferredColorScheme(.dark)
         }

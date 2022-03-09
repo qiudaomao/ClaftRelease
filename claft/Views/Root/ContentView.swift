@@ -24,8 +24,11 @@ struct ContentView: View {
     @State private var selection: Int? = -1
     #else
     @State private var selection: Int? = 0
+    @State private var cancellables:Set<AnyCancellable> = Set<AnyCancellable>()
+    @State var firstChange: Bool = true
     #endif
     @EnvironmentObject var serverModel:ServerModel
+    @EnvironmentObject var connectionOrderModel: ConnectionOrderModel
     var menus:[MenuItem] = [
         MenuItem(title: "OverView", image: "tablecells.fill"),
         MenuItem(title: "Proxies",  image: "network"),
@@ -45,54 +48,44 @@ struct ContentView: View {
                 if serverModel.servers.count > 0 {
                     List {
                         NavigationLink(destination: OverView(), tag: 0, selection: $selection) {
-//                            Image(systemName: menus[0].image)
-//                                .foregroundColor(self.selection == 0 ? .white : .blue)
-//                            Text(menus[0].title)
-//                                .padding()
                             Label(menus[0].title, systemImage: menus[0].image)
                                 .padding()
                         }
                         NavigationLink(destination: ProxiesView(), tag: 1, selection: $selection) {
-//                            Image(systemName: menus[1].image)
-//                                .foregroundColor(self.selection == 1 ? .white : .blue)
-//                            Text(menus[1].title)
-//                                .padding()
                             Label(menus[1].title, systemImage: menus[1].image)
                                 .padding()
                         }
                         NavigationLink(destination: RuleView(), tag: 2, selection: $selection) {
-//                            Image(systemName: menus[2].image)
-//                                .foregroundColor(self.selection == 2 ? .white : .blue)
-//                            Text(menus[2].title)
-//                                .padding()
                             Label(menus[2].title, systemImage: menus[2].image)
                                 .padding()
                         }
-                        NavigationLink(destination: ConnectionsView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 3, selection: $selection) {
-//                            Image(systemName: menus[3].image)
-//                                .foregroundColor(self.selection == 3 ? .white : .blue)
-//                            Text(menus[3].title)
-//                                .padding()
+                        #if os(macOS)
+                        NavigationLink(destination: ConnectionsView(), tag: 3, selection: $selection) {
                             Label(menus[3].title, systemImage: menus[3].image)
                                 .padding()
                         }
+                        #else
+                        NavigationLink(destination: ConnectionsView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 3, selection: $selection) {
+                            Label(menus[3].title, systemImage: menus[3].image)
+                                .padding()
+                        }
+                        #endif
                         NavigationLink(destination: ConfigView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 4, selection: $selection) {
-//                            Image(systemName: menus[4].image)
-//                                .foregroundColor(self.selection == 4 ? .white : .blue)
-//                            Text(menus[4].title)
-//                                .padding()
                             Label(menus[4].title, systemImage: menus[4].image)
                                 .padding()
                         }
                         NavigationLink(destination: LogView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 5, selection: $selection) {
-//                            Image(systemName: menus[5].image)
-//                                .foregroundColor(self.selection == 5 ? .white : .blue)
-//                            Text(menus[5].title)
-//                                .padding()
                             Label(menus[5].title, systemImage: menus[5].image)
                                 .padding()
                         }
                     }
+                } else {
+                    Button {
+                        showSheet.toggle()
+                    } label: {
+                        Label("Server", systemImage: "plus.circle")
+                    }
+
                 }
             }
             .navigationTitle("Claft")
@@ -113,14 +106,43 @@ struct ContentView: View {
         }
 #if os(macOS)
         .toolbar {
-//            ServerListView().environmentObject(serverModel)
+            if self.selection == 3 {
+                ZStack {
+                        TextField("Search", text: $connectionOrderModel.searchKeyword)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .padding(7)
+                            .padding(.horizontal, 25)
+                            .background(Color("textFieldBackground"))
+                            .frame(width: 120, height: 28)
+                            .cornerRadius(8)
+                            .padding(.horizontal, 10)
+                            .overlay(
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 16)
+                        Spacer()
+                    })
+                }
+                Picker(selection: $connectionOrderModel.orderMode, label: Text("Sort By")) {
+                    Text("Default").tag(ConnectionOrder.none)
+                    Text("Time").tag(ConnectionOrder.time)
+                    Text("Download Size").tag(ConnectionOrder.downloadSize)
+                    Text("Upload Size").tag(ConnectionOrder.uploadSize)
+                }
+                Button(action: {
+                    connectionOrderModel.pause.toggle()
+                }) {
+                    Image(systemName: connectionOrderModel.pause ? "play.fill" : "pause.fill")
+                }
+            }
             Button(action: {
                 showSheet.toggle()
             }) {
                 Label("ManageServers", systemImage: "slider.horizontal.3")
             }.sheet(isPresented: $showSheet) {
-                ManageServerPanel(servers: $serverModel.servers)
-                    .frame(width: 600, height: 360)
+                ManageServerPanel()
+                    .frame(width: 480, height: 360)
             }
         }
 #endif
@@ -139,10 +161,10 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let serverModel = ServerModel()
         serverModel.servers = [
-            Server(id: 0, host: "192.168.23.1", port: "9191", secret: "061x09bg33"),
-            Server(id: 1, host: "127.0.0.1", port: "9090", https: true),
-            Server(id: 2, host: "serverC", port: "9091", secret: "abc"),
-            Server(id: 3, host: "serverD", port: "9092", secret: "def", https: true)
+            Server(id: UUID(), host: "192.168.23.1", port: "9191", secret: "061x09bg33"),
+            Server(id: UUID(), host: "127.0.0.1", port: "9090", https: true),
+            Server(id: UUID(), host: "serverC", port: "9091", secret: "abc"),
+            Server(id: UUID(), host: "serverD", port: "9092", secret: "def", https: true)
         ]
         return Group {
             ContentView().environmentObject(serverModel)
