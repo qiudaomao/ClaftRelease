@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProxyCardView: View {
-    var proxy:ProxyItemData = ProxyItemData()
+    @Binding var proxy:ProxyItemData// = ProxyItemData()
     var selected:Bool = false
     @State var rect:CGRect = .zero
 
@@ -97,18 +97,18 @@ struct ProxyCardView: View {
 
 struct ProxyCardView_Previews: PreviewProvider {
     static var previews: some View {
-        var proxy = ProxyItemData()
+        @State var proxy = ProxyItemData()
         proxy.name = "节点选择"
         proxy.type = "ShadowSocks"
         proxy.history = [ProxyHistoryData(time: "123", delay: 1024)]
         return Group {
-            ProxyCardView(proxy: proxy)
+            ProxyCardView(proxy: $proxy)
             #if os(tvOS)
                 .previewLayout(.fixed(width: 320, height: 80))
             #else
                 .previewLayout(.fixed(width: 140, height: 40))
             #endif
-            ProxyCardView(proxy: proxy)
+            ProxyCardView(proxy: $proxy)
                 .preferredColorScheme(.dark)
             #if os(tvOS)
                 .previewLayout(.fixed(width: 320, height: 80))

@@ -30,12 +30,18 @@ struct ContentView: View {
     @EnvironmentObject var serverModel:ServerModel
     @EnvironmentObject var connectionOrderModel: ConnectionOrderModel
     var menus:[MenuItem] = [
-        MenuItem(title: "OverView", image: "tablecells.fill"),
-        MenuItem(title: "Proxies",  image: "network"),
-        MenuItem(title: "Rules",    image: "list.bullet"),
-        MenuItem(title: "Connections",    image: "point.3.filled.connected.trianglepath.dotted"),
-        MenuItem(title: "Config",   image: "gearshape"),
-        MenuItem(title: "Logs",     image: "terminal"),
+        MenuItem(title: "OverView".localized,
+                 image: "tablecells.fill"),
+        MenuItem(title: "Proxies".localized,
+                 image: "network"),
+        MenuItem(title: "Rules".localized,
+                 image: "list.bullet"),
+        MenuItem(title: "Connections".localized,
+                 image: "point.3.filled.connected.trianglepath.dotted"),
+        MenuItem(title: "Config".localized,
+                 image: "gearshape"),
+        MenuItem(title: "Logs".localized,
+                 image: "terminal"),
     ]
     var body: some View {
         NavigationView {
@@ -106,7 +112,25 @@ struct ContentView: View {
         }
 #if os(macOS)
         .toolbar {
-            if self.selection == 3 {
+            if self.selection == 2 || self.selection == 5 {
+                ZStack {
+                        TextField("Search", text: $connectionOrderModel.searchKeyword)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .padding(7)
+                            .padding(.horizontal, 25)
+                            .background(Color("textFieldBackground"))
+                            .frame(width: 120, height: 28)
+                            .cornerRadius(8)
+                            .padding(.horizontal, 10)
+                            .overlay(
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 16)
+                        Spacer()
+                    })
+                }
+            } else if self.selection == 3 {
                 ZStack {
                         TextField("Search", text: $connectionOrderModel.searchKeyword)
                             .textFieldStyle(PlainTextFieldStyle())

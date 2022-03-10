@@ -35,6 +35,19 @@ struct ConnectionMetaData: Hashable, Codable {
     var destinationPort: String = ""
     var host: String = ""
     var dnsMode: String = ""
+    
+    init() {}
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        network = try container.decodeIfPresent(String.self, forKey: .network) ?? ""
+        type = try container.decodeIfPresent(String.self, forKey: .type) ?? ""
+        sourceIP = try container.decodeIfPresent(String.self, forKey: .sourceIP) ?? ""
+        destinationIP = try container.decodeIfPresent(String.self, forKey: .destinationIP) ?? ""
+        sourcePort = try container.decodeIfPresent(String.self, forKey: .sourcePort) ?? ""
+        destinationPort = try container.decodeIfPresent(String.self, forKey: .destinationPort) ?? ""
+        host = try container.decodeIfPresent(String.self, forKey: .host) ?? ""
+        dnsMode = try container.decodeIfPresent(String.self, forKey: .dnsMode) ?? ""
+    }
 }
 
 struct ConnectionItem: Hashable, Codable {

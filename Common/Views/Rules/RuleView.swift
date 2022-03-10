@@ -17,13 +17,22 @@ struct RuleView: View {
 #if os(iOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 #endif
+    @EnvironmentObject var connectionOrderModel:ConnectionOrderModel
+    @State var keyword: String = ""
+    @State var keywordCancellable: AnyCancellable? = nil
+    
     var body: some View {
         VStack {
             ScrollView {
                 LazyVStack {
                     ServerListView()
                     if rect.size.width > 40 {
-                        ForEach(rules, id:\.uuid) { rule in
+                        ForEach(rules.filter({ rule in
+                            if keyword.lengthOfBytes(using: .utf8) == 0 {
+                                return true
+                            }
+                            return rule.payload.lowercased().contains(keyword.lowercased())
+                        }), id:\.uuid) { rule in
                             RuleCardView(rule: rule)
                                 .frame(width: (rect.size.width > 960) ? 960 - 40 : rect.size.width - 40, height: 40)
                                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 4, trailing: 0))
@@ -45,6 +54,15 @@ struct RuleView: View {
                 self.rules = []
                 ruleModel.loadRule(server)
             }.store(in: &cancelables)
+            keywordCancellable = self.connectionOrderModel.$searchKeyword
+                .debounce(for: 0.5, scheduler: RunLoop.main)
+                .removeDuplicates()
+                .sink(receiveValue: { keyword in
+                    print("keyword change to '\(keyword)'")
+                    withAnimation {
+                        self.keyword = keyword
+                    }
+                })
         }
         .navigationTitle("Rules")
         .overlay(Color.clear.modifier(GeometryGetterMod(rect: $rect)))

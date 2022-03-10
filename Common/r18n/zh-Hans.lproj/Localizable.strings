@@ -1,0 +1,44 @@
+/* 
+  Localizable.strings
+  claft
+
+  Created by zfu on 2022/3/10.
+  
+*/
+"OverView" = "概览";
+"Proxies" = "代理";
+"Rules" = "规则";
+"Connections" = "连接";
+"Config" = "配置";
+"Logs" = "日志";
+"Servers" = "服务器";
+"Search" = "搜索";
+"Default" = "默认";
+"Time" = "时间";
+"Download Size" = "下行数据";
+"Upload Size" = "上行数据";
+"Host" = "主机";
+"Port" = "端口";
+"Secret" = "密钥";
+"https" = "https";
+"Allow LAN" = "允许局域网连接";
+"Mode" = "代理模式";
+"Log Level" = "日志等级";
+"Web Port" = "Web 端口";
+"HTTP Port" = "HTTP 端口";
+"Socks Port" = "Socks 端口";
+"Mixed Port" = "混合端口";
+"Redir Port" = "重定向端口";
+"TProxy Port" = "TProxy 端口";
+"Test URL" = "测速链接";
+"Global" = "全局";
+"Rule" = "规则";
+"Script" = "脚本";
+"Direct" = "直连";
+"info" = "信息";
+"warning" = "警告";
+"error" = "错误";
+"debug" = "调试";
+"silent" = "静默";
+"Domain or IP" = "域名或IP";
+"Optional" = "可选";

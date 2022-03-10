@@ -167,7 +167,7 @@ struct ConfigView: View {
                                 Spacer()
                                 Text("\(configData.port)")
                                     .foregroundColor(.secondary)
-                                    .frame(width: 120)
+//                                    .frame(width: 120)
                                     .multilineTextAlignment(.trailing)
                                     .onChange(of: configData.port) { _ in
                                         self.onChanged()
@@ -183,7 +183,7 @@ struct ConfigView: View {
                                 Text("HTTP Port")
                                 Spacer()
                                 Text("\(configData.httpPort)")
-                                    .frame(width: 120)
+//                                    .frame(width: 120)
                                     .multilineTextAlignment(.trailing)
                                     .foregroundColor(.secondary)
                                     .onChange(of: configData.httpPort) { _ in
@@ -200,7 +200,7 @@ struct ConfigView: View {
                                 Text("Socks Port")
                                 Spacer()
                                 Text("\(configData.socksPort)")
-                                    .frame(width: 120)
+//                                    .frame(width: 120)
                                     .foregroundColor(.secondary)
                                     .multilineTextAlignment(.trailing)
                                     .onChange(of: configData.socksPort) { _ in
@@ -217,7 +217,7 @@ struct ConfigView: View {
                                 Text("Mixed Port")
                                 Spacer()
                                 Text("\(configData.mixedPort)")
-                                    .frame(width: 120)
+//                                    .frame(width: 120)
                                     .foregroundColor(.secondary)
                                     .multilineTextAlignment(.trailing)
                                     .onChange(of: configData.mixedPort) { _ in
@@ -234,7 +234,7 @@ struct ConfigView: View {
                                 Text("Redir Port")
                                 Spacer()
                                 Text("\(configData.redirPort)")
-                                    .frame(width: 120)
+//                                    .frame(width: 120)
                                     .foregroundColor(.secondary)
                                     .multilineTextAlignment(.trailing)
                                     .onChange(of: configData.redirPort) { _ in
@@ -251,7 +251,7 @@ struct ConfigView: View {
                                 Text("TProxy Port")
                                 Spacer()
                                 Text("\(configData.tproxyPort)")
-                                    .frame(width: 120)
+//                                    .frame(width: 120)
                                     .foregroundColor(.secondary)
                                     .multilineTextAlignment(.trailing)
                                     .onChange(of: configData.tproxyPort) { _ in
@@ -277,6 +277,7 @@ struct ConfigView: View {
                         }.padding([.top], 5)
                     }
                 }
+                .frame(maxWidth: 480)
                 .padding()
             }
         }

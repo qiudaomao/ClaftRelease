@@ -100,9 +100,9 @@ struct CreateServer: View {
 #else
 struct CreateServer: View {
     var entries:[Entry] = [
-        Entry(title: "Host", image: "network", placeHolder: "Domain or IP"),
-        Entry(title: "Port", image: "bolt.horizontal.circle", placeHolder: "9090"),
-        Entry(title: "Secret", image: "lock.fill", placeHolder: "Optional", isSecret: true),
+        Entry(title: "Host".localized, image: "network", placeHolder: "Domain or IP".localized),
+        Entry(title: "Port".localized, image: "bolt.horizontal.circle", placeHolder: "9090"),
+        Entry(title: "Secret".localized, image: "lock.fill", placeHolder: "Optional".localized, isSecret: true),
     ]
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var serverModel:ServerModel

@@ -75,7 +75,7 @@ struct ConfigDataModel {
     var redirPort: String = ""
     var socksPort: String = ""
     var tproxyPort: String = ""
-    var testURL: String = ""
+    var testURL: String = "http://www.gstatic.com/generate_204"
     var initialized: Bool = false
 }
 

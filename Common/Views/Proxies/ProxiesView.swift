@@ -13,6 +13,12 @@ enum ProxiesFocusable: Hashable {
     case item(section: Int, proxy: String)
 }
 
+struct RenderData {
+    var name: String = ""
+    var now: String = ""
+    var items: [ProxyItemData] = []
+}
+
 struct ProxiesView: View {
     @EnvironmentObject var serverModel:ServerModel
 #if os(iOS)
@@ -23,6 +29,7 @@ struct ProxiesView: View {
     @State var proxiesData:ProxiesData = ProxiesData()
     @State var cancellables: Set<AnyCancellable> = Set<AnyCancellable>()
     @State var changeProxyCancellable:AnyCancellable? = nil
+    @State var renderDatas:[RenderData] = []
     #if os(tvOS)
     @FocusState var focused: ProxiesFocusable?
     #endif
@@ -31,8 +38,8 @@ struct ProxiesView: View {
             ScrollView {
                 ServerListView()
                 LazyVStack(alignment: .leading) {
-                    ForEach(0..<proxiesData.proxies.orderedSelections.count, id:\.self) { idx in
-                        let item = proxiesData.proxies.orderedSelections[idx]
+                    ForEach(0..<renderDatas.count, id:\.self) { idx in
+                        let item = renderDatas[idx]
 //                    ForEach(proxiesData.proxies.orderedSelections, id: \.uuid) { item in
                         #if os(tvOS)
 //                        Text("\(item.name)")
@@ -70,11 +77,11 @@ struct ProxiesView: View {
                             #endif
                             ScrollView {
                                 LazyVGrid(columns: columns, spacing: 4) {
-                                    ForEach(item.all, id: \.self) { proxy in
-                                        ProxyCardView(proxy: proxiesData.proxies.datas[proxy]!, selected: item.now == proxy)
+                                    ForEach($renderDatas[idx].items, id: \.uuid) { $proxy in
+                                        ProxyCardView(proxy: $proxy, selected: item.now == proxy.name)
                                             .gesture(TapGesture().onEnded({ _ in
                                                 print("change \(item.name) => \(proxy)")
-                                                changeProxyCancellable = serverModel.changeProxy(item.name, proxy)?.sink(receiveCompletion: { error in
+                                                changeProxyCancellable = serverModel.changeProxy(item.name, proxy.name)?.sink(receiveCompletion: { error in
                                                     print("complete \(error)")
                                                     let server = serverModel.servers[serverModel.currentServerIndex]
                                                     proxyModel.proxiesData = ProxiesData()
@@ -107,6 +114,15 @@ struct ProxiesView: View {
                                     .onTapGesture {
                                         //check network delays
                                         print("check network delays")
+                                        let server = serverModel.servers[serverModel.currentServerIndex]
+                                        let proxies = item.items.filter({ item in
+                                            return item.type != "Selector" && item.type != "URLTest"
+                                        }).map { item in
+                                            item.name
+                                        }
+                                        if proxies.count > 0 {
+                                            proxyModel.updateDelay(server, proxies: proxies)
+                                        }
                                     }
                             }
 //                            .padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
@@ -129,6 +145,15 @@ struct ProxiesView: View {
                     }
                 }
                 proxiesData = data
+                renderDatas = data.proxies.orderedSelections.map({ item in
+                    var renderItem = RenderData()
+                    renderItem.name = item.name
+                    renderItem.now = item.now
+                    renderItem.items = item.all.map({ name in
+                        return data.proxies.datas[name]!
+                    })
+                    return renderItem
+                })
                 #if os(tvOS)
                 if proxiesData.proxies.orderedSelections.count > 0 {
                     if let proxy = proxiesData.proxies.orderedSelections.first {

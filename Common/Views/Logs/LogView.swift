@@ -24,6 +24,9 @@ struct LogView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     #endif
     @EnvironmentObject var serverModel:ServerModel
+    @EnvironmentObject var connectionOrderModel:ConnectionOrderModel
+    @State var keyword: String = ""
+    @State var keywordCancellable: AnyCancellable? = nil
     
     var server:Server
     var body: some View {
@@ -32,7 +35,12 @@ struct LogView: View {
                 LazyVStack {
                     ServerListView()
                     if (rect.size.width > 40) {
-                        ForEach(logs.reversed(), id: \.uuid) { logItem in
+                        ForEach(logs.reversed().filter({ log in
+                            if keyword.lengthOfBytes(using: .utf8) == 0 {
+                                return true
+                            }
+                            return "\(log.type)\(log.payload)".lowercased().contains(keyword.lowercased())
+                        }), id: \.uuid) { logItem in
                             HStack {
                                 Text("\(logItem.type)")
                                     .frame(width: 25)
@@ -78,6 +86,15 @@ struct LogView: View {
                 }).store(in: &cancellable)
                 currentServerIdx = idx
             }).store(in: &cancellable)
+            keywordCancellable = self.connectionOrderModel.$searchKeyword
+                .debounce(for: 0.5, scheduler: RunLoop.main)
+                .removeDuplicates()
+                .sink(receiveValue: { keyword in
+                    print("keyword change to '\(keyword)'")
+                    withAnimation {
+                        self.keyword = keyword
+                    }
+                })
         }
         .onDisappear {
             if currentServerIdx > 0 {

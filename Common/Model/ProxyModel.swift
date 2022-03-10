@@ -95,6 +95,10 @@ struct ProxiesData: Codable {
     var proxies:ProxyData = ProxyData(items: [])
 }
 
+struct DelayData: Codable {
+    var delay: Int = 0
+}
+
 class ProxyModel: ObservableObject {
     @Published var proxiesData:ProxiesData = {
         var data:ProxiesData? = nil
@@ -126,6 +130,63 @@ class ProxyModel: ObservableObject {
                 self?.proxiesData = data
             }
             .store(in: &cancellables)
+    }
+    
+    public func updateDelay(_ server:Server, proxies:[String]) {
+        for proxy in proxies {
+            guard let encodedName = proxy.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+                continue
+            }
+            let checkURL = "http://www.gstatic.com/generate_204"
+            let url = "\(server.https ? "https":"http")://\(server.host):\(server.port)/proxies/\(encodedName)/delay?timeout=5000&url=\(checkURL)"
+            var headers:[String:String] = [:]
+            if let secret = server.secret {
+                headers["Authorization"] = "Bearer \(secret)"
+            }
+            let items = self.proxiesData.proxies.items
+            for idx in 0..<items.count {
+                if items[idx].name == proxy {
+                    print("latest clear \(proxy)")
+                    self.proxiesData.proxies.items[idx].history = []
+                }
+            }
+            for idx in 0..<self.proxiesData.proxies.orderedSelections.count {
+                if self.proxiesData.proxies.orderedSelections[idx].name == proxy {
+                    print("latest clear \(proxy)")
+                    self.proxiesData.proxies.orderedSelections[idx].history = []
+                }
+            }
+            self.proxiesData.proxies.datas[proxy]?.history = []
+            NetworkManager.shared.getData(url: url, type: DelayData.self, headers: headers)
+                .sink { completion in
+                    switch completion {
+                    case .failure(let err):
+                        print("error fetch from \(url) : \(err.localizedDescription)")
+                    case .finished:
+                        print("network fetch from \(url) finished")
+                    }
+                }
+                receiveValue: { [weak self] data in
+                    self?.proxiesData.proxies.datas[proxy]?.history = [ProxyHistoryData(time: "", delay: data.delay)]
+                    if let items = self?.proxiesData.proxies.items {
+                        for idx in 0..<items.count {
+                            if items[idx].name == proxy {
+                                print("latest \(proxy) -> \(data.delay)")
+                                self?.proxiesData.proxies.items[idx].history = [ProxyHistoryData(time: "", delay: data.delay)]
+                            }
+                        }
+                    }
+                    if let items = self?.proxiesData.proxies.orderedSelections {
+                        for idx in 0..<items.count {
+                            if items[idx].name == proxy {
+                                print("latest \(proxy) -> \(data.delay)")
+                                self?.proxiesData.proxies.orderedSelections[idx].history = [ProxyHistoryData(time: "", delay: data.delay)]
+                            }
+                        }
+                    }
+                }
+                .store(in: &cancellables)
+        }
     }
 }
 

@@ -1,0 +1,44 @@
+/* 
+  Localizable.strings
+  claft
+
+  Created by zfu on 2022/3/10.
+  
+*/
+"OverView" = "OverView";
+"Proxies" = "Proxies";
+"Rules" = "Rules";
+"Connections" = "Connections";
+"Config" = "Config";
+"Logs" = "Logs";
+"Servers" = "Servers";
+"Search" = "Search";
+"Default" = "Default";
+"Time" = "Time";
+"Download Size" = "Download Size";
+"Upload Size" = "Upload Size";
+"Host" = "Host";
+"Port" = "Port";
+"Secret" = "Secret";
+"https" = "https";
+"Allow LAN" = "Allow LAN";
+"Mode" = "Mode";
+"Log Level" = "Log Level";
+"Web Port" = "Web Port";
+"HTTP Port" = "HTTP Port";
+"Socks Port" = "Socks Port";
+"Mixed Port" = "Mixed Port";
+"Redir Port" = "Redir Port";
+"TProxy Port" = "TProxy Port";
+"Test URL" = "Test URL";
+"Global" = "Global";
+"Rule" = "Rule";
+"Script" = "Script";
+"Direct" = "Direct";
+"info" = "info";
+"warning" = "warning";
+"error" = "error";
+"debug" = "debug";
+"silent" = "silent";
+"Domain or IP" = "Domain or IP";
+"Optional" = "Optional";

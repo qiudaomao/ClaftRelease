@@ -48,6 +48,12 @@
 		E958E3C227CC6792001197A9 /* SocketRocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; };
 		E958E3C327CC6792001197A9 /* SocketRocket.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E958E3C727CC6CE6001197A9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DCC2754C106008E20F0 /* ContentView.swift */; };
+		E959EA5227D9AA9B004EE5B0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E959EA5627D9AA9B004EE5B0 /* Localizable.strings */; };
+		E959EA5327D9AA9B004EE5B0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E959EA5627D9AA9B004EE5B0 /* Localizable.strings */; };
+		E959EA5427D9AA9B004EE5B0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E959EA5627D9AA9B004EE5B0 /* Localizable.strings */; };
+		E959EA5927D9AD36004EE5B0 /* String+localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = E959EA5827D9AD36004EE5B0 /* String+localized.swift */; };
+		E959EA5A27D9AD36004EE5B0 /* String+localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = E959EA5827D9AD36004EE5B0 /* String+localized.swift */; };
+		E959EA5B27D9AD36004EE5B0 /* String+localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = E959EA5827D9AD36004EE5B0 /* String+localized.swift */; };
 		E976207B27D4B11D005290B3 /* claftTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E976207A27D4B11D005290B3 /* claftTVApp.swift */; };
 		E976207F27D4B121005290B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E976207E27D4B121005290B3 /* Assets.xcassets */; };
 		E976208227D4B121005290B3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E976208127D4B121005290B3 /* Preview Assets.xcassets */; };
@@ -210,6 +216,9 @@
 		E958E39827CC66F2001197A9 /* ClaftMacUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClaftMacUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E958E39C27CC66F2001197A9 /* ClaftMacUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaftMacUITests.swift; sourceTree = "<group>"; };
 		E958E39E27CC66F2001197A9 /* ClaftMacUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaftMacUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E959EA5527D9AA9B004EE5B0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E959EA5727D9AAC2004EE5B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		E959EA5827D9AD36004EE5B0 /* String+localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+localized.swift"; sourceTree = "<group>"; };
 		E976207827D4B11D005290B3 /* Claft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Claft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E976207A27D4B11D005290B3 /* claftTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = claftTVApp.swift; sourceTree = "<group>"; };
 		E976207E27D4B121005290B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -374,6 +383,7 @@
 				E925832127588FC4002B0F49 /* NetWorkManager.swift */,
 				E9EA0FE62760E46E00F9AAB4 /* LocalFileReader.swift */,
 				E9E7D8BC27CA3DB800F3A1D2 /* WebSocket.swift */,
+				E959EA5827D9AD36004EE5B0 /* String+localized.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -429,6 +439,14 @@
 			path = ClaftMacUITests;
 			sourceTree = "<group>";
 		};
+		E959EA4D27D9AA74004EE5B0 /* r18n */ = {
+			isa = PBXGroup;
+			children = (
+				E959EA5627D9AA9B004EE5B0 /* Localizable.strings */,
+			);
+			path = r18n;
+			sourceTree = "<group>";
+		};
 		E976207927D4B11D005290B3 /* claftTV */ = {
 			isa = PBXGroup;
 			children = (
@@ -475,6 +493,7 @@
 		E9D0438527D8E1F6003DAF71 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				E959EA4D27D9AA74004EE5B0 /* r18n */,
 				E92583232758957D002B0F49 /* Views */,
 				E925832027588FB5002B0F49 /* Tools */,
 				E9C99BBC27588E3A009EF515 /* Model */,
@@ -732,6 +751,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = E9D75DBE2754C106008E20F0;
 			productRefGroup = E9D75DC82754C106008E20F0 /* Products */;
@@ -755,6 +775,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E958E3C127CC6760001197A9 /* connection.json in Resources */,
+				E959EA5327D9AA9B004EE5B0 /* Localizable.strings in Resources */,
 				E958E38827CC66F2001197A9 /* Preview Assets.xcassets in Resources */,
 				E958E38527CC66F2001197A9 /* Assets.xcassets in Resources */,
 				E958E3C027CC6760001197A9 /* proxies.json in Resources */,
@@ -781,6 +802,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E976208227D4B121005290B3 /* Preview Assets.xcassets in Resources */,
+				E959EA5427D9AA9B004EE5B0 /* Localizable.strings in Resources */,
 				E976207F27D4B121005290B3 /* Assets.xcassets in Resources */,
 				E97620A727D4B477005290B3 /* config.json in Resources */,
 				E97620A527D4B477005290B3 /* proxies.json in Resources */,
@@ -793,6 +815,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9D75DD22754C109008E20F0 /* Preview Assets.xcassets in Resources */,
+				E959EA5227D9AA9B004EE5B0 /* Localizable.strings in Resources */,
 				E958E37527CBB290001197A9 /* proxies.json in Resources */,
 				E9E7D8C127CA71A800F3A1D2 /* Assets.xcassets in Resources */,
 				E9EA0FE52760E0D800F9AAB4 /* config.json in Resources */,
@@ -843,6 +866,7 @@
 				E90276D227D33AA80010985B /* ProxyCardView.swift in Sources */,
 				E958E3B927CC6754001197A9 /* ConnectionOrderModel.swift in Sources */,
 				E958E3B327CC674C001197A9 /* BottomSheetView.swift in Sources */,
+				E959EA5A27D9AD36004EE5B0 /* String+localized.swift in Sources */,
 				E958E3C727CC6CE6001197A9 /* ContentView.swift in Sources */,
 				E958E3B027CC674C001197A9 /* CreateServer.swift in Sources */,
 				E958E3AE27CC674C001197A9 /* PlaceHoldView.swift in Sources */,
@@ -896,6 +920,7 @@
 				E97620A127D4B167005290B3 /* NetWorkManager.swift in Sources */,
 				E976209127D4B167005290B3 /* ProxyModel.swift in Sources */,
 				E976207B27D4B11D005290B3 /* claftTVApp.swift in Sources */,
+				E959EA5B27D9AD36004EE5B0 /* String+localized.swift in Sources */,
 				E976209727D4B167005290B3 /* RuleCardView.swift in Sources */,
 				E976208727D4B14E005290B3 /* ServerCard.swift in Sources */,
 				E976209927D4B167005290B3 /* WebSocketModel.swift in Sources */,
@@ -932,6 +957,7 @@
 				E90276D127D33AA80010985B /* ProxyCardView.swift in Sources */,
 				E9E7D8CB27CB36D800F3A1D2 /* ConnectionsView.swift in Sources */,
 				E958E37327CBA9C6001197A9 /* ConnectionOrderModel.swift in Sources */,
+				E959EA5927D9AD36004EE5B0 /* String+localized.swift in Sources */,
 				E9EA0FE72760E46E00F9AAB4 /* LocalFileReader.swift in Sources */,
 				E9D75DCB2754C106008E20F0 /* claftApp.swift in Sources */,
 				E9D75DF52754CE26008E20F0 /* ProxiesView.swift in Sources */,
@@ -983,6 +1009,18 @@
 			targetProxy = E9D75DE22754C109008E20F0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E959EA5627D9AA9B004EE5B0 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E959EA5527D9AA9B004EE5B0 /* en */,
+				E959EA5727D9AAC2004EE5B0 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E958E3A127CC66F2001197A9 /* Debug */ = {
@@ -1181,6 +1219,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -1242,6 +1281,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
