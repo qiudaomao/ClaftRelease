@@ -210,8 +210,7 @@
 		E958E39827CC66F2001197A9 /* ClaftMacUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClaftMacUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E958E39C27CC66F2001197A9 /* ClaftMacUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaftMacUITests.swift; sourceTree = "<group>"; };
 		E958E39E27CC66F2001197A9 /* ClaftMacUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaftMacUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		E958E3C527CC67E7001197A9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		E976207827D4B11D005290B3 /* claftTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = claftTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E976207827D4B11D005290B3 /* Claft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Claft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E976207A27D4B11D005290B3 /* claftTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = claftTVApp.swift; sourceTree = "<group>"; };
 		E976207E27D4B121005290B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E976208127D4B121005290B3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -223,7 +222,7 @@
 		E9D29F8027CE6118002E5088 /* RuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleView.swift; sourceTree = "<group>"; };
 		E9D29F8327CE6137002E5088 /* RuleCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleCardView.swift; sourceTree = "<group>"; };
 		E9D29F8627CE614D002E5088 /* RuleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleModel.swift; sourceTree = "<group>"; };
-		E9D75DC72754C106008E20F0 /* claft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = claft.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9D75DC72754C106008E20F0 /* Claft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Claft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9D75DCA2754C106008E20F0 /* claftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = claftApp.swift; sourceTree = "<group>"; };
 		E9D75DCC2754C106008E20F0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E9D75DD12754C109008E20F0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -398,7 +397,6 @@
 			isa = PBXGroup;
 			children = (
 				E958E38027CC66EF001197A9 /* ClaftMacApp.swift */,
-				E958E3C527CC67E7001197A9 /* ContentView.swift */,
 				E958E38427CC66F2001197A9 /* Assets.xcassets */,
 				E958E38927CC66F2001197A9 /* ClaftMac.entitlements */,
 				E958E38627CC66F2001197A9 /* Preview Content */,
@@ -474,9 +472,20 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		E9D0438527D8E1F6003DAF71 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				E92583232758957D002B0F49 /* Views */,
+				E925832027588FB5002B0F49 /* Tools */,
+				E9C99BBC27588E3A009EF515 /* Model */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		E9D75DBE2754C106008E20F0 = {
 			isa = PBXGroup;
 			children = (
+				E9D0438527D8E1F6003DAF71 /* Common */,
 				E9D75DC92754C106008E20F0 /* claft */,
 				E9D75DDA2754C109008E20F0 /* claftTests */,
 				E9D75DE42754C109008E20F0 /* claftUITests */,
@@ -492,13 +501,13 @@
 		E9D75DC82754C106008E20F0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E9D75DC72754C106008E20F0 /* claft.app */,
+				E9D75DC72754C106008E20F0 /* Claft.app */,
 				E9D75DD72754C109008E20F0 /* claftTests.xctest */,
 				E9D75DE12754C109008E20F0 /* claftUITests.xctest */,
 				E958E37E27CC66EF001197A9 /* ClaftMac.app */,
 				E958E38E27CC66F2001197A9 /* ClaftMacTests.xctest */,
 				E958E39827CC66F2001197A9 /* ClaftMacUITests.xctest */,
-				E976207827D4B11D005290B3 /* claftTV.app */,
+				E976207827D4B11D005290B3 /* Claft.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -507,9 +516,6 @@
 			isa = PBXGroup;
 			children = (
 				E9E7D8C427CA73FD00F3A1D2 /* claft.entitlements */,
-				E92583232758957D002B0F49 /* Views */,
-				E925832027588FB5002B0F49 /* Tools */,
-				E9C99BBC27588E3A009EF515 /* Model */,
 				E9D75DCA2754C106008E20F0 /* claftApp.swift */,
 				E9E7D8C027CA71A800F3A1D2 /* Assets.xcassets */,
 				E9D75DD02754C109008E20F0 /* Preview Content */,
@@ -625,7 +631,7 @@
 			);
 			name = claftTV;
 			productName = claftTV;
-			productReference = E976207827D4B11D005290B3 /* claftTV.app */;
+			productReference = E976207827D4B11D005290B3 /* Claft.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E9D75DC62754C106008E20F0 /* claft */ = {
@@ -643,7 +649,7 @@
 			);
 			name = claft;
 			productName = claft;
-			productReference = E9D75DC72754C106008E20F0 /* claft.app */;
+			productReference = E9D75DC72754C106008E20F0 /* Claft.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E9D75DD62754C109008E20F0 /* claftTests */ = {
@@ -991,8 +997,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ClaftMac/Preview Content\"";
 				DEVELOPMENT_TEAM = SGZE33W2XX;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1000,7 +1008,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = qiudaomao.ClaftMac;
+				PRODUCT_BUNDLE_IDENTIFIER = qiudaomao.claft;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1020,8 +1028,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ClaftMac/Preview Content\"";
 				DEVELOPMENT_TEAM = SGZE33W2XX;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1029,7 +1039,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = qiudaomao.ClaftMac;
+				PRODUCT_BUNDLE_IDENTIFIER = qiudaomao.claft;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1129,8 +1139,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.qiudaomao.claftTV;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = qiudaomao.claft;
+				PRODUCT_NAME = Claft;
 				SDKROOT = appletvos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1157,8 +1167,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.qiudaomao.claftTV;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = qiudaomao.claft;
+				PRODUCT_NAME = Claft;
 				SDKROOT = appletvos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1295,6 +1305,7 @@
 				DEVELOPMENT_TEAM = SGZE33W2XX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1306,9 +1317,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.qiudaomao.claft;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTS_MACCATALYST = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = qiudaomao.claft;
+				PRODUCT_NAME = Claft;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1327,6 +1338,7 @@
 				DEVELOPMENT_TEAM = SGZE33W2XX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1338,9 +1350,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.qiudaomao.claft;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTS_MACCATALYST = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = qiudaomao.claft;
+				PRODUCT_NAME = Claft;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

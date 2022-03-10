@@ -62,7 +62,7 @@ struct ProxiesView: View {
                             }
                         }
                         #else
-                        DisclosureGroup("\(item.name)", isExpanded: $expanded[idx]) {
+                        DisclosureGroup(isExpanded: $expanded[idx]) {
                             #if os(iOS)
                             let columns:[GridItem] = Array(repeating: .init(.flexible()), count: horizontalSizeClass == .compact ? 2:3)
                             #else
@@ -88,7 +88,30 @@ struct ProxiesView: View {
                                     }
                                 }
                             }
+                        } label: {
+                            HStack {
+                                HStack {
+                                    Text("\(item.name)")
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .font(.headline)
+                                    Spacer()
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(Color("DisclosureGroupColor"))
+                                .onTapGesture {
+                                    withAnimation {
+                                        expanded[idx].toggle()
+                                    }
+                                }
+                                Image(systemName: "speedometer")
+                                    .onTapGesture {
+                                        //check network delays
+                                        print("check network delays")
+                                    }
+                            }
+//                            .padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
                         }
+                        .padding()
                         #endif
                     }
                 }

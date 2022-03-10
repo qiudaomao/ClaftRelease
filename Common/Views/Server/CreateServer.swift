@@ -123,7 +123,7 @@ struct CreateServer: View {
                 Spacer()
                 Button {
                     let secret:String? = inputValue[2].lengthOfBytes(using: .utf8) > 0 ? inputValue[2] : nil
-                    var server = Server(id: UUID(), host: inputValue[0], port: inputValue[1], secret: secret, https: https)
+                    let server = Server(id: UUID(), host: inputValue[0], port: inputValue[1], secret: secret, https: https)
                     serverModel.servers.append(server)
                     serverModel.connectServer(serverModel.servers.count-1)
                     serverModel.saveServers()

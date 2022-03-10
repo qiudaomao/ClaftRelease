@@ -34,20 +34,40 @@ struct ProxyCardView: View {
             }
             .padding()
             if let delay = proxy.history.last?.delay {
-                if delay > 0 && delay < 100 {
+                if delay < 1 {
                     Image(systemName: "circle.fill")
                         .font(Font.system(size: 8 * scale))
                         .position(x: rect.width - 8 * scale, y: 16 * scale)
-                        .foregroundColor(.green)
+                        .foregroundColor(.gray)
+                } else if delay > 0 && delay < 100 {
+                        Image(systemName: "circle.fill")
+                            .font(Font.system(size: 8 * scale))
+                            .position(x: rect.width - 8 * scale, y: 16 * scale)
+                            .foregroundColor(.green)
+                        Text("\(delay) ms")
+                            .font(.system(size: 10))
+                            .frame(width: 80, alignment: .trailing)
+                            .position(x: rect.width - 44, y: rect.height - 22)
+                            .foregroundColor(.green)
                 } else if delay < 1000 {
                     Image(systemName: "circle.fill")
                         .font(Font.system(size: 8 * scale))
                         .position(x: rect.width - 8 * scale, y: 16 * scale)
                         .foregroundColor(.orange)
+                    Text("\(delay) ms")
+                        .font(.system(size: 10))
+                        .frame(width: 80, alignment: .trailing)
+                        .position(x: rect.width - 44, y: rect.height - 22)
+                        .foregroundColor(.orange)
                 } else {
                     Image(systemName: "circle.fill")
                         .font(Font.system(size: 8 * scale))
                         .position(x: rect.width - 8 * scale, y: 16 * scale)
+                        .foregroundColor(.red)
+                    Text("\(delay) ms")
+                        .font(.system(size: 10))
+                        .frame(width: 80, alignment: .trailing)
+                        .position(x: rect.width - 44, y: rect.height - 22)
                         .foregroundColor(.red)
                 }
             }
@@ -60,7 +80,7 @@ struct ProxyCardView: View {
 #if os(tvOS)
     .frame(width: 320, height: 100)
 #endif
-                .background(Color.blue)
+                .background(Color.blue.opacity(0.8))
                 .cornerRadius(8)
                 .overlay(Color.clear.modifier(GeometryGetterMod(rect: $rect)))
         } else {

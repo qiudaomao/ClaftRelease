@@ -70,9 +70,11 @@ struct LogView: View {
                 let server = serverModel.servers[idx]
                 server.websockets?.connect(.log)
                 server.websockets?.logWebSocket.$logs.sink(receiveValue: { logs in
-                    self.logs = logs.map({ item in
-                        return LogItem(type: item.type, payload: item.payload, uuid: UUID())
-                    })
+                    withAnimation {
+                        self.logs = logs.map({ item in
+                            return LogItem(type: item.type, payload: item.payload, uuid: UUID())
+                        })
+                    }
                 }).store(in: &cancellable)
                 currentServerIdx = idx
             }).store(in: &cancellable)

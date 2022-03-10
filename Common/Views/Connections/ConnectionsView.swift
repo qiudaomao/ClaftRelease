@@ -26,6 +26,7 @@ struct ConnectionsView: View {
     @State var connectionDataCancellable: AnyCancellable? = nil
     @State var currentServerIdxCancellable: AnyCancellable? = nil
     @State var orderCancellable: AnyCancellable? = nil
+    @State var pauseCancellable: AnyCancellable? = nil
     @State var rect:CGRect = CGRect()
     @State var pause:Bool = false
     @State var showBottomSheet = false
@@ -202,20 +203,26 @@ struct ConnectionsView: View {
         .onAppear {
             orderCancellable = self.connectionOrderModel.$orderMode.sink(receiveValue: { order in
                 print("order change to \(order)")
-                self.orderMode = order
+                withAnimation {
+                    self.orderMode = order
+                }
             })
             keywordCancellable = self.connectionOrderModel.$searchKeyword
                 .debounce(for: 0.5, scheduler: RunLoop.main)
                 .removeDuplicates()
                 .sink(receiveValue: { keyword in
                     print("keyword change to '\(keyword)'")
-                    self.keyword = keyword
+                    withAnimation {
+                        self.keyword = keyword
+                    }
                 })
             currentServerIdxCancellable = serverModel.$currentServerIndex.sink(receiveValue: { idx in
                 print("connectionsview current server index changed to \(idx)")
                 if currentServerIdx >= 0 {
                     if !self.pause {
-                        self.connectionData = ConnectionData()
+                        withAnimation {
+                            self.connectionData = ConnectionData()
+                        }
                     }
                     let server = serverModel.servers[currentServerIdx]
                     server.websockets?.disconnect(.connections)
@@ -228,6 +235,9 @@ struct ConnectionsView: View {
                     }
                 })
                 currentServerIdx = idx
+            })
+            pauseCancellable = connectionOrderModel.$pause.sink(receiveValue: { pause in
+                self.pause = pause
             })
         }
         .onDisappear {
