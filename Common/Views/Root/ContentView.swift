@@ -71,7 +71,7 @@ struct ContentView: View {
                                 .padding()
                         }
                         #else
-                        NavigationLink(destination: ConnectionsView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 3, selection: $selection) {
+                        NavigationLink(destination: ConnectionsView(), tag: 3, selection: $selection) {
                             Label(menus[3].title, systemImage: menus[3].image)
                                 .padding()
                         }
@@ -106,7 +106,7 @@ struct ContentView: View {
             }) {
                 Image(systemName: "slider.horizontal.3")
             }.sheet(isPresented: $showSheet) {
-                ManageServerPanel(servers: $serverModel.servers)
+                ManageServerPanel()
             })
             #endif
         }
@@ -192,14 +192,14 @@ struct ContentView_Previews: PreviewProvider {
         ]
         return Group {
             ContentView().environmentObject(serverModel)
-                .previewInterfaceOrientation(.portrait)
+//                .previewInterfaceOrientation(.portrait)
                 .previewDevice(PreviewDevice(rawValue: "iPhone 13 Pro"))
             ContentView().environmentObject(serverModel)
                 .preferredColorScheme(.dark)
-                .previewInterfaceOrientation(.portrait)
+//                .previewInterfaceOrientation(.portrait)
                 .previewDevice(PreviewDevice(rawValue: "iPhone 13 Pro"))
             ContentView().environmentObject(serverModel)
-                .previewInterfaceOrientation(.landscapeLeft)
+//                .previewInterfaceOrientation(.landscapeLeft)
                 .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
         }
     }

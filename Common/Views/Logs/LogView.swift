@@ -33,7 +33,13 @@ struct LogView: View {
         VStack {
             ScrollView {
                 LazyVStack {
+                    #if os(iOS)
+                    if horizontalSizeClass != .compact {
+                        ServerListView()
+                    }
+                    #else
                     ServerListView()
+                    #endif
                     if (rect.size.width > 40) {
                         ForEach(logs.reversed().filter({ log in
                             if keyword.lengthOfBytes(using: .utf8) == 0 {
@@ -58,7 +64,8 @@ struct LogView: View {
                             #endif
                             .frame(width: rect.size.width - 40, height: 26)
                             .padding(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4))
-                            .background(Material.thickMaterial)
+//                            .background(Material.thickMaterial)
+                            .modifier(CardBackgroundModifier())
                             .cornerRadius(8)
                         }
                     }
@@ -112,7 +119,7 @@ struct LogView_Previews: PreviewProvider {
         Group {
             LogView(server: server)
             LogView(server: server)
-                .previewInterfaceOrientation(.landscapeLeft)
+//                .previewInterfaceOrientation(.landscapeLeft)
                 .preferredColorScheme(.dark)
         }
     }

@@ -107,7 +107,13 @@ struct ConfigView: View {
     var body: some View {
         VStack {
             ScrollView {
+                #if os(iOS)
+                if horizontalSizeClass != .compact {
+                    ServerListView()
+                }
+                #else
                 ServerListView()
+                #endif
                 VStack {
                     if configData.initialized {
                         #if os(iOS)

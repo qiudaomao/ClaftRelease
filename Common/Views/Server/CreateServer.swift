@@ -85,7 +85,7 @@ struct CreateServer: View {
             }, trailing: Button(action: {
                 print("save")
                 let secret:String? = inputValue[2].lengthOfBytes(using: .utf8) > 0 ? inputValue[2] : nil
-                var server = Server(id: serverModel.servers.count, host: inputValue[0], port: inputValue[1], secret: secret, https: https)
+                let server = Server(id: UUID(), host: inputValue[0], port: inputValue[1], secret: secret, https: https)
                 serverModel.servers.append(server)
                 serverModel.connectServer(serverModel.servers.count-1)
                 serverModel.saveServers()
@@ -108,7 +108,6 @@ struct CreateServer: View {
     @EnvironmentObject var serverModel:ServerModel
     @State var inputValue:[String] = ["", "9090", ""]
     @State var https:Bool = false
-    @FocusState var focus: CreateServerFocus?
     var body: some View {
         VStack {
             HStack {
@@ -144,13 +143,11 @@ struct CreateServer: View {
                             .multilineTextAlignment(.trailing)
                         if entries[idx].isSecret {
                             SecureField(entries[idx].placeHolder, text: $inputValue[idx])
-                                .focused($focus, equals: CreateServerFocus(rawValue: idx))
                                 .multilineTextAlignment(.leading)
                                 .disableAutocorrection(true)
                                 .frame(width: 120)
                         } else {
                             TextField(entries[idx].placeHolder, text: $inputValue[idx])
-                                .focused($focus, equals: CreateServerFocus(rawValue: idx))
                                 .multilineTextAlignment(.leading)
                                 .disableAutocorrection(true)
                                 .frame(width: 120)
@@ -167,9 +164,6 @@ struct CreateServer: View {
                     Toggle("", isOn: $https)
                 }.padding()
             }
-        }
-        .onAppear {
-            focus = .host
         }
     }
 }

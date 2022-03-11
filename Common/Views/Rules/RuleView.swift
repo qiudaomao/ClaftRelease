@@ -25,7 +25,13 @@ struct RuleView: View {
         VStack {
             ScrollView {
                 LazyVStack {
+                    #if os(iOS)
+                    if horizontalSizeClass != .compact {
+                        ServerListView()
+                    }
+                    #else
                     ServerListView()
+                    #endif
                     if rect.size.width > 40 {
                         ForEach(rules.filter({ rule in
                             if keyword.lengthOfBytes(using: .utf8) == 0 {

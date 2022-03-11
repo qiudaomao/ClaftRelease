@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 struct ProxyHistoryData: Codable {
     var time: String = ""
@@ -127,7 +128,9 @@ class ProxyModel: ObservableObject {
                 }
             }
             receiveValue: { [weak self] data in
-                self?.proxiesData = data
+                withAnimation {
+                    self?.proxiesData = data
+                }
             }
             .store(in: &cancellables)
     }

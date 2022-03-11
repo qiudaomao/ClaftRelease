@@ -46,7 +46,7 @@ struct ManageServerPanel: View {
                         .swipeActions {
                             Button(role:.destructive, action: {
                                 print("delete")
-                                servers = servers.filter({ server_ in
+                                serverModel.servers = serverModel.servers.filter({ server_ in
                                     server.id != server_.id
                                 })
                                 serverModel.saveServers()

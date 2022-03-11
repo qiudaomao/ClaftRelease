@@ -18,7 +18,13 @@ struct OverView: View {
     @State private var trafficCancellable: AnyCancellable? = nil
     var body: some View {
         VStack(alignment: .leading) {
+            #if os(iOS)
+            if horizontalSizeClass != .compact {
+                ServerListView()
+            }
+            #else
             ServerListView()
+            #endif
             VStack {
                 Spacer()
                 NetworkSpeedDraw(trafficHistory: trafficHistory)
@@ -29,7 +35,11 @@ struct OverView: View {
                 #endif
                 Spacer()
             }
+            #if os(macOS)
             .padding(EdgeInsets(top: 0, leading: 30, bottom: 30, trailing: 30))
+            #else
+            .padding(EdgeInsets(top: 0, leading: 8, bottom: 30, trailing: 8))
+            #endif
         }
         .navigationTitle("OverView")
         .onAppear {

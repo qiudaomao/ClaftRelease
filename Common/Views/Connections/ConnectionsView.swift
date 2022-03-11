@@ -33,10 +33,8 @@ struct ConnectionsView: View {
     @State var isOpenBottomSheet = false
     @State var currentServerIdx = -1
     @State var orderMode:ConnectionOrder = .none
-    #if os(macOS)
     @State var keyword: String = ""
     @State var keywordCancellable: AnyCancellable? = nil
-    #endif
     #if os(iOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     #endif
@@ -49,7 +47,13 @@ struct ConnectionsView: View {
             VStack {
                 ScrollView {
                     LazyVStack {
+                        #if os(iOS)
+                        if horizontalSizeClass != .compact {
+                            ServerListView()
+                        }
+                        #else
                         ServerListView()
+                        #endif
                         if (rect.size.width > 40) {
                             ForEach(connectionData.connections
                                         .filter({ conn in
@@ -266,7 +270,7 @@ struct ConnectionsView_Previews: PreviewProvider {
         ConnectionsView(connectionData: connectionData)
             .environmentObject(serverModel)
             .environmentObject(connectionOrderModel)
-            .previewInterfaceOrientation(.landscapeLeft)
+//            .previewInterfaceOrientation(.landscapeLeft)
             .preferredColorScheme(.dark)
         #else
         Group {

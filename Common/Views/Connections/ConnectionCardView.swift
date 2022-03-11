@@ -139,7 +139,8 @@ struct ConnectionCardView: View {
             #endif
         }
 //        .background(Color("connectionCard"))
-        .background(Material.thickMaterial)
+//        .background(Material.thickMaterial)
+        .modifier(CardBackgroundModifier())
         .cornerRadius(8 * scale)
         .padding(EdgeInsets(top: 0, leading: 2, bottom: 0, trailing: 2))
     }

@@ -36,7 +36,13 @@ struct ProxiesView: View {
     var body: some View {
         VStack {
             ScrollView {
+                #if os(iOS)
+                if horizontalSizeClass != .compact {
+                    ServerListView()
+                }
+                #else
                 ServerListView()
+                #endif
                 LazyVStack(alignment: .leading) {
                     ForEach(0..<renderDatas.count, id:\.self) { idx in
                         let item = renderDatas[idx]
@@ -77,14 +83,14 @@ struct ProxiesView: View {
                             #endif
                             ScrollView {
                                 LazyVGrid(columns: columns, spacing: 4) {
-                                    ForEach($renderDatas[idx].items, id: \.uuid) { $proxy in
+                                    ForEach($renderDatas[idx].items, id: \.name) { $proxy in
                                         ProxyCardView(proxy: $proxy, selected: item.now == proxy.name)
                                             .gesture(TapGesture().onEnded({ _ in
                                                 print("change \(item.name) => \(proxy)")
                                                 changeProxyCancellable = serverModel.changeProxy(item.name, proxy.name)?.sink(receiveCompletion: { error in
                                                     print("complete \(error)")
                                                     let server = serverModel.servers[serverModel.currentServerIndex]
-                                                    proxyModel.proxiesData = ProxiesData()
+//                                                    proxyModel.proxiesData = ProxiesData()
                                                     proxyModel.update(server)
                                                 }, receiveValue: { value in
                                                     if let value = value {
