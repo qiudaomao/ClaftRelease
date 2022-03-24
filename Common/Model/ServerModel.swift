@@ -138,6 +138,7 @@ struct ChangeProxyBody: Codable {
 class ServerModel: ObservableObject {
     @Published var servers:[Server] = []
     @Published var currentServerIndex:Int = 0
+    @Published var currentServer: Server? = nil
     private var cancelables:Set<AnyCancellable> = Set<AnyCancellable>()
 
     public func connectServer(_ idx:Int) {
@@ -151,6 +152,10 @@ class ServerModel: ObservableObject {
     func changeCurrentServer(_ idx:Int) {
         if idx >= 0 && idx < servers.count {
             self.currentServerIndex = idx
+            self.currentServer = servers[self.currentServerIndex]
+        }
+        if idx < 0 {
+            self.currentServer = nil
         }
         //save here
         let userDefault = UserDefaults.standard
@@ -197,11 +202,16 @@ class ServerModel: ObservableObject {
         if let idx = userDefault.object(forKey: "currentServerIndex") as? Int {
             if servers.count > idx {
                 self.currentServerIndex = idx
+                self.currentServer = servers[self.currentServerIndex]
                 return
             }
         }
         if servers.count > 0 {
             self.currentServerIndex = 0
+            self.currentServer = servers.first
+        } else {
+            self.currentServerIndex = 0
+            self.currentServer = nil
         }
     }
     
@@ -224,20 +234,5 @@ class ServerModel: ObservableObject {
         } catch {
             print("error \(error)")
         }
-    }
-    
-    public func changeProxy(_ selector:String, _ target:String) -> Future<String?, Error>? {
-//        NetworkManager.putData(url)
-        let server = servers[currentServerIndex]
-        guard let encodedURL = selector.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
-            return nil
-        }
-        let url = "\(server.https ? "https":"http")://\(server.host):\(server.port)/proxies/\(encodedURL)"
-        let body = ChangeProxyBody(name: target)
-        var headers:[String:String] = [:]
-        if let secret = server.secret {
-            headers["Authorization"] = "Bearer \(secret)"
-        }
-        return NetworkManager.shared.putData(url: url, type: ChangeProxyBody.self, body: body, headers: headers)
     }
 }

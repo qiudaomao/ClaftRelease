@@ -280,7 +280,7 @@ struct ConnectionsView_Previews: PreviewProvider {
             ConnectionsView(connectionData: connectionData)
                 .environmentObject(serverModel)
                 .environmentObject(connectionOrderModel)
-                .previewInterfaceOrientation(.landscapeLeft)
+//                .previewInterfaceOrientation(.landscapeLeft)
                 .preferredColorScheme(.dark)
         }
         #endif

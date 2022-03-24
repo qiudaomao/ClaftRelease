@@ -60,6 +60,6 @@ struct OverView: View {
 struct OverView_Previews: PreviewProvider {
     static var previews: some View {
         let serverModel = ServerModel()
-        return PlaceHoldView().environmentObject(serverModel)
+        return OverView().environmentObject(serverModel)
     }
 }

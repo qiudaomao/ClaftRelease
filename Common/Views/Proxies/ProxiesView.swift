@@ -13,19 +13,12 @@ enum ProxiesFocusable: Hashable {
     case item(section: Int, proxy: String)
 }
 
-struct RenderData {
-    var name: String = ""
-    var now: String = ""
-    var items: [ProxyItemData] = []
-}
-
 struct ProxiesView: View {
     @EnvironmentObject var serverModel:ServerModel
 #if os(iOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 #endif
     @ObservedObject var proxyModel:ProxyModel = ProxyModel()
-    @State var expanded:[Bool] = []
     @State var proxiesData:ProxiesData = ProxiesData()
     @State var cancellables: Set<AnyCancellable> = Set<AnyCancellable>()
     @State var changeProxyCancellable:AnyCancellable? = nil
@@ -33,6 +26,7 @@ struct ProxiesView: View {
     #if os(tvOS)
     @FocusState var focused: ProxiesFocusable?
     #endif
+
     var body: some View {
         VStack {
             ScrollView {
@@ -44,8 +38,8 @@ struct ProxiesView: View {
                 ServerListView()
                 #endif
                 LazyVStack(alignment: .leading) {
-                    ForEach(0..<renderDatas.count, id:\.self) { idx in
-                        let item = renderDatas[idx]
+                    ForEach($renderDatas, id: \.name) { $item in
+//                        let item = renderDatas[idx]
 //                    ForEach(proxiesData.proxies.orderedSelections, id: \.uuid) { item in
                         #if os(tvOS)
 //                        Text("\(item.name)")
@@ -55,16 +49,7 @@ struct ProxiesView: View {
                                 LazyVGrid(columns: columns, spacing: 20) {
                                     ForEach(item.all, id: \.self) { proxy in
                                         Button {
-                                            changeProxyCancellable = serverModel.changeProxy(item.name, proxy)?.sink(receiveCompletion: { error in
-                                                print("complete \(error)")
-                                                let server = serverModel.servers[serverModel.currentServerIndex]
-                                                proxyModel.proxiesData = ProxiesData()
-                                                proxyModel.update(server)
-                                            }, receiveValue: { value in
-                                                if let value = value {
-                                                    print("\(value)")
-                                                }
-                                            })
+                                            proxyModel.changeProxy(serverModel.currentServer, item.name, proxy.name)
                                         } label: {
                                             ProxyCardView(proxy: proxiesData.proxies.datas[proxy]!, selected: item.now == proxy)
                                         }
@@ -75,7 +60,7 @@ struct ProxiesView: View {
                             }
                         }
                         #else
-                        DisclosureGroup(isExpanded: $expanded[idx]) {
+                        DisclosureGroup(isExpanded: $item.expanded) {
                             #if os(iOS)
                             let columns:[GridItem] = Array(repeating: .init(.flexible()), count: horizontalSizeClass == .compact ? 2:3)
                             #else
@@ -83,20 +68,14 @@ struct ProxiesView: View {
                             #endif
                             ScrollView {
                                 LazyVGrid(columns: columns, spacing: 4) {
-                                    ForEach($renderDatas[idx].items, id: \.name) { $proxy in
+                                    ForEach($item.items, id: \.name) { $proxy in
                                         ProxyCardView(proxy: $proxy, selected: item.now == proxy.name)
                                             .gesture(TapGesture().onEnded({ _ in
                                                 print("change \(item.name) => \(proxy)")
-                                                changeProxyCancellable = serverModel.changeProxy(item.name, proxy.name)?.sink(receiveCompletion: { error in
-                                                    print("complete \(error)")
-                                                    let server = serverModel.servers[serverModel.currentServerIndex]
-//                                                    proxyModel.proxiesData = ProxiesData()
-                                                    proxyModel.update(server)
-                                                }, receiveValue: { value in
-                                                    if let value = value {
-                                                        print("\(value)")
-                                                    }
-                                                })
+                                                guard let server = serverModel.currentServer else {
+                                                    return
+                                                }
+                                                proxyModel.changeProxy(server, item.name, proxy.name)
                                             }))
                                     }
                                 }
@@ -113,7 +92,8 @@ struct ProxiesView: View {
                                 .background(Color("DisclosureGroupColor"))
                                 .onTapGesture {
                                     withAnimation {
-                                        expanded[idx].toggle()
+//                                        expanded[idx].toggle()
+                                        item.expanded.toggle()
                                     }
                                 }
                                 Image(systemName: "speedometer")
@@ -122,7 +102,9 @@ struct ProxiesView: View {
                                         print("check network delays")
                                         let server = serverModel.servers[serverModel.currentServerIndex]
                                         let proxies = item.items.filter({ item in
-                                            return item.type != "Selector" && item.type != "URLTest"
+                                            return item.type != "Selector"
+                                                    && item.type != "URLTest"
+                                                    && item.fromProvider == false
                                         }).map { item in
                                             item.name
                                         }
@@ -142,37 +124,26 @@ struct ProxiesView: View {
         }
         .navigationTitle("Proxies")
         .onAppear {
-            proxyModel.$proxiesData.sink { data in
-                if data.proxies.orderedSelections.count > 0 {
-                    if expanded.count != data.proxies.orderedSelections.count {
-                        expanded = data.proxies.orderedSelections.map({ _ in
-                            return false
-                        })
-                    }
+            serverModel.$currentServer.sink { server in
+                guard let server = server else {
+                    proxyModel.proxiesData = ProxiesData()
+                    renderDatas = []
+                    return
                 }
-                proxiesData = data
-                renderDatas = data.proxies.orderedSelections.map({ item in
-                    var renderItem = RenderData()
-                    renderItem.name = item.name
-                    renderItem.now = item.now
-                    renderItem.items = item.all.map({ name in
-                        return data.proxies.datas[name]!
-                    })
-                    return renderItem
-                })
-                #if os(tvOS)
-                if proxiesData.proxies.orderedSelections.count > 0 {
-                    if let proxy = proxiesData.proxies.orderedSelections.first {
-                        focused = .item(section: 0, proxy: proxy.name)
-                    }
-                }
-                #endif
-            }.store(in: &cancellables)
-            serverModel.$currentServerIndex.sink { idx in
-                let server = serverModel.servers[idx]
                 proxyModel.proxiesData = ProxiesData()
-                expanded = []
+                renderDatas = []
                 proxyModel.update(server)
+            }.store(in: &cancellables)
+            proxyModel.$renderDatas.sink { datas_ in
+                var datas = datas_
+                for item in renderDatas.filter({ $0.expanded }) {
+                    for i in 0..<renderDatas.count {
+                        if renderDatas[i].name == item.name {
+                            datas[i].expanded = true
+                        }
+                    }
+                }
+                self.renderDatas = datas
             }.store(in: &cancellables)
         }
     }

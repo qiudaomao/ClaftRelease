@@ -136,34 +136,34 @@ class ConfigModel: ObservableObject {
                     }
                 }
                 if let httpPort = config.httpPort {
-                    configData.httpPort = "\(httpPort)"
+                    configData.httpPort = httpPort > 0 ? "\(httpPort)" : "NA".localized
                 } else {
-                    configData.httpPort = ""
+                    configData.httpPort = "NA".localized
                 }
                 if let mixedPort = config.mixedPort {
-                    configData.mixedPort = "\(mixedPort)"
+                    configData.mixedPort = mixedPort > 0 ? "\(mixedPort)" : "NA".localized
                 } else {
-                    configData.mixedPort = ""
+                    configData.mixedPort = "NA".localized
                 }
                 if let port = config.port {
-                    configData.port = "\(port)"
+                    configData.port = port > 0 ? "\(port)" : "NA".localized
                 } else {
-                    configData.port = ""
+                    configData.port = "NA".localized
                 }
                 if let redirPort = config.redirPort {
-                    configData.redirPort = "\(redirPort)"
+                    configData.redirPort = redirPort > 0 ? "\(redirPort)" : "NA".localized
                 } else {
-                    configData.redirPort = ""
+                    configData.redirPort = "NA".localized
                 }
                 if let socksPort = config.socksPort {
-                    configData.socksPort = "\(socksPort)"
+                    configData.socksPort = socksPort > 0 ? "\(socksPort)" : "NA".localized
                 } else {
-                    configData.socksPort = ""
+                    configData.socksPort = "NA".localized
                 }
                 if let tproxyPort = config.tproxyPort {
-                    configData.tproxyPort = "\(tproxyPort)"
+                    configData.tproxyPort = tproxyPort > 0 ? "\(tproxyPort)" : "NA".localized
                 } else {
-                    configData.tproxyPort = ""
+                    configData.tproxyPort = "NA".localized
                 }
                 print("update finish")
                 self?.finishInit = true

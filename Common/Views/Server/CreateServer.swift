@@ -34,7 +34,9 @@ struct CreateServer: View {
     @EnvironmentObject var serverModel:ServerModel
     @State var inputValue:[String] = ["", "9090", ""]
     @State var https:Bool = false
+    #if os(tvOS)
     @FocusState var focus: CreateServerFocus?
+    #endif
     var body: some View {
         NavigationView {
             List {
@@ -52,7 +54,9 @@ struct CreateServer: View {
                                 .autocapitalization(.none)
                             #endif
                                 .disableAutocorrection(true)
+                            #if os(tvOS)
                                 .focused($focus, equals: CreateServerFocus(rawValue: idx))
+                            #endif
                         } else {
                             TextField(entries[idx].placeHolder, text: $inputValue[idx])
                                 .multilineTextAlignment(.leading)
@@ -60,7 +64,9 @@ struct CreateServer: View {
                                 .autocapitalization(.none)
                             #endif
                                 .disableAutocorrection(true)
+                            #if os(tvOS)
                                 .focused($focus, equals: CreateServerFocus(rawValue: idx))
+                            #endif
                         }
                     }
                     .padding()

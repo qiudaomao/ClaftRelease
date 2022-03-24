@@ -9,6 +9,24 @@ import SwiftUI
 import Combine
 
 #if os(iOS) || os(tvOS)
+struct SwipeToDeleteModifier<Label>: ViewModifier where Label: View {
+    var label: () -> Label
+    public init(@ViewBuilder label: @escaping () -> Label) {
+        self.label = label
+    }
+    
+    func body(content: Content) -> some View {
+        if #available(iOS 15.0, *) {
+            content
+                .swipeActions {
+                    label()
+                }
+        } else {
+            content
+        }
+    }
+}
+
 struct ManageServerPanel: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var showSheet = false
@@ -43,17 +61,17 @@ struct ManageServerPanel: View {
                                 .padding()
                         }
                         #if os(iOS) || os(macOS)
-                        .swipeActions {
-                            Button(role:.destructive, action: {
-                                print("delete")
-                                serverModel.servers = serverModel.servers.filter({ server_ in
-                                    server.id != server_.id
-                                })
-                                serverModel.saveServers()
-                            }) {
-                                Label("Delete", systemImage: "trash")
-                            }
-                        }
+//                        .swipeActions {
+//                            Button(role:.destructive, action: {
+//                                print("delete")
+//                                serverModel.servers = serverModel.servers.filter({ server_ in
+//                                    server.id != server_.id
+//                                })
+//                                serverModel.saveServers()
+//                            }) {
+//                                Label("Delete", systemImage: "trash")
+//                            }
+//                        }))
                         #endif
                     }
                 }

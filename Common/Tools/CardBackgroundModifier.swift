@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CardBackgroundModifier: ViewModifier {
     func body(content: Content) -> some View {
+        #if os(macOS)
         if #available(macOS 12.0, *) {
             content
                 .background(Material.thickMaterial)
@@ -16,6 +17,15 @@ struct CardBackgroundModifier: ViewModifier {
             content
                 .background(Color("connectionCard"))
         }
+        #else
+        if #available(iOS 15.0, *) {
+            content
+                .background(Material.thickMaterial)
+        } else {
+            content
+                .background(Color("connectionCard"))
+        }
+        #endif
     }
 }
 
