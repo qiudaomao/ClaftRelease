@@ -32,47 +32,84 @@ struct ManageServerPanel: View {
     @State private var showSheet = false
     @EnvironmentObject var serverModel:ServerModel
 //    @Binding var servers:[Server]
+    
     var body: some View {
         return NavigationView {
             VStack {
                 List() {
                     ForEach(serverModel.servers, id: \.id) { server in
-                        HStack {
-                            if server.secret != nil {
-                                if server.https {
-                                    Image(systemName: "lock.fill")
-                                        .foregroundColor(Color.green)
+#if os(iOS) || os(macOS)
+                        if #available(iOS 15.0, *) {
+                            HStack {
+                                if server.secret != nil {
+                                    if server.https {
+                                        Image(systemName: "lock.fill")
+                                            .foregroundColor(Color.green)
+                                    } else {
+                                        Image(systemName: "lock.fill")
+                                    }
                                 } else {
-                                    Image(systemName: "lock.fill")
+                                    if server.https {
+                                        Image(systemName: "lock")
+                                            .foregroundColor(Color.green)
+                                    } else {
+                                        Image(systemName: "lock")
+                                    }
                                 }
-                            } else {
-                                if server.https {
-                                    Image(systemName: "lock")
-                                        .foregroundColor(Color.green)
-                                } else {
-                                    Image(systemName: "lock")
+                                Text("\(server.host)")
+                                    .padding()
+                                Spacer()
+                                Text("\(server.port)")
+                                    .foregroundColor(.secondary)
+                                    .padding()
+                            }
+                            .swipeActions {
+                                Button(role:.destructive, action: {
+                                    print("delete")
+                                    serverModel.servers = serverModel.servers.filter({ server_ in
+                                        server.id != server_.id
+                                    })
+                                    serverModel.saveServers()
+                                }) {
+                                    Label("Delete", systemImage: "trash")
                                 }
                             }
-                            Text("\(server.host)")
-                                .padding()
-                            Spacer()
-                            Text("\(server.port)")
-                                .foregroundColor(.secondary)
-                                .padding()
+                        } else {
+                            // Fallback on earlier versions
+                            HStack {
+                                if server.secret != nil {
+                                    if server.https {
+                                        Image(systemName: "lock.fill")
+                                            .foregroundColor(Color.green)
+                                    } else {
+                                        Image(systemName: "lock.fill")
+                                    }
+                                } else {
+                                    if server.https {
+                                        Image(systemName: "lock")
+                                            .foregroundColor(Color.green)
+                                    } else {
+                                        Image(systemName: "lock")
+                                    }
+                                }
+                                Text("\(server.host)")
+                                    .padding()
+                                Spacer()
+                                Text("\(server.port)")
+                                    .foregroundColor(.secondary)
+                                    .padding()
+                                Button {
+                                    print("delete")
+                                    serverModel.servers = serverModel.servers.filter({ server_ in
+                                        server.id != server_.id
+                                    })
+                                    serverModel.saveServers()
+                                } label: {
+                                    Image(systemName: "trash")
+                                }
+                            }
                         }
-                        #if os(iOS) || os(macOS)
-//                        .swipeActions {
-//                            Button(role:.destructive, action: {
-//                                print("delete")
-//                                serverModel.servers = serverModel.servers.filter({ server_ in
-//                                    server.id != server_.id
-//                                })
-//                                serverModel.saveServers()
-//                            }) {
-//                                Label("Delete", systemImage: "trash")
-//                            }
-//                        }))
-                        #endif
+#endif
                     }
                 }
             }

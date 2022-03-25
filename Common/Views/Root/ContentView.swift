@@ -76,11 +76,11 @@ struct ContentView: View {
                                 .padding()
                         }
                         #endif
-                        NavigationLink(destination: ConfigView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 4, selection: $selection) {
+                        NavigationLink(destination: ConfigView(server: serverModel.currentServer), tag: 4, selection: $selection) {
                             Label(menus[4].title, systemImage: menus[4].image)
                                 .padding()
                         }
-                        NavigationLink(destination: LogView(server: serverModel.servers[serverModel.currentServerIndex]), tag: 5, selection: $selection) {
+                        NavigationLink(destination: LogView(), tag: 5, selection: $selection) {
                             Label(menus[5].title, systemImage: menus[5].image)
                                 .padding()
                         }

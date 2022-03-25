@@ -40,7 +40,7 @@ struct CreateServer: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(0..<entries.count) { idx in
+                ForEach(0..<entries.count, id: \.self) { idx in
 //                ForEach(entries) { (entry, idx) in
                     HStack {
                         Image(systemName: entries[idx].image)

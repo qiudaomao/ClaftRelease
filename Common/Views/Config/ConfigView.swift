@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct ConfigView: View {
-    var server: Server
+    var server: Server?
     @StateObject var configModel: ConfigModel = ConfigModel()
     @EnvironmentObject var serverModel:ServerModel
     @State private var cancelables = Set<AnyCancellable>()
@@ -23,6 +23,9 @@ struct ConfigView: View {
     
     func onChanged() {
         guard configData.initialized else {
+            return
+        }
+        guard let server = server else {
             return
         }
         if configModel.configData.allowLan != configData.allowLan {
