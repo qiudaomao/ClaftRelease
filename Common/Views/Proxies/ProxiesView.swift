@@ -61,6 +61,16 @@ struct ProxiesView: View {
                     let columns:[GridItem] = Array(repeating: .init(.flexible()), count: 3)
                     #endif
                     ScrollView {
+                        if item.isProvider {
+                            if let updateAt = item.updateAt {
+                                HStack {
+                                    Text("\(updateAt)")
+                                        .font(Font.system(size: 10))
+                                        .foregroundColor(.secondary)
+                                    Spacer()
+                                }
+                            }
+                        }
                         LazyVGrid(columns: columns, spacing: 4) {
                             ForEach($item.items, id: \.name) { $proxy in
                                 ProxyCardView(proxy: $proxy, selected: item.now == proxy.name)
@@ -75,6 +85,56 @@ struct ProxiesView: View {
                         }
                     }
                 } label: {
+                    if renderDatas.count > 0 {
+//                        let itemNow = renderDatas[currentSelection]
+                        let proxies = item.items.filter({ item in
+                            return item.type != "Selector"
+                                    && item.type != "URLTest"
+                                    && item.fromProvider == false
+                                    && item.name != "DIRECT"
+                                    && item.name != "REJECT"
+                        }).map { item in
+                            item.name
+                        }
+                    HStack {
+                        if item.isProvider {
+                            Image(systemName: "link")
+                            Text("\(item.name)")
+                                .foregroundColor(.secondary)
+                            Spacer()
+                        } else {
+                            Text("\(item.name) - \(item.now)")
+                                .lineLimit(1)
+                        }
+                        Spacer()
+                        if item.isProvider {
+                            Image(systemName: "arrow.counterclockwise")
+                                .onTapGesture {
+                                    //check network delays
+                                    print("update now")
+                                    let server = serverModel.servers[serverModel.currentServerIndex]
+                                    proxyModel.updateProvider(server, item.name)
+                                }
+                        }
+                        if proxies.count > 0 {
+                            Image(systemName: "speedometer")
+                                .onTapGesture {
+                                    //check network delays
+                                    print("check network delays")
+                                    if item.isProvider {
+                                        let server = serverModel.servers[serverModel.currentServerIndex]
+                                        proxyModel.checkHealthy(server, item.name)
+                                    } else {
+                                        let server = serverModel.servers[serverModel.currentServerIndex]
+                                        if proxies.count > 0 {
+                                            proxyModel.updateDelay(server, proxies: proxies)
+                                        }
+                                    }
+                                }
+                        }
+                    }//.padding([.top, .leading, .trailing])
+                    }
+                    /*
                     HStack {
                         HStack {
                             Text("\(item.updateAt ?? item.name)")
@@ -95,6 +155,8 @@ struct ProxiesView: View {
                                 .onTapGesture {
                                     //check network delays
                                     print("update now")
+                                    let server = serverModel.servers[serverModel.currentServerIndex]
+                                    proxyModel.updateProvider(server, item.name)
                                 }
                         }
                         Image(systemName: "speedometer")
@@ -115,6 +177,7 @@ struct ProxiesView: View {
                             }
                     }
 //                            .padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
+                     */
                 }
                 .padding()
                 #endif
@@ -196,9 +259,11 @@ struct ProxiesView: View {
                     }
                 HStack {
                     if item.isProvider {
-                        Text("\(item.updateAt ?? item.name)")
+                        Text("\(item.name) - Provider")
+                                .lineLimit(1)
                     } else {
                         Text("\(item.name) - \(item.now)")
+                                .lineLimit(1)
                     }
                     Spacer()
                     if item.isProvider {
@@ -227,6 +292,16 @@ struct ProxiesView: View {
                             }
                     }
                 }.padding([.top, .leading, .trailing])
+                    if item.isProvider {
+                        if let updateAt = item.updateAt {
+                            HStack {
+                                Text("\(updateAt)")
+                                    .font(Font.system(size: 10))
+                                    .foregroundColor(.secondary)
+                                Spacer()
+                            }.padding([.leading, .trailing])
+                        }
+                    }
                 }
                 LazyVGrid(columns: columns) {
                     if renderDatas.count > currentSelection {
