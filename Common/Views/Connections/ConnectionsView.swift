@@ -98,6 +98,8 @@ struct ConnectionsView: View {
                     }
                     #if os(iOS)
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 160, trailing: 0))
+                    #else
+                    .padding([.bottom])
                     #endif
                 }
                 #if os(iOS)

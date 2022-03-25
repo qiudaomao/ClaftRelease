@@ -68,7 +68,7 @@ class NetworkManager {
         }
     }
     
-    func putData<T: Encodable>(url: String, type: T.Type, body: T, headers: [String:String] = [:]) -> Future<String?, Error> {
+    func putData<T: Encodable>(url: String, type: T.Type, body: T?, headers: [String:String] = [:]) -> Future<String?, Error> {
         return Future<String?, Error> { [weak self] promise in
             guard let self = self, let url = URL(string: url) else {
                 return promise(.failure(NetworkError.invalidURL))

@@ -22,11 +22,13 @@ struct ProxyCardView: View {
             VStack() {
                 HStack {
                     Text("\(proxy.name)")
+                        .lineLimit(1)
                         .font(.system(size: 10 * scale))
                     Spacer()
                 }
                 HStack {
                     Text("\(proxy.type)")
+                        .lineLimit(1)
                         .font(.system(size: 10 * scale))
                         .foregroundColor(.secondary)
                     Spacer()
@@ -39,7 +41,7 @@ struct ProxyCardView: View {
                         .font(Font.system(size: 8 * scale))
                         .position(x: rect.width - 8 * scale, y: 16 * scale)
                         .foregroundColor(.gray)
-                } else if delay > 0 && delay < 100 {
+                } else if delay > 0 && delay < 300 {
                         Image(systemName: "circle.fill")
                             .font(Font.system(size: 8 * scale))
                             .position(x: rect.width - 8 * scale, y: 16 * scale)
@@ -49,7 +51,7 @@ struct ProxyCardView: View {
                             .frame(width: 80, alignment: .trailing)
                             .position(x: rect.width - 44, y: rect.height - 22)
                             .foregroundColor(.green)
-                } else if delay < 1000 {
+                } else if delay < 1500 {
                     Image(systemName: "circle.fill")
                         .font(Font.system(size: 8 * scale))
                         .position(x: rect.width - 8 * scale, y: 16 * scale)

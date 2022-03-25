@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct RuleView: View {
-    @ObservedObject var ruleModel:RuleModel = RuleModel()
+    @StateObject var ruleModel:RuleModel = RuleModel()
     @EnvironmentObject var serverModel:ServerModel
     @State private var cancelables = Set<AnyCancellable>()
     @State var rect:CGRect = CGRect()
@@ -48,7 +48,7 @@ struct RuleView: View {
                         }
                     }
                 }
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 140, trailing: 0))
+                .padding([.bottom])
 //                .frame(maxWidth: 960)
             }
         }.onAppear {

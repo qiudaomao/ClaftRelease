@@ -10,7 +10,7 @@ import Combine
 
 struct ConfigView: View {
     var server: Server
-    @ObservedObject var configModel: ConfigModel = ConfigModel()
+    @StateObject var configModel: ConfigModel = ConfigModel()
     @EnvironmentObject var serverModel:ServerModel
     @State private var cancelables = Set<AnyCancellable>()
     @State var configData: ConfigDataModel = ConfigDataModel()

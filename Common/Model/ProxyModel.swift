@@ -14,6 +14,9 @@ struct RenderData {
     var now: String = ""
     var items: [ProxyItemData] = []
     var expanded: Bool = false
+    var isProvider = false
+    var updateAt: String? = nil
+    var vehicleType: String? = nil
 }
 
 struct ProxyHistoryData: Codable {
@@ -110,6 +113,9 @@ struct DelayData: Codable {
 struct ProviderItemData: Codable {
     var name: String
     var proxies: [ProxyItemData]
+    var type: String
+    var vehicleType: String
+    var updatedAt: String?
 }
 
 struct ProviderData : Codable {
@@ -143,7 +149,7 @@ struct ProxyProviderData : Codable {
 }
 
 class ProxyModel: ObservableObject {
-    var currentServer: Server? = nil
+    private var currentServer: Server? = nil
     @Published var renderDatas:[RenderData] = []
     @Published var proxiesData:ProxiesData = {
         var data:ProxiesData? = nil
@@ -170,7 +176,7 @@ class ProxyModel: ObservableObject {
         var proxiesPublisher: AnyPublisher<[RenderData], Never> {
             return Publishers.CombineLatest($proxiesData, $proxyProviderData).map { data, providerData -> [RenderData] in
                 self.proxiesData = data
-                let renderDatas = data.proxies.orderedSelections
+                var renderDatas = data.proxies.orderedSelections
                     .map({ item -> RenderData in
                     var renderItem = RenderData()
                     renderItem.name = item.name
@@ -191,10 +197,15 @@ class ProxyModel: ObservableObject {
                             })
                             .map({ name in
                                 for provider in providerData.providers.items {
+                                    print("provider \(provider.name)")
                                     for proxy in provider.proxies {
                                         if proxy.name == name {
                                             var p = proxy
-                                            p.fromProvider = true
+                                            if provider.updatedAt == nil || provider.vehicleType == "Compatible" {
+                                                p.fromProvider = false
+                                            } else {
+                                                p.fromProvider = true
+                                            }
                                             return p
                                         }
                                     }
@@ -203,6 +214,21 @@ class ProxyModel: ObservableObject {
                     })
                     return renderItem
                 })
+                let renderProviders = providerData.providers.items
+                    .filter({ provider in
+                        provider.updatedAt != nil || provider.vehicleType != "Compatible"
+                    })
+                    .map({ provider -> RenderData in
+                        var renderItem = RenderData()
+                        renderItem.name = provider.name
+                        renderItem.items = provider.proxies
+                        renderItem.now = ""
+                        renderItem.isProvider = true
+                        renderItem.updateAt = provider.updatedAt ?? ""
+                        renderItem.vehicleType = provider.vehicleType
+                        return renderItem
+                    })
+                    .sorted { $0.name > $1.name }
                 #if os(tvOS)
                 if proxiesData.proxies.orderedSelections.count > 0 {
                     if let proxy = proxiesData.proxies.orderedSelections.first {
@@ -210,15 +236,20 @@ class ProxyModel: ObservableObject {
                     }
                 }
                 #endif
+                renderDatas.append(contentsOf: renderProviders)
                 return renderDatas
             }.eraseToAnyPublisher()
         }
         proxiesPublisher.sink { renderDatas in
+            if renderDatas.count > 0 {
+                print("proxiesPublisher now: \(renderDatas[0].now)")
+            }
             self.renderDatas = renderDatas
         }.store(in: &cancellables)
     }
     
     public func update(_ server:Server) {
+        currentServer = server
         let url = "http://\(server.host):\(server.port)/proxies"
         var headers:[String:String] = [:]
         if let secret = server.secret {
@@ -342,11 +373,6 @@ class ProxyModel: ObservableObject {
     }
     
     public func changeProxy(_ server:Server, _ selector:String, _ target:String) {
-        if currentServer?.id != server.id {
-            return
-        }
-//        NetworkManager.putData(url)
-//        let server = servers[currentServerIndex]
         guard let encodedURL = selector.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
             return
         }
@@ -363,7 +389,50 @@ class ProxyModel: ObservableObject {
                 print("receive \(str)")
             }
         }
-
+    }
+    
+    public func checkHealthy(_ server:Server, _ provider:String) {
+        guard let encodedURL = provider.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+            return
+        }
+        //first remove all history
+        for idx in 0..<renderDatas.count {
+            if renderDatas[idx].isProvider && renderDatas[idx].name == provider {
+                for i in 0..<renderDatas[idx].items.count {
+                    renderDatas[idx].items[i].history = []
+                }
+            }
+        }
+        //http://192.168.23.1:9191/providers/proxies/passwall/healthcheck
+        let url = "\(server.https ? "https":"http")://\(server.host):\(server.port)/providers/proxies/\(encodedURL)/healthcheck"
+        var headers:[String:String] = [:]
+        if let secret = server.secret {
+            headers["Authorization"] = "Bearer \(secret)"
+        }
+        changeServerCancellable = NetworkManager.shared.getData(url: url, type: String.self, headers: headers).sink { _ in
+            self.update(server)
+        } receiveValue: { str in
+            print("receive \(str)")
+        }
+    }
+    
+    public func updateProvider(_ server:Server, _ provider:String) {
+        guard let encodedURL = provider.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+            return
+        }
+        //http://192.168.23.1:9191/providers/proxies/passwall/healthcheck
+        let url = "\(server.https ? "https":"http")://\(server.host):\(server.port)/providers/proxies/\(encodedURL)"
+        var headers:[String:String] = [:]
+        if let secret = server.secret {
+            headers["Authorization"] = "Bearer \(secret)"
+        }
+        changeServerCancellable = NetworkManager.shared.putData(url: url, type: String.self, body: nil, headers: headers).sink { _ in
+            self.update(server)
+        } receiveValue: { str in
+            if let str = str {
+                print("receive \(str)")
+            }
+        }
     }
 }
 
