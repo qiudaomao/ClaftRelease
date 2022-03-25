@@ -123,137 +123,158 @@ struct ProxiesView: View {
         .padding()
     }
     
-    var splitBody: some View {
-        HSplitView {
+    var leftBody: some View {
+        ScrollView {
+            LazyVStack {
+                ForEach($renderDatas, id: \.name) { $item in
+                    let idx = renderDatas.firstIndex(where: { obj in
+                        obj.name == item.name
+                    })
+                    if idx == currentSelection {
+                        HStack {
+                            if item.isProvider {
+                                Image(systemName: "link")
+                                    .padding([.leading])
+                                Text("\(item.vehicleType ?? "")")
+                                    .foregroundColor(.secondary)
+                                Spacer()
+                            }
+                            Text("\(item.name)")
+                                .padding([.trailing])
+                        }
+                        .frame(width: rect.width - 40, height: 40)
+                        .background(Color.blue.opacity(0.8))
+                        .cornerRadius(8)
+                        .onTapGesture {
+                            currentSelection = idx ?? 0
+                        }
+                    } else {
+                        HStack {
+                            if item.isProvider {
+                                Image(systemName: "link")
+                                    .padding([.leading])
+                                Text("\(item.vehicleType ?? "")")
+                                    .foregroundColor(.secondary)
+                                Spacer()
+                            }
+                            Text("\(item.name)")
+                                .padding([.trailing])
+                        }
+                        .frame(width: rect.width - 40, height: 40)
+                        .modifier(CardBackgroundModifier())
+                        .cornerRadius(8)
+                        .onTapGesture {
+                            currentSelection = idx ?? 0
+                        }
+                    }
+                }
+            }
+            .padding()
+        }
+        #if os(macOS)
+        .frame(maxWidth: 220)
+        #else
+        .frame(maxWidth: 280)
+        #endif
+        .overlay(Color.clear.modifier(GeometryGetterMod(rect: $rect)))
+    }
+    
+    var rightBody: some View {
+        VStack {
             ScrollView {
-                LazyVStack {
-                    ForEach($renderDatas, id: \.name) { $item in
-                        let idx = renderDatas.firstIndex(where: { obj in
-                            obj.name == item.name
-                        })
-                        if idx == currentSelection {
-                            HStack {
-                                if item.isProvider {
-                                    Image(systemName: "link")
-                                        .padding([.leading])
-                                    Text("\(item.vehicleType ?? "")")
-                                        .foregroundColor(.secondary)
-                                    Spacer()
-                                }
-                                Text("\(item.name)")
-                                    .padding([.trailing])
-                            }
-                            .frame(width: rect.width - 40, height: 40)
-                            .background(Color.blue.opacity(0.8))
-                            .cornerRadius(8)
+                let columns:[GridItem] = Array(repeating: .init(.flexible()), count: 3)
+                if renderDatas.count > 0 {
+                    let item = renderDatas[currentSelection]
+                    let proxies = item.items.filter({ item in
+                        return item.type != "Selector"
+                                && item.type != "URLTest"
+                                && item.fromProvider == false
+                                && item.name != "DIRECT"
+                                && item.name != "REJECT"
+                    }).map { item in
+                        item.name
+                    }
+                HStack {
+                    if item.isProvider {
+                        Text("\(item.updateAt ?? item.name)")
+                    } else {
+                        Text("\(item.name) - \(item.now)")
+                    }
+                    Spacer()
+                    if item.isProvider {
+                        Image(systemName: "arrow.counterclockwise")
                             .onTapGesture {
-                                currentSelection = idx ?? 0
+                                //check network delays
+                                print("update now")
+                                let server = serverModel.servers[serverModel.currentServerIndex]
+                                proxyModel.updateProvider(server, item.name)
                             }
-                        } else {
-                            HStack {
-                                if item.isProvider {
-                                    Image(systemName: "link")
-                                        .padding([.leading])
-                                    Text("\(item.vehicleType ?? "")")
-                                        .foregroundColor(.secondary)
-                                    Spacer()
-                                }
-                                Text("\(item.name)")
-                                    .padding([.trailing])
-                            }
-                            .frame(width: rect.width - 40, height: 40)
-                            .modifier(CardBackgroundModifier())
-                            .cornerRadius(8)
+                    }
+                    if proxies.count > 0 {
+                        Image(systemName: "speedometer")
                             .onTapGesture {
-                                currentSelection = idx ?? 0
+                                //check network delays
+                                print("check network delays")
+                                if item.isProvider {
+                                    let server = serverModel.servers[serverModel.currentServerIndex]
+                                    proxyModel.checkHealthy(server, item.name)
+                                } else {
+                                    let server = serverModel.servers[serverModel.currentServerIndex]
+                                    if proxies.count > 0 {
+                                        proxyModel.updateDelay(server, proxies: proxies)
+                                    }
+                                }
                             }
+                    }
+                }.padding([.top, .leading, .trailing])
+                }
+                LazyVGrid(columns: columns) {
+                    if renderDatas.count > currentSelection {
+                        ForEach($renderDatas[currentSelection].items, id: \.name) { $proxy in
+                            ProxyCardView(proxy: $proxy, selected: renderDatas[currentSelection].now == proxy.name)
+                                .gesture(TapGesture().onEnded({ _ in
+                                    if renderDatas[currentSelection].isProvider {
+                                        return
+                                    }
+                                    print("change \(renderDatas[currentSelection].name) => \(proxy.name)")
+                                    guard let server = serverModel.currentServer else {
+                                        return
+                                    }
+                                    proxyModel.changeProxy(server, renderDatas[currentSelection].name, proxy.name)
+                                }))
                         }
                     }
                 }
                 .padding()
-            }
-            .frame(maxWidth: 220)
-            .overlay(Color.clear.modifier(GeometryGetterMod(rect: $rect)))
-            VStack {
-                ScrollView {
-                    let columns:[GridItem] = Array(repeating: .init(.flexible()), count: 3)
-                    if renderDatas.count > 0 {
-                        let item = renderDatas[currentSelection]
-                        let proxies = item.items.filter({ item in
-                            return item.type != "Selector"
-                                    && item.type != "URLTest"
-                                    && item.fromProvider == false
-                                    && item.name != "DIRECT"
-                                    && item.name != "REJECT"
-                        }).map { item in
-                            item.name
-                        }
-                    HStack {
-                        if item.isProvider {
-                            Text("\(item.updateAt ?? item.name)")
-                        } else {
-                            Text("\(item.name) - \(item.now)")
-                        }
-                        Spacer()
-                        if item.isProvider {
-                            Image(systemName: "arrow.counterclockwise")
-                                .onTapGesture {
-                                    //check network delays
-                                    print("update now")
-                                    let server = serverModel.servers[serverModel.currentServerIndex]
-                                    proxyModel.updateProvider(server, item.name)
-                                }
-                        }
-                        if proxies.count > 0 {
-                            Image(systemName: "speedometer")
-                                .onTapGesture {
-                                    //check network delays
-                                    print("check network delays")
-                                    if item.isProvider {
-                                        let server = serverModel.servers[serverModel.currentServerIndex]
-                                        proxyModel.checkHealthy(server, item.name)
-                                    } else {
-                                        let server = serverModel.servers[serverModel.currentServerIndex]
-                                        if proxies.count > 0 {
-                                            proxyModel.updateDelay(server, proxies: proxies)
-                                        }
-                                    }
-                                }
-                        }
-                    }.padding([.top, .leading, .trailing])
-                    }
-                    LazyVGrid(columns: columns) {
-                        if renderDatas.count > currentSelection {
-                            ForEach($renderDatas[currentSelection].items, id: \.name) { $proxy in
-                                ProxyCardView(proxy: $proxy, selected: renderDatas[currentSelection].now == proxy.name)
-                                    .gesture(TapGesture().onEnded({ _ in
-                                        if renderDatas[currentSelection].isProvider {
-                                            return
-                                        }
-                                        print("change \(renderDatas[currentSelection].name) => \(proxy.name)")
-                                        guard let server = serverModel.currentServer else {
-                                            return
-                                        }
-                                        proxyModel.changeProxy(server, renderDatas[currentSelection].name, proxy.name)
-                                    }))
-                            }
-                        }
-                    }
-                    .padding()
-                }.frame(maxWidth: .infinity)
-            }
+            }.frame(maxWidth: .infinity)
         }
+    }
+    
+    var splitBody: some View {
+        #if os(macOS)
+        HSplitView {
+            leftBody
+            rightBody
+        }
+        #else
+        HStack {
+            leftBody
+            rightBody
+        }
+        #endif
     }
     
     var body: some View {
         VStack {
 #if os(iOS)
-            ScrollView {
                 if horizontalSizeClass != .compact {
                     ServerListView()
+                    splitBody
+                } else {
+                    ScrollView {
+                        expandBody
+                    }
                 }
-                expandBody
-            }
 #else
             ServerListView()
             splitBody
