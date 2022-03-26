@@ -76,8 +76,11 @@ struct ProxyCardView: View {
                     let date: Date? = {
                         do {
                             let regex = try NSRegularExpression(pattern: "\\.[0-9]+Z$")
+                            let regex1 = try NSRegularExpression(pattern: "\\.[0-9]+\\+")
                             let str = regex.stringByReplacingMatches(in: time, range: NSMakeRange(0, time.lengthOfBytes(using: .utf8)), withTemplate: "Z")
-                            return ISO8601DateFormatter().date(from: str)
+                            let
+                            str1 = regex1.stringByReplacingMatches(in: str, range: NSMakeRange(0, str.lengthOfBytes(using: .utf8)), withTemplate: "+")
+                            return ISO8601DateFormatter().date(from: str1)
                         } catch {
                             print("update at regex error: \(error)")
                         }
