@@ -43,3 +43,9 @@
 "Domain or IP" = "Domain or IP";
 "Optional" = "Optional";
 "NA" = "NA";
+"%d seconds ago" = "%d seconds ago";
+"%d minutes ago" = "%d minutes ago";
+"%d hours ago" = "%d hours ago";
+"%d days ago" = "%d days ago";
+"%d months ago" = "%d months ago";
+"Update at " = "Update at ";

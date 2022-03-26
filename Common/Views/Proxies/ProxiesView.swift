@@ -62,9 +62,9 @@ struct ProxiesView: View {
                     #endif
                     ScrollView {
                         if item.isProvider {
-                            if let updateAt = item.updateAt {
+                            if let updateAt = item.updateAt?.updateStr {
                                 HStack {
-                                    Text("\(updateAt)")
+                                    Text("\("Update at ".localized) \(updateAt)")
                                         .font(Font.system(size: 10))
                                         .foregroundColor(.secondary)
                                     Spacer()
@@ -293,9 +293,9 @@ struct ProxiesView: View {
                     }
                 }.padding([.top, .leading, .trailing])
                     if item.isProvider {
-                        if let updateAt = item.updateAt {
+                        if let updateAt = item.updateAt?.updateStr {
                             HStack {
-                                Text("\(updateAt)")
+                                Text("\("Update at ".localized) \(updateAt)")
                                     .font(Font.system(size: 10))
                                     .foregroundColor(.secondary)
                                 Spacer()
@@ -365,6 +365,7 @@ struct ProxiesView: View {
                 }
 //                proxyModel.proxiesData = ProxiesData()
                 renderDatas = []
+                currentSelection = 0
                 proxyModel.update(server)
             }.store(in: &cancellables)
             proxyModel.$renderDatas.sink { datas_ in

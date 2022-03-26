@@ -15,7 +15,7 @@ struct RenderData {
     var items: [ProxyItemData] = []
     var expanded: Bool = false
     var isProvider = false
-    var updateAt: String? = nil
+    var updateAt: Date? = nil
     var vehicleType: String? = nil
 }
 
@@ -224,7 +224,15 @@ class ProxyModel: ObservableObject {
                         renderItem.items = provider.proxies
                         renderItem.now = ""
                         renderItem.isProvider = true
-                        renderItem.updateAt = provider.updatedAt ?? ""
+                        if let updateAt = provider.updatedAt {
+                            do {
+                                let regex = try NSRegularExpression(pattern: "\\.[0-9]+Z")
+                                let str = regex.stringByReplacingMatches(in: updateAt, range: NSMakeRange(0, updateAt.lengthOfBytes(using: .utf8)), withTemplate: "Z")
+                                renderItem.updateAt = ISO8601DateFormatter().date(from: str)
+                            } catch {
+                                print("update at regex error: \(error)")
+                            }
+                        }
                         renderItem.vehicleType = provider.vehicleType
                         return renderItem
                     })
@@ -339,12 +347,12 @@ class ProxyModel: ObservableObject {
                     }
                 }
                 receiveValue: { [weak self] data in
-                    self?.proxiesData.proxies.datas[proxy]?.history = [ProxyHistoryData(time: "", delay: data.delay)]
+                    self?.proxiesData.proxies.datas[proxy]?.history = [ProxyHistoryData(time: Date().ISO8601Str, delay: data.delay)]
                     if let items = self?.proxiesData.proxies.items {
                         for idx in 0..<items.count {
                             if items[idx].name == proxy {
                                 print("latest \(proxy) -> \(data.delay)")
-                                self?.proxiesData.proxies.items[idx].history = [ProxyHistoryData(time: "", delay: data.delay)]
+                                self?.proxiesData.proxies.items[idx].history = [ProxyHistoryData(time: Date().ISO8601Str, delay: data.delay)]
                             }
                         }
                     }
@@ -352,7 +360,7 @@ class ProxyModel: ObservableObject {
                         for idx in 0..<items.count {
                             if items[idx].name == proxy {
                                 print("latest \(proxy) -> \(data.delay)")
-                                self?.proxiesData.proxies.orderedSelections[idx].history = [ProxyHistoryData(time: "", delay: data.delay)]
+                                self?.proxiesData.proxies.orderedSelections[idx].history = [ProxyHistoryData(time: Date().ISO8601Str, delay: data.delay)]
                             }
                         }
                     }
@@ -361,7 +369,7 @@ class ProxyModel: ObservableObject {
                             if let proxies = self?.proxyProviderData.providers.items[idx].proxies {
                                 for i in 0..<proxies.count {
                                     if self?.proxyProviderData.providers.items[idx].proxies[i].name == proxy {
-                                        self?.proxyProviderData.providers.items[idx].proxies[i].history = [ProxyHistoryData(time: "", delay: data.delay)]
+                                        self?.proxyProviderData.providers.items[idx].proxies[i].history = [ProxyHistoryData(time: Date().ISO8601Str, delay: data.delay)]
                                     }
                                 }
                             }

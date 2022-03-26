@@ -72,6 +72,28 @@ struct ProxyCardView: View {
                         .position(x: rect.width - 44, y: rect.height - 22)
                         .foregroundColor(.red)
                 }
+                if let time = proxy.history.last?.time {
+                    let date: Date? = {
+                        do {
+                            let regex = try NSRegularExpression(pattern: "\\.[0-9]+Z$")
+                            let str = regex.stringByReplacingMatches(in: time, range: NSMakeRange(0, time.lengthOfBytes(using: .utf8)), withTemplate: "Z")
+                            return ISO8601DateFormatter().date(from: str)
+                        } catch {
+                            print("update at regex error: \(error)")
+                        }
+                        return nil
+                    }()
+                    if let str = date?.updateStr {
+                        HStack {
+                            Spacer()
+                            Text("\(str)")
+                                .font(.system(size: 8 * scale))
+                                .foregroundColor(.secondary)
+                                .frame(width: 120, alignment: .trailing)
+                                .position(x: rect.width - 72, y: rect.height - 10)
+                        }
+                    }
+                }
             }
         }
     }
@@ -103,11 +125,13 @@ struct ProxyCardView_Previews: PreviewProvider {
         @State var proxy = ProxyItemData()
         proxy.name = "节点选择"
         proxy.type = "ShadowSocks"
-        proxy.history = [ProxyHistoryData(time: "123", delay: 1024)]
+        proxy.history = [ProxyHistoryData(time: "2022-03-26T00:52:39.926268244Z", delay: 1024)]
         return Group {
             ProxyCardView(proxy: $proxy)
             #if os(tvOS)
                 .previewLayout(.fixed(width: 320, height: 80))
+            #elseif os(macOS)
+                .previewLayout(.fixed(width: 280, height: 180))
             #else
                 .previewLayout(.fixed(width: 140, height: 40))
             #endif
@@ -115,6 +139,8 @@ struct ProxyCardView_Previews: PreviewProvider {
                 .preferredColorScheme(.dark)
             #if os(tvOS)
                 .previewLayout(.fixed(width: 320, height: 80))
+            #elseif os(macOS)
+                .previewLayout(.fixed(width: 280, height: 180))
             #else
                 .previewLayout(.fixed(width: 200, height: 40))
             #endif

@@ -43,3 +43,9 @@
 "Domain or IP" = "域名或IP";
 "Optional" = "可选";
 "NA" = "不可用";
+"%d seconds ago" = "%d 秒钟前";
+"%d minutes ago" = "%d 分钟前";
+"%d hours ago" = "%d 小时前";
+"%d days ago" = "%d 天前";
+"%d months ago" = "%d 月前";
+"Update at " = "更新于";
