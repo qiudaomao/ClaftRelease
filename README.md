@@ -6,6 +6,6 @@ Thanks to [yacd](https://github.com/haishanh/yacd)
 
 ![](connections.light.png)
 ![](connections.dark.png)
-![](proxies.png)
+![](proxies_o.png)
 ![](global.png)
 ![](config.png)
