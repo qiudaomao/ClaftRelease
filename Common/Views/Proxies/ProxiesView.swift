@@ -206,7 +206,7 @@ struct ProxiesView: View {
                                 .padding([.trailing])
                         }
                         .frame(width: rect.width - 40, height: 40)
-                        .background(Color.blue.opacity(0.8))
+                        .background(Color.accentColor)
                         .cornerRadius(8)
                         .onTapGesture {
                             currentSelection = idx ?? 0

@@ -107,7 +107,7 @@ struct ProxyCardView: View {
 #if os(tvOS)
     .frame(width: 320, height: 100)
 #endif
-                .background(Color.blue.opacity(0.8))
+                .background(Color.accentColor)
                 .cornerRadius(8)
                 .overlay(Color.clear.modifier(GeometryGetterMod(rect: $rect)))
         } else {
