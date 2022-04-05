@@ -45,8 +45,6 @@
 		E958E3BF27CC6760001197A9 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = E9EA0FE42760E0D800F9AAB4 /* config.json */; };
 		E958E3C027CC6760001197A9 /* proxies.json in Resources */ = {isa = PBXBuildFile; fileRef = E958E37427CBB290001197A9 /* proxies.json */; };
 		E958E3C127CC6760001197A9 /* connection.json in Resources */ = {isa = PBXBuildFile; fileRef = E9E7D8CE27CB477F00F3A1D2 /* connection.json */; };
-		E958E3C227CC6792001197A9 /* SocketRocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; };
-		E958E3C327CC6792001197A9 /* SocketRocket.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E958E3C727CC6CE6001197A9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75DCC2754C106008E20F0 /* ContentView.swift */; };
 		E959EA5227D9AA9B004EE5B0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E959EA5627D9AA9B004EE5B0 /* Localizable.strings */; };
 		E959EA5327D9AA9B004EE5B0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E959EA5627D9AA9B004EE5B0 /* Localizable.strings */; };
@@ -88,11 +86,15 @@
 		E976209F27D4B167005290B3 /* ConnectionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8CC27CB371200F3A1D2 /* ConnectionCardView.swift */; };
 		E97620A027D4B167005290B3 /* Formater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EA0FE92760E5CC00F9AAB4 /* Formater.swift */; };
 		E97620A127D4B167005290B3 /* NetWorkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925832127588FC4002B0F49 /* NetWorkManager.swift */; };
-		E97620A227D4B197005290B3 /* SocketRocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; };
-		E97620A327D4B197005290B3 /* SocketRocket.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E97620A527D4B477005290B3 /* proxies.json in Resources */ = {isa = PBXBuildFile; fileRef = E958E37427CBB290001197A9 /* proxies.json */; };
 		E97620A627D4B477005290B3 /* connection.json in Resources */ = {isa = PBXBuildFile; fileRef = E9E7D8CE27CB477F00F3A1D2 /* connection.json */; };
 		E97620A727D4B477005290B3 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = E9EA0FE42760E0D800F9AAB4 /* config.json */; };
+		E997DE6727FC3DD600C7F72B /* SocketRocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E997DE6627FC3DD600C7F72B /* SocketRocket.xcframework */; };
+		E997DE6827FC3DD600C7F72B /* SocketRocket.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E997DE6627FC3DD600C7F72B /* SocketRocket.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E997DE6A27FC3DE000C7F72B /* SocketRocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E997DE6627FC3DD600C7F72B /* SocketRocket.xcframework */; };
+		E997DE6B27FC3DE000C7F72B /* SocketRocket.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E997DE6627FC3DD600C7F72B /* SocketRocket.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E997DE6D27FC3DE400C7F72B /* SocketRocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E997DE6627FC3DD600C7F72B /* SocketRocket.xcframework */; };
+		E997DE6E27FC3DE400C7F72B /* SocketRocket.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E997DE6627FC3DD600C7F72B /* SocketRocket.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E9BDD23827CFC2C300A171B5 /* OverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BDD23727CFC2C300A171B5 /* OverView.swift */; };
 		E9BDD23927CFC2C300A171B5 /* OverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BDD23727CFC2C300A171B5 /* OverView.swift */; };
 		E9BDD23B27CFC33D00A171B5 /* NetworkSpeedDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BDD23A27CFC33D00A171B5 /* NetworkSpeedDraw.swift */; };
@@ -123,8 +125,6 @@
 		E9E7D8BD27CA3DB800F3A1D2 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8BC27CA3DB800F3A1D2 /* WebSocket.swift */; };
 		E9E7D8BF27CA4B6E00F3A1D2 /* WebSocketModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8BE27CA4B6E00F3A1D2 /* WebSocketModel.swift */; };
 		E9E7D8C127CA71A800F3A1D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9E7D8C027CA71A800F3A1D2 /* Assets.xcassets */; };
-		E9E7D8C527CA740E00F3A1D2 /* SocketRocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; };
-		E9E7D8C627CA740E00F3A1D2 /* SocketRocket.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E9E7D8CB27CB36D800F3A1D2 /* ConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8CA27CB36D800F3A1D2 /* ConnectionsView.swift */; };
 		E9E7D8CD27CB371200F3A1D2 /* ConnectionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E7D8CC27CB371200F3A1D2 /* ConnectionCardView.swift */; };
 		E9E7D8CF27CB477F00F3A1D2 /* connection.json in Resources */ = {isa = PBXBuildFile; fileRef = E9E7D8CE27CB477F00F3A1D2 /* connection.json */; };
@@ -167,35 +167,35 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E958E3C427CC6792001197A9 /* Embed Frameworks */ = {
+		E997DE6927FC3DD600C7F72B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E958E3C327CC6792001197A9 /* SocketRocket.xcframework in Embed Frameworks */,
+				E997DE6827FC3DD600C7F72B /* SocketRocket.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E97620A427D4B197005290B3 /* Embed Frameworks */ = {
+		E997DE6C27FC3DE000C7F72B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E97620A327D4B197005290B3 /* SocketRocket.xcframework in Embed Frameworks */,
+				E997DE6B27FC3DE000C7F72B /* SocketRocket.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E9E7D8C727CA740E00F3A1D2 /* Embed Frameworks */ = {
+		E997DE6F27FC3DE400C7F72B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E9E7D8C627CA740E00F3A1D2 /* SocketRocket.xcframework in Embed Frameworks */,
+				E997DE6E27FC3DE400C7F72B /* SocketRocket.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -230,6 +230,7 @@
 		E976207A27D4B11D005290B3 /* claftTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = claftTVApp.swift; sourceTree = "<group>"; };
 		E976207E27D4B121005290B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E976208127D4B121005290B3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E997DE6627FC3DD600C7F72B /* SocketRocket.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SocketRocket.xcframework; path = dependency/SocketRocket.xcframework; sourceTree = "<group>"; };
 		E9BDD23727CFC2C300A171B5 /* OverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverView.swift; sourceTree = "<group>"; };
 		E9BDD23A27CFC33D00A171B5 /* NetworkSpeedDraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSpeedDraw.swift; sourceTree = "<group>"; };
 		E9C99BBD27588E6A009EF515 /* ConfigModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigModel.swift; sourceTree = "<group>"; };
@@ -251,7 +252,6 @@
 		E9D75DF62755CA62008E20F0 /* ServerCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCard.swift; sourceTree = "<group>"; };
 		E9D8AA3127EEACFF00878D19 /* DateDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDiff.swift; sourceTree = "<group>"; };
 		E9E7D8B627C9F82100F3A1D2 /* ServerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerModel.swift; sourceTree = "<group>"; };
-		E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SocketRocket.xcframework; path = ../../github/tvos.mpv.player/contrib/cocoapods_xcframeworks/output/SocketRocket.xcframework; sourceTree = "<group>"; };
 		E9E7D8BC27CA3DB800F3A1D2 /* WebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
 		E9E7D8BE27CA4B6E00F3A1D2 /* WebSocketModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketModel.swift; sourceTree = "<group>"; };
 		E9E7D8C027CA71A800F3A1D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -271,7 +271,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E958E3C227CC6792001197A9 /* SocketRocket.xcframework in Frameworks */,
+				E997DE6727FC3DD600C7F72B /* SocketRocket.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,7 +293,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E97620A227D4B197005290B3 /* SocketRocket.xcframework in Frameworks */,
+				E997DE6D27FC3DE400C7F72B /* SocketRocket.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,7 +301,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9E7D8C527CA740E00F3A1D2 /* SocketRocket.xcframework in Frameworks */,
+				E997DE6A27FC3DE000C7F72B /* SocketRocket.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,7 +583,7 @@
 		E9E7D8B927CA3D6E00F3A1D2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E9E7D8BA27CA3D6E00F3A1D2 /* SocketRocket.xcframework */,
+				E997DE6627FC3DD600C7F72B /* SocketRocket.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -598,7 +598,7 @@
 				E958E37A27CC66EF001197A9 /* Sources */,
 				E958E37B27CC66EF001197A9 /* Frameworks */,
 				E958E37C27CC66EF001197A9 /* Resources */,
-				E958E3C427CC6792001197A9 /* Embed Frameworks */,
+				E997DE6927FC3DD600C7F72B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -652,7 +652,7 @@
 				E976207427D4B11D005290B3 /* Sources */,
 				E976207527D4B11D005290B3 /* Frameworks */,
 				E976207627D4B11D005290B3 /* Resources */,
-				E97620A427D4B197005290B3 /* Embed Frameworks */,
+				E997DE6F27FC3DE400C7F72B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -670,7 +670,7 @@
 				E9D75DC32754C106008E20F0 /* Sources */,
 				E9D75DC42754C106008E20F0 /* Frameworks */,
 				E9D75DC52754C106008E20F0 /* Resources */,
-				E9E7D8C727CA740E00F3A1D2 /* Embed Frameworks */,
+				E997DE6C27FC3DE000C7F72B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
