@@ -12,7 +12,7 @@ build/
 #*.xcworkspace
 #!default.xcworkspace
 xcuserdata
-xcshareddata
+#xcshareddata
 profile
 *.moved-aside
 DerivedData
