@@ -25,6 +25,7 @@ struct ClaftMacApp: App {
                         connectionOrderModel.saveOrder(value)
                     }.store(in: &cancellables)
                 }
+                .frame(minWidth: 800, minHeight: 460)
         }
     }
 }
