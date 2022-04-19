@@ -78,12 +78,20 @@ struct ConnectionsView: View {
                                 } else if orderMode == .downloadSpeed {
                                     if let a = a.downloadSpeed, let b = b.downloadSpeed {
                                         return a > b
+                                    } else if let _ = a.downloadSpeed {
+                                        return true
+                                    } else if let _ = b.downloadSpeed {
+                                        return false
                                     } else {
                                         return a.download > b.download
                                     }
                                 } else if orderMode == .uploadSpeed {
                                     if let a = a.uploadSpeed , let b = b.uploadSpeed{
                                         return a > b
+                                    } else if let _ = a.uploadSpeed {
+                                        return true
+                                    } else if let _ = b.uploadSpeed {
+                                        return false
                                     } else {
                                         return a.upload > b.upload
                                     }
