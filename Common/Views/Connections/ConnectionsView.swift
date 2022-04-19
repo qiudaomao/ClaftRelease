@@ -178,7 +178,7 @@ struct ConnectionsView: View {
             
             #if os(iOS)
             if showBottomSheet {
-                BottomSheetView(isOpen: self.$isOpenBottomSheet, maxHeight: 540) {
+                BottomSheetView(isOpen: self.$isOpenBottomSheet, maxHeight: 660) {
                     VStack {
                         Text("Sort By")
                             .font(.system(size: 23))
