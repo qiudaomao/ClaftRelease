@@ -208,6 +208,22 @@ struct ConnectionsView: View {
                         }
                         .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
                         Button(action: {
+                            self.orderMode = .downloadSpeed
+                            self.connectionOrderModel.saveOrder(.downloadSpeed)
+                            self.showBottomSheet = false
+                        }) {
+                            Text("Download Speed")
+                        }
+                        .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
+                        Button(action: {
+                            self.orderMode = .uploadSpeed
+                            self.connectionOrderModel.saveOrder(.uploadSpeed)
+                            self.showBottomSheet = false
+                        }) {
+                            Text("Upload Speed")
+                        }
+                        .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
+                        Button(action: {
                             self.showBottomSheet = false
                         }) {
                             Text("Cancel")
