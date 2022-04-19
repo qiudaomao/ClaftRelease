@@ -75,6 +75,14 @@ struct ConnectionsView: View {
                                     return a.download > b.download
                                 } else if orderMode == .uploadSize {
                                     return a.upload > b.upload
+                                } else if orderMode == .downloadSpeed {
+                                    if let a = a.downloadSpeed, let b = b.downloadSpeed {
+                                        return a > b
+                                    }
+                                } else if orderMode == .uploadSpeed {
+                                    if let a = a.uploadSpeed , let b = b.uploadSpeed{
+                                        return a > b
+                                    }
                                 }
                                 return true
                             }), id: \.id) { connectionItem in

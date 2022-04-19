@@ -194,22 +194,24 @@ struct ProxiesView: View {
                         obj.name == item.name
                     })
                     if idx == currentSelection {
-                        HStack {
-                            if item.isProvider {
-                                Image(systemName: "link")
-                                    .padding([.leading])
-                                Text("\(item.vehicleType ?? "")")
-                                    .foregroundColor(.secondary)
-                                Spacer()
+                        if rect.width > 40 {
+                            HStack {
+                                if item.isProvider {
+                                    Image(systemName: "link")
+                                        .padding([.leading])
+                                    Text("\(item.vehicleType ?? "")")
+                                        .foregroundColor(.secondary)
+                                    Spacer()
+                                }
+                                Text("\(item.name)")
+                                    .padding([.trailing])
                             }
-                            Text("\(item.name)")
-                                .padding([.trailing])
-                        }
-                        .frame(width: rect.width - 40, height: 40)
-                        .background(Color.accentColor)
-                        .cornerRadius(8)
-                        .onTapGesture {
-                            currentSelection = idx ?? 0
+                            .frame(width: rect.width - 40, height: 40)
+                            .background(Color.accentColor)
+                            .cornerRadius(8)
+                            .onTapGesture {
+                                currentSelection = idx ?? 0
+                            }
                         }
                     } else {
                         HStack {

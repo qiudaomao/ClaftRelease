@@ -55,6 +55,8 @@ struct ConnectionItem: Hashable, Codable {
     var metadata: ConnectionMetaData = ConnectionMetaData()
     var upload: Int = 0
     var download: Int = 0
+    var uploadSpeed: Int? = nil
+    var downloadSpeed: Int? = nil
     var start: String = ""
     var chains: [String] = []
     var rule: String = ""
@@ -148,7 +150,18 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
                     }
                     self.trafficHistory.append(trafficData)
                 case .connections:
-                    let connectionData = try JSONDecoder().decode(ConnectionData.self, from: data)
+                    var connectionData = try JSONDecoder().decode(ConnectionData.self, from: data)
+                    //caculate speed
+                    var idx = 0
+                    for conn in connectionData.connections {
+                        if let item = self.connectionData.connections.first(where: { obj in
+                            obj.id == conn.id
+                        }) {
+                            connectionData.connections[idx].uploadSpeed = conn.upload - item.upload
+                            connectionData.connections[idx].downloadSpeed = conn.download - item.download
+                        }
+                        idx += 1
+                    }
                     self.connectionData = connectionData
                 case .logs:
                     let logData = try JSONDecoder().decode(LogData.self, from: data)

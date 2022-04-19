@@ -153,6 +153,8 @@ struct ContentView: View {
                     Text("Time").tag(ConnectionOrder.time)
                     Text("Download Size").tag(ConnectionOrder.downloadSize)
                     Text("Upload Size").tag(ConnectionOrder.uploadSize)
+                    Text("Download Speed").tag(ConnectionOrder.downloadSpeed)
+                    Text("Upload Speed").tag(ConnectionOrder.uploadSpeed)
                 }
                 Button(action: {
                     connectionOrderModel.pause.toggle()

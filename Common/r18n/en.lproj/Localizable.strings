@@ -17,6 +17,8 @@
 "Time" = "Time";
 "Download Size" = "Download Size";
 "Upload Size" = "Upload Size";
+"Download Speed" = "Download Speed";
+"Upload Speed" = "Upload Speed";
 "Host" = "Host";
 "Port" = "Port";
 "Secret" = "Secret";
@@ -50,3 +52,5 @@
 "%d months ago" = "%d months ago";
 "Update at " = "Update at ";
 "Start Time" = "Start Time";
+"Cancel" = "Cancel";
+"Sort By" = "Sort By";

@@ -17,6 +17,8 @@
 "Time" = "时间";
 "Download Size" = "下行数据";
 "Upload Size" = "上行数据";
+"Download Speed" = "下行速度";
+"Upload Speed" = "上行速度";
 "Host" = "主机";
 "Port" = "端口";
 "Secret" = "密钥";
@@ -50,3 +52,5 @@
 "%d months ago" = "%d 月前";
 "Update at " = "更新于";
 "Start Time" = "发起时间";
+"Cancel" = "取消";
+"Sort By" = "排序方式";

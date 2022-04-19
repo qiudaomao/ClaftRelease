@@ -13,6 +13,8 @@ enum ConnectionOrder: Int {
     case time = 1
     case downloadSize = 2
     case uploadSize = 3
+    case downloadSpeed = 4
+    case uploadSpeed = 5
 }
 
 class ConnectionOrderModel: ObservableObject {
