@@ -62,11 +62,11 @@ struct ConnectionsView: View {
                                 }
                                 let meta = conn.metadata
                                 for item in conn.chains {
-                                    if item.contains(keyword) {
+                                    if item.lowercased().contains(keyword) {
                                         return true
                                     }
                                 }
-                                return "\(meta.network) \(meta.type) \(meta.sourceIP) \(meta.destinationIP) \(meta.sourcePort) \(meta.destinationPort) \(meta.host) \(meta.dnsMode)".lowercased().contains(keyword.lowercased())
+                                return "\(meta.network) \(meta.type) \(meta.sourceIP) \(meta.destinationIP) \(meta.sourcePort) \(meta.destinationPort) \(meta.host) \(meta.dnsMode)".lowercased().contains(keyword)
                             })
                                         .sorted(by: { a, b in
                                 if orderMode == .time {
@@ -255,7 +255,7 @@ struct ConnectionsView: View {
                 .sink(receiveValue: { keyword in
                     print("keyword change to '\(keyword)'")
                     withAnimation {
-                        self.keyword = keyword
+                        self.keyword = keyword.lowercased()
                     }
                 })
             currentServerIdxCancellable = serverModel.$currentServerIndex.sink(receiveValue: { idx in
