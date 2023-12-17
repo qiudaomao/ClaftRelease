@@ -41,6 +41,11 @@ struct ConnectionsView: View {
     @EnvironmentObject var serverModel:ServerModel
     @EnvironmentObject var connectionOrderModel:ConnectionOrderModel
     
+    func closeConnection(_ id:String) {
+        let server = serverModel.servers[currentServerIdx]
+        serverModel.deleteConnection(server, id)
+    }
+    
 //    var server:Server
     var body: some View {
         ZStack {
@@ -102,14 +107,20 @@ struct ConnectionsView: View {
                                 Button {
                                     self.showBottomSheet.toggle()
                                 } label: {
-                                    ConnectionCardView(connectionItem: connectionItem)
+                                    ConnectionCardView(callback: {
+                                        print("ondelete \(connectionItem.id)")
+                                        closeConnection(connectionItem.id)
+                                    }, connectionItem: connectionItem)
                                         .frame(width: rect.size.width - 40)
 //                                        .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
                                 }
                                 .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
                                 .buttonStyle(CardButtonStyle())
                                 #else
-                                ConnectionCardView(connectionItem: connectionItem)
+                                ConnectionCardView(callback: {
+                                    print("ondelete \(connectionItem.id)")
+                                    closeConnection(connectionItem.id)
+                                }, connectionItem: connectionItem)
                                     .frame(width: (rect.size.width > 960) ? 960 - 40 : rect.size.width - 40)
                                     .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
                                 #endif

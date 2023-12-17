@@ -235,4 +235,21 @@ class ServerModel: ObservableObject {
             print("error \(error)")
         }
     }
+    
+    public func deleteConnection(_ server:Server, _ id:String) {
+        guard let encodedURL = id.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+            return
+        }
+        let url = "\(server.https ? "https":"http")://\(server.host):\(server.port)/connections/\(encodedURL)"
+        var headers:[String:String] = [:]
+        if let secret = server.secret {
+            headers["Authorization"] = "Bearer \(secret)"
+        }
+        let _ = NetworkManager.shared.deleteData(url: url, headers: headers).sink { _ in
+        } receiveValue: { str in
+            if let str = str {
+                print("receive \(str)")
+            }
+        }
+    }
 }

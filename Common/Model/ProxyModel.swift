@@ -83,6 +83,9 @@ struct ProxyData: Codable {
             array.append(decodedObject)
         }
         items = array
+        if let d = datas["GLOBAL"] {
+            orderedSelections.append(d)
+        }
         if let all = datas["GLOBAL"]?.all {
             for i in 0..<all.count {
                 if let item = datas[all[i]] {
