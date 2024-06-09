@@ -272,15 +272,18 @@ struct ConnectionsView: View {
             currentServerIdxCancellable = serverModel.$currentServerIndex.sink(receiveValue: { idx in
                 print("connectionsview current server index changed to \(idx)")
                 if currentServerIdx >= 0 {
+                    let server = serverModel.servers[currentServerIdx]
+                    print("disconnect server \(server.host)")
+                    connectionDataCancellable?.cancel()
+                    server.websockets?.disconnect(.connections)
                     if !self.pause {
                         withAnimation {
                             self.connectionData = ConnectionData()
                         }
                     }
-                    let server = serverModel.servers[currentServerIdx]
-                    server.websockets?.disconnect(.connections)
                 }
                 let server = serverModel.servers[idx]
+                print("try connect server \(server.host)")
                 server.websockets?.connect(.connections)
                 connectionDataCancellable = server.websockets?.connectionWebSocket.$connectionData.sink(receiveValue: { connectionData in
                     if !self.pause {
@@ -294,6 +297,9 @@ struct ConnectionsView: View {
             })
         }
         .onDisappear {
+            orderCancellable?.cancel()
+            connectionDataCancellable?.cancel()
+            currentServerIdxCancellable?.cancel()
             orderCancellable = nil
             connectionDataCancellable = nil
             currentServerIdxCancellable = nil
