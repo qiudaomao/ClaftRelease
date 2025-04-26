@@ -206,6 +206,7 @@
 		E90276D027D33AA80010985B /* ProxyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyCardView.swift; sourceTree = "<group>"; };
 		E925832127588FC4002B0F49 /* NetWorkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkManager.swift; sourceTree = "<group>"; };
 		E9258324275895B2002B0F49 /* ConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigView.swift; sourceTree = "<group>"; };
+		E92ED3CD2DBD1FEB00006621 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E935F3032759EF78001CD0BC /* SpecificCornerShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificCornerShape.swift; sourceTree = "<group>"; };
 		E958E37027CB9F37001197A9 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		E958E37227CBA9C6001197A9 /* ConnectionOrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionOrderModel.swift; sourceTree = "<group>"; };
@@ -416,6 +417,7 @@
 		E958E37F27CC66EF001197A9 /* ClaftMac */ = {
 			isa = PBXGroup;
 			children = (
+				E92ED3CD2DBD1FEB00006621 /* Info.plist */,
 				E958E38027CC66EF001197A9 /* ClaftMacApp.swift */,
 				E958E38427CC66F2001197A9 /* Assets.xcassets */,
 				E958E38927CC66F2001197A9 /* ClaftMac.entitlements */,
@@ -1055,7 +1057,9 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ClaftMac/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Claft;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1088,7 +1092,9 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ClaftMac/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Claft;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1190,6 +1196,7 @@
 				DEVELOPMENT_TEAM = SGZE33W2XX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1218,6 +1225,7 @@
 				DEVELOPMENT_TEAM = SGZE33W2XX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1369,6 +1377,7 @@
 				DEVELOPMENT_TEAM = SGZE33W2XX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1403,6 +1412,7 @@
 				DEVELOPMENT_TEAM = SGZE33W2XX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
