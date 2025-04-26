@@ -112,7 +112,7 @@ struct ServerCard: View {
                 .padding(EdgeInsets(top: 5, leading: 12, bottom: 5, trailing: 0))
                 #else
                 .padding(EdgeInsets(top: 5, leading: 6, bottom: 5, trailing: 0))
-                .frame(width: 120)
+                .frame(width: 132)
                 #endif
                 switch trafficData.connectionStatus {
                 case .none:
@@ -121,42 +121,42 @@ struct ServerCard: View {
                     #if os(tvOS)
                         .position(x: 290, y: 8 * scale)
                     #else
-                        .position(x: 110 * scale, y: 8 * scale)
+                        .position(x: 122 * scale, y: 8 * scale)
                     #endif
                         .foregroundColor(.gray)
                 case .connecting:
                     Image(systemName: "circle.fill")
                         .font(Font.system(size: 8 * scale))
                         #if os(tvOS)
-                            .position(x: 290, y: 8 * scale)
+                        .position(x: 290, y: 8 * scale)
                         #else
-                            .position(x: 110 * scale, y: 8 * scale)
+                        .position(x: 122 * scale, y: 8 * scale)
                         #endif
                         .foregroundColor(.blue)
                 case .connected:
                     Image(systemName: "circle.fill")
                         .font(Font.system(size: 8 * scale))
-#if os(tvOS)
-    .position(x: 290, y: 8 * scale)
-#else
-    .position(x: 110 * scale, y: 8 * scale)
-#endif
+                        #if os(tvOS)
+                        .position(x: 290, y: 8 * scale)
+                        #else
+                        .position(x: 122 * scale, y: 8 * scale)
+                        #endif
                         .foregroundColor(.green)
                 case .failed:
                     Image(systemName: "circle.fill")
                         .font(Font.system(size: 8 * scale))
-#if os(tvOS)
-    .position(x: 290, y: 8 * scale)
-#else
-    .position(x: 110 * scale, y: 8 * scale)
-#endif
+                    #if os(tvOS)
+                        .position(x: 290, y: 8 * scale)
+                    #else
+                        .position(x: 122 * scale, y: 8 * scale)
+                    #endif
                         .foregroundColor(.red)
                 }
                 #if os(macOS)
                 if selected {
                     Image(systemName: "checkmark")
                         .font(Font.system(size: 8 * scale))
-                        .position(x: 111, y: 50)
+                        .position(x: 124, y: 50)
                         .foregroundColor(.blue)
                 }
                 #elseif os(tvOS)
@@ -172,7 +172,7 @@ struct ServerCard: View {
         #if os(tvOS)
         .frame(width: 300, height: 120)
         #else
-        .frame(width: 120, height: 60)
+        .frame(width: 130, height: 60)
         #endif
         #if os(iOS)
         .overlay(SpecificCornerShape(
@@ -210,7 +210,7 @@ struct ServerCard_Previews: PreviewProvider {
         }
         #else
         Group {
-            ServerCard(server: Server(id: UUID(), host: "127.0.0.1", port: "9090"), trafficData: TrafficData(up: 2314, down: 71645, connectionStatus: .none), selected: false)
+            ServerCard(server: Server(id: UUID(), host: "192.168.123.123", port: "9090"), trafficData: TrafficData(up: 2314, down: 71645, connectionStatus: .none), selected: true)
                 .previewLayout(.fixed(width: 140, height: 80))
             ServerCard(server: Server(id: UUID(), host: "127.0.0.1", port: "9090", secret: "abc"), trafficData: TrafficData(up: 0, down: 0, connectionStatus: .connecting), selected: true)
                 .previewLayout(.fixed(width: 140, height: 80))

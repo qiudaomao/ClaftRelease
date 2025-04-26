@@ -137,7 +137,7 @@ struct ContentView: View {
                             .padding(7)
                             .padding(.horizontal, 25)
                             .background(Color("textFieldBackground"))
-                            .frame(width: 120, height: 28)
+                            .frame(width: 240, height: 28)
                             .cornerRadius(8)
                             .padding(.horizontal, 10)
                             .overlay(
@@ -160,6 +160,15 @@ struct ContentView: View {
                     connectionOrderModel.pause.toggle()
                 }) {
                     Image(systemName: connectionOrderModel.pause ? "play.fill" : "pause.fill")
+                }
+                Button(action: {
+                    let currentServerIndex = serverModel.currentServerIndex
+                    let server = serverModel.servers[currentServerIndex]
+                    serverModel.servers[currentServerIndex].websockets?.connectionWebSocket.connectionData.connections.forEach { connection in
+                        serverModel.deleteConnection(server, connection.id)
+                    }
+                }) {
+                    Image(systemName: "xmark.circle")
                 }
             }
             Button(action: {
