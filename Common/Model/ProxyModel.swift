@@ -219,6 +219,12 @@ class ProxyModel: ObservableObject {
                 })
                 let renderProviders = providerData.providers.items
                     .filter({ provider in
+                        provider.name != "default"
+                    })
+                    .filter({ provider in
+                        provider.vehicleType != "Compatible"
+                    })
+                    .filter({ provider in
                         provider.updatedAt != nil || provider.vehicleType != "Compatible"
                     })
                     .map({ provider -> RenderData in
@@ -227,6 +233,7 @@ class ProxyModel: ObservableObject {
                         renderItem.items = provider.proxies
                         renderItem.now = ""
                         renderItem.isProvider = true
+                        print("renderProviders name \(provider.name)")
                         if let updateAt = provider.updatedAt {
                             do {
                                 let regex = try NSRegularExpression(pattern: "\\.[0-9]+Z")
