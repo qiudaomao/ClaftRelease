@@ -11,6 +11,7 @@ struct ProviderRuleItemData: Codable {
     var vehicleType: String
     var updatedAt: String?
     var updatedAtDate: Date?
+    var updatedAtStr: String?
 }
 
 struct ProviderRuleData: Codable {
@@ -39,6 +40,7 @@ struct ProviderRuleData: Codable {
                     let regex = try NSRegularExpression(pattern: "\\.[0-9]+Z")
                     let str = regex.stringByReplacingMatches(in: updateAt, range: NSMakeRange(0, updateAt.lengthOfBytes(using: .utf8)), withTemplate: "Z")
                     decodedObject.updatedAtDate = ISO8601DateFormatter().date(from: str)
+                    decodedObject.updatedAtStr = DateFormatter.localizedString(from: decodedObject.updatedAtDate ?? Date(), dateStyle: .medium, timeStyle: .short)
                 } catch {
                     print("update at regex error: \(error)")
                 }

@@ -92,8 +92,13 @@ struct RuleProviderCardView: View {
                                 print("update now")
                                 doUpdate?()
                             }
-                        Text("\(rule.updatedAt ?? "")")
-                            .font(.system(size: 10))
+                        if let date = rule.updatedAtDate {
+                            Text(date.updateStr)
+                                .font(.system(size: 10))
+                        } else {
+                            Text(rule.updatedAt ?? "")
+                                .font(.system(size: 10))
+                        }
                     }.padding(EdgeInsets(top: 0, leading: 8, bottom: 2, trailing: 8))
                     Spacer()
                 }
