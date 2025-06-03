@@ -143,27 +143,21 @@ class ProviderModel: ObservableObject {
         loadProviderRule(server)
     }
     
-    public func updateProvider(_ server:Server) {
-        currentServer = server
-        let url = "http://\(server.host):\(server.port)/providers/proxies"
+    public func updateProvider(_ server:Server, _ provider:String) {
+        guard let encodedURL = provider.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
+            return
+        }
+        let url = "\(server.https ? "https":"http")://\(server.host):\(server.port)/providers/rules/\(encodedURL)"
         var headers:[String:String] = [:]
         if let secret = server.secret {
             headers["Authorization"] = "Bearer \(secret)"
         }
-        NetworkManager.shared.getData(url: url, type: ProxyProviderData.self, headers: headers)
-            .sink { completion in
-                switch completion {
-                case .failure(let err):
-                    print("error fetch from \(url) : \(err.localizedDescription)")
-                case .finished:
-                    print("network fetch from \(url) finished")
-                }
+        changeServerCancellable = NetworkManager.shared.putData(url: url, type: String.self, body: nil, headers: headers).sink { _ in
+            self.loadProviderRule(server)
+        } receiveValue: { str in
+            if let str = str {
+                print("receive \(str)")
             }
-            receiveValue: { [weak self] data in
-                withAnimation {
-                    self?.proxyProviderData = data
-                }
-            }
-            .store(in: &cancellables)
+        }
     }
 }

@@ -38,7 +38,7 @@ struct RuleView: View {
                             RuleProviderCardView(rule: item) {
                                 print("update")
                                 if let server = serverModel.currentServer {
-                                    ruleModel.updateRuleProvider(server)
+                                    ruleModel.updateRuleProvider(server, item.name)
                                 }
                             }
                             .frame(width: (rect.size.width > 960) ? 960 - 40 : rect.size.width - 40, height: 40)

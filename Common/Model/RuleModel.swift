@@ -63,7 +63,7 @@ class RuleModel: ObservableObject {
         providerModel.updateProviderRule(server)
     }
     
-    func updateRuleProvider(_ server:Server) {
-        providerModel.updateProviderRule(server)
+    func updateRuleProvider(_ server:Server, _ provider:String) {
+        providerModel.updateProvider(server, provider)
     }
 }
