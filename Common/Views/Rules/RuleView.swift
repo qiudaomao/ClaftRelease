@@ -14,6 +14,7 @@ struct RuleView: View {
     @State private var cancelables = Set<AnyCancellable>()
     @State var rect:CGRect = CGRect()
     @State var rules:[RuleItem] = []
+    @State var ruleProviders:[ProviderRuleItemData] = []
 #if os(iOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 #endif
@@ -32,6 +33,18 @@ struct RuleView: View {
                     #else
                     ServerListView()
                     #endif
+                    if rect.size.width > 40 {
+                        ForEach(ruleProviders, id: \.name) { item in
+                            RuleProviderCardView(rule: item) {
+                                print("update")
+                                if let server = serverModel.currentServer {
+                                    ruleModel.updateRuleProvider(server)
+                                }
+                            }
+                            .frame(width: (rect.size.width > 960) ? 960 - 40 : rect.size.width - 40, height: 40)
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 4, trailing: 0))
+                        }
+                    }
                     if rect.size.width > 40 {
                         ForEach(rules.filter({ rule in
                             if keyword.lengthOfBytes(using: .utf8) == 0 {
@@ -54,6 +67,11 @@ struct RuleView: View {
         }.onAppear {
             ruleModel.$rules.sink { rules in
                 self.rules = rules
+            }.store(in: &cancelables)
+            ruleModel.$ruleProviderData.sink{ provider in
+                self.ruleProviders = provider?.providers.items.sorted(by: { a, b in
+                    return a.name < b.name
+                }) ?? []
             }.store(in: &cancelables)
             serverModel.$currentServerIndex.sink { idx in
                 let server = serverModel.servers[idx]

@@ -113,44 +113,6 @@ struct DelayData: Codable {
     var delay: Int = 0
 }
 
-struct ProviderItemData: Codable {
-    var name: String
-    var proxies: [ProxyItemData]
-    var type: String
-    var vehicleType: String
-    var updatedAt: String?
-}
-
-struct ProviderData : Codable {
-    var items: [ProviderItemData]
-    
-    private struct DynamicCodingKeys: CodingKey {
-        var stringValue: String
-        
-        var intValue: Int?
-        init?(intValue: Int) {
-            return nil
-        }
-        
-        init?(stringValue: String) {
-            self.stringValue = stringValue
-        }
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: DynamicCodingKeys.self)
-        items = []
-        for key in container.allKeys {
-            let decodedObject = try container.decode(ProviderItemData.self, forKey: DynamicCodingKeys(stringValue: key.stringValue)!)
-            self.items.append(decodedObject)
-        }
-    }
-}
-
-struct ProxyProviderData : Codable {
-    var providers: ProviderData
-}
-
 class ProxyModel: ObservableObject {
     private var currentServer: Server? = nil
     @Published var renderDatas:[RenderData] = []

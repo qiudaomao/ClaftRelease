@@ -52,6 +52,12 @@
 		E959EA5927D9AD36004EE5B0 /* String+localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = E959EA5827D9AD36004EE5B0 /* String+localized.swift */; };
 		E959EA5A27D9AD36004EE5B0 /* String+localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = E959EA5827D9AD36004EE5B0 /* String+localized.swift */; };
 		E959EA5B27D9AD36004EE5B0 /* String+localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = E959EA5827D9AD36004EE5B0 /* String+localized.swift */; };
+		E95B7B0F2DEECFC700B9BF2A /* ProviderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95B7B0E2DEECFC700B9BF2A /* ProviderModel.swift */; };
+		E95B7B102DEECFC700B9BF2A /* ProviderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95B7B0E2DEECFC700B9BF2A /* ProviderModel.swift */; };
+		E95B7B112DEECFC700B9BF2A /* ProviderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95B7B0E2DEECFC700B9BF2A /* ProviderModel.swift */; };
+		E95B7B132DEED49B00B9BF2A /* RuleProviderCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95B7B122DEED49200B9BF2A /* RuleProviderCardView.swift */; };
+		E95B7B142DEED49B00B9BF2A /* RuleProviderCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95B7B122DEED49200B9BF2A /* RuleProviderCardView.swift */; };
+		E95B7B152DEED49B00B9BF2A /* RuleProviderCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95B7B122DEED49200B9BF2A /* RuleProviderCardView.swift */; };
 		E963E8D427DB2C90002AAE03 /* CardBackgroundModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963E8D327DB2C90002AAE03 /* CardBackgroundModifier.swift */; };
 		E963E8D527DB2C90002AAE03 /* CardBackgroundModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963E8D327DB2C90002AAE03 /* CardBackgroundModifier.swift */; };
 		E963E8D627DB2C90002AAE03 /* CardBackgroundModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E963E8D327DB2C90002AAE03 /* CardBackgroundModifier.swift */; };
@@ -226,6 +232,8 @@
 		E959EA5527D9AA9B004EE5B0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E959EA5727D9AAC2004EE5B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E959EA5827D9AD36004EE5B0 /* String+localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+localized.swift"; sourceTree = "<group>"; };
+		E95B7B0E2DEECFC700B9BF2A /* ProviderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderModel.swift; sourceTree = "<group>"; };
+		E95B7B122DEED49200B9BF2A /* RuleProviderCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleProviderCardView.swift; sourceTree = "<group>"; };
 		E963E8D327DB2C90002AAE03 /* CardBackgroundModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBackgroundModifier.swift; sourceTree = "<group>"; };
 		E976207827D4B11D005290B3 /* Claft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Claft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E976207A27D4B11D005290B3 /* claftTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = claftTVApp.swift; sourceTree = "<group>"; };
@@ -344,6 +352,7 @@
 		E90276CB27D202090010985B /* Rules */ = {
 			isa = PBXGroup;
 			children = (
+				E95B7B122DEED49200B9BF2A /* RuleProviderCardView.swift */,
 				E9D29F8327CE6137002E5088 /* RuleCardView.swift */,
 				E9D29F8027CE6118002E5088 /* RuleView.swift */,
 			);
@@ -497,6 +506,7 @@
 				E9E7D8BE27CA4B6E00F3A1D2 /* WebSocketModel.swift */,
 				E958E37227CBA9C6001197A9 /* ConnectionOrderModel.swift */,
 				E958E37627CBB43B001197A9 /* ProxyModel.swift */,
+				E95B7B0E2DEECFC700B9BF2A /* ProviderModel.swift */,
 				E9D29F8627CE614D002E5088 /* RuleModel.swift */,
 			);
 			path = Model;
@@ -873,6 +883,7 @@
 				E958E3B227CC674C001197A9 /* ManageServerPanel.swift in Sources */,
 				E958E3B127CC674C001197A9 /* ConnectionsView.swift in Sources */,
 				E958E3BB27CC6754001197A9 /* ProxyModel.swift in Sources */,
+				E95B7B152DEED49B00B9BF2A /* RuleProviderCardView.swift in Sources */,
 				E958E3BA27CC6754001197A9 /* ServerModel.swift in Sources */,
 				E9D29F8827CE614D002E5088 /* RuleModel.swift in Sources */,
 				E9CA47AC27CCEF7F008640F9 /* LogView.swift in Sources */,
@@ -883,6 +894,7 @@
 				E963E8D527DB2C90002AAE03 /* CardBackgroundModifier.swift in Sources */,
 				E958E3C727CC6CE6001197A9 /* ContentView.swift in Sources */,
 				E958E3B027CC674C001197A9 /* CreateServer.swift in Sources */,
+				E95B7B0F2DEECFC700B9BF2A /* ProviderModel.swift in Sources */,
 				E958E3AE27CC674C001197A9 /* PlaceHoldView.swift in Sources */,
 				E9D29F8527CE6137002E5088 /* RuleCardView.swift in Sources */,
 				E958E3AB27CC6748001197A9 /* ProxiesView.swift in Sources */,
@@ -929,6 +941,7 @@
 				E97620A027D4B167005290B3 /* Formater.swift in Sources */,
 				E976208827D4B14E005290B3 /* ServerListView.swift in Sources */,
 				E976209427D4B167005290B3 /* BottomSheetView.swift in Sources */,
+				E95B7B142DEED49B00B9BF2A /* RuleProviderCardView.swift in Sources */,
 				E976209C27D4B167005290B3 /* ConfigView.swift in Sources */,
 				E976208B27D4B14E005290B3 /* PlaceHoldView.swift in Sources */,
 				E976209B27D4B167005290B3 /* WebSocket.swift in Sources */,
@@ -939,6 +952,7 @@
 				E963E8D627DB2C90002AAE03 /* CardBackgroundModifier.swift in Sources */,
 				E976209727D4B167005290B3 /* RuleCardView.swift in Sources */,
 				E976208727D4B14E005290B3 /* ServerCard.swift in Sources */,
+				E95B7B102DEECFC700B9BF2A /* ProviderModel.swift in Sources */,
 				E976209927D4B167005290B3 /* WebSocketModel.swift in Sources */,
 				E976209A27D4B167005290B3 /* ConnectionOrderModel.swift in Sources */,
 				E976209327D4B167005290B3 /* LogView.swift in Sources */,
@@ -968,6 +982,7 @@
 				E958E37127CB9F37001197A9 /* BottomSheetView.swift in Sources */,
 				E9E7D8CD27CB371200F3A1D2 /* ConnectionCardView.swift in Sources */,
 				E958E37727CBB43B001197A9 /* ProxyModel.swift in Sources */,
+				E95B7B132DEED49B00B9BF2A /* RuleProviderCardView.swift in Sources */,
 				E925832227588FC4002B0F49 /* NetWorkManager.swift in Sources */,
 				E9D29F8727CE614D002E5088 /* RuleModel.swift in Sources */,
 				E9CA47AB27CCEF7F008640F9 /* LogView.swift in Sources */,
@@ -978,6 +993,7 @@
 				E963E8D427DB2C90002AAE03 /* CardBackgroundModifier.swift in Sources */,
 				E9EA0FE72760E46E00F9AAB4 /* LocalFileReader.swift in Sources */,
 				E9D75DCB2754C106008E20F0 /* claftApp.swift in Sources */,
+				E95B7B112DEECFC700B9BF2A /* ProviderModel.swift in Sources */,
 				E9D75DF52754CE26008E20F0 /* ProxiesView.swift in Sources */,
 				E9D29F8427CE6137002E5088 /* RuleCardView.swift in Sources */,
 				E9F83ED6275788350022B6BC /* ManageServerPanel.swift in Sources */,

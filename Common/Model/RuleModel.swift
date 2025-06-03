@@ -27,7 +27,17 @@ struct RuleItem {
 
 class RuleModel: ObservableObject {
     @Published var rules:[RuleItem] = []
+    @Published var ruleProviderData:RuleProviderData? = nil
+    private var providerModel = ProviderModel()
     private var cancellables = Set<AnyCancellable>()
+    
+    init() {
+        providerModel.$providerRuleData
+            .sink { [weak self] data in
+                self?.ruleProviderData = data
+            }
+            .store(in: &cancellables)
+    }
     
     func loadRule(_ server:Server) {
         let url = "http://\(server.host):\(server.port)/rules"
@@ -50,5 +60,10 @@ class RuleModel: ObservableObject {
                 })
             }
             .store(in: &cancellables)
+        providerModel.updateProviderRule(server)
+    }
+    
+    func updateRuleProvider(_ server:Server) {
+        providerModel.updateProviderRule(server)
     }
 }
