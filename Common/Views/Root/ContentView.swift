@@ -119,7 +119,7 @@ struct ContentView: View {
                             .padding(7)
                             .padding(.horizontal, 25)
                             .background(Color("textFieldBackground"))
-                            .frame(width: 120, height: 28)
+                            .frame(width: 240, height: 28)
                             .cornerRadius(8)
                             .padding(.horizontal, 10)
                             .overlay(
@@ -164,8 +164,28 @@ struct ContentView: View {
                 Button(action: {
                     let currentServerIndex = serverModel.currentServerIndex
                     let server = serverModel.servers[currentServerIndex]
-                    serverModel.servers[currentServerIndex].websockets?.connectionWebSocket.connectionData.connections.forEach { connection in
-                        serverModel.deleteConnection(server, connection.id)
+                    if !connectionOrderModel.searchKeyword.isEmpty {
+                        // Only delete connections that match the search
+                        let keyword = connectionOrderModel.searchKeyword
+                        serverModel.servers[currentServerIndex].websockets?.connectionWebSocket.connectionData.connections.filter({ conn in
+                                if keyword.lengthOfBytes(using: .utf8) == 0 {
+                                    return true
+                                }
+                                let meta = conn.metadata
+                                for item in conn.chains {
+                                    if item.lowercased().contains(keyword) {
+                                        return true
+                                    }
+                                }
+                                return "\(meta.network) \(meta.type) \(meta.sourceIP) \(meta.destinationIP) \(meta.sourcePort) \(meta.destinationPort) \(meta.host) \(meta.dnsMode)".lowercased().contains(keyword)
+                            }).forEach { connection in
+                            serverModel.deleteConnection(server, connection.id)
+                        }
+                    } else {
+                        // Delete all connections if no search
+                        serverModel.servers[currentServerIndex].websockets?.connectionWebSocket.connectionData.connections.forEach { connection in
+                            serverModel.deleteConnection(server, connection.id)
+                        }
                     }
                 }) {
                     Image(systemName: "xmark.circle")
