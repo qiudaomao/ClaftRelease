@@ -60,7 +60,9 @@ struct ConnectionsView: View {
                         ServerListView()
                         #endif
                         if (rect.size.width > 40) {
-                            ForEach(connectionData.connections
+                            // Combine active and closed connections
+                            let allConnections = connectionData.connections + connectionData.closedConnections
+                            ForEach(allConnections
                                         .filter({ conn in
                                 if keyword.lengthOfBytes(using: .utf8) == 0 {
                                     return true
@@ -74,6 +76,12 @@ struct ConnectionsView: View {
                                 return "\(meta.network) \(meta.type) \(meta.sourceIP) \(meta.destinationIP) \(meta.sourcePort) \(meta.destinationPort) \(meta.host) \(meta.dnsMode)".lowercased().contains(keyword)
                             })
                                         .sorted(by: { a, b in
+                                // Sort active connections first, then closed connections
+                                let aIsClosed = a.closed == true
+                                let bIsClosed = b.closed == true
+                                if aIsClosed != bIsClosed {
+                                    return !aIsClosed // Active connections first
+                                }
                                 if orderMode == .time {
                                     return a.start < b.start
                                 } else if orderMode == .downloadSize {
@@ -108,8 +116,10 @@ struct ConnectionsView: View {
                                     self.showBottomSheet.toggle()
                                 } label: {
                                     ConnectionCardView(callback: {
-                                        print("ondelete \(connectionItem.id)")
-                                        closeConnection(connectionItem.id)
+                                        if connectionItem.closed != true {
+                                            print("ondelete \(connectionItem.id)")
+                                            closeConnection(connectionItem.id)
+                                        }
                                     }, connectionItem: connectionItem)
                                         .frame(width: rect.size.width - 40)
 //                                        .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))
@@ -118,8 +128,10 @@ struct ConnectionsView: View {
                                 .buttonStyle(CardButtonStyle())
                                 #else
                                 ConnectionCardView(callback: {
-                                    print("ondelete \(connectionItem.id)")
-                                    closeConnection(connectionItem.id)
+                                    if connectionItem.closed != true {
+                                        print("ondelete \(connectionItem.id)")
+                                        closeConnection(connectionItem.id)
+                                    }
                                 }, connectionItem: connectionItem)
                                     .frame(width: (rect.size.width > 960) ? 960 - 40 : rect.size.width - 40)
                                     .padding(EdgeInsets(top: 8, leading: 0, bottom: 4, trailing: 0))

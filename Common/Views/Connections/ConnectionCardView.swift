@@ -10,55 +10,76 @@ import SwiftUI
 struct ConnectionCardView: View {
     let callback: () -> Void
     var connectionItem:ConnectionItem
+    
+    private func getRelativeCloseTime(_ closeTimeString: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        if let closeDate = formatter.date(from: closeTimeString) {
+            let relativeTime = closeDate.updateStr
+            if relativeTime.isEmpty {
+                return "\("closed".localized) \("just now".localized)"
+            } else {
+                return "\("closed".localized) \(relativeTime)"
+            }
+        }
+        return "\("closed".localized) \("recently".localized)"
+    }
+    
     var body: some View {
         #if os(tvOS)
         let scale = 2.0
         #else
         let scale = 1.0
         #endif
+        let isClosedConnection = connectionItem.closed == true
         HStack {
             HStack {
                 VStack(alignment: .leading) {
                     HStack {
+                        if isClosedConnection {
+                            Image(systemName: "xmark.circle.fill")
+                                .font(.system(size: 12 * scale))
+                                .foregroundColor(.red)
+                        }
                         Text("\(connectionItem.metadata.network)")
                             .padding(EdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8))
                             .frame(minWidth: 40)
                             .font(.system(size: 10 * scale))
-                            .background(Color("tagBackground"))
+                            .background(isClosedConnection ? Color.red.opacity(0.3) : Color("tagBackground"))
                             .cornerRadius(8)
                         Text("\(connectionItem.metadata.type)")
                             .padding(EdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8))
                             .frame(minWidth: 52)
                             .font(.system(size: 10 * scale))
-                            .background(Color("tagBackground"))
+                            .background(isClosedConnection ? Color.red.opacity(0.3) : Color("tagBackground"))
                             .cornerRadius(8)
                         if connectionItem.metadata.dnsMode.lengthOfBytes(using: .utf8) > 0 {
                         Text("\(connectionItem.metadata.dnsMode)")
                             .frame(minWidth: 36)
                             .padding(EdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8))
                             .font(.system(size: 10 * scale))
-                            .background(Color("tagBackground"))
+                            .background(isClosedConnection ? Color.red.opacity(0.3) : Color("tagBackground"))
                             .cornerRadius(8)
                         }
                         Spacer()
                         Image(systemName: "arrowtriangle.up.fill")
                             .font(.system(size: 10 * scale))
-                            .foregroundColor(Color.green)
+                            .foregroundColor(isClosedConnection ? Color.red.opacity(0.6) : Color.green)
                         Text("\(connectionItem.upload.humanReadableByteCount())")
                             .lineLimit(1)
                             .frame(minWidth: 46, alignment: .trailing)
                             .multilineTextAlignment(.trailing)
                             .font(.system(size: 10 * scale))
-                            .foregroundColor(.gray)
+                            .foregroundColor(isClosedConnection ? .red.opacity(0.8) : .gray)
                         Image(systemName: "arrowtriangle.down.fill")
                             .font(.system(size: 10 * scale))
-                            .foregroundColor(Color.green)
+                            .foregroundColor(isClosedConnection ? Color.red.opacity(0.6) : Color.green)
                         Text("\(connectionItem.download.humanReadableByteCount())")
                             .lineLimit(1)
                             .frame(minWidth: 46, alignment: .trailing)
                             .multilineTextAlignment(.trailing)
                             .font(.system(size: 10 * scale))
-                            .foregroundColor(.gray)
+                            .foregroundColor(isClosedConnection ? .red.opacity(0.8) : .gray)
                     }
                     .frame(height: 20 * scale)
                     .padding(EdgeInsets(top: 4, leading: 8, bottom: 0, trailing: 8))
@@ -114,22 +135,22 @@ struct ConnectionCardView: View {
                         Spacer()
                         Image(systemName: "arrowtriangle.up")
                             .font(.system(size: 10 * scale))
-                            .foregroundColor(Color.green)
-                        Text("\((connectionItem.uploadSpeed ?? 0).humanReadableByteCount())/s")
+                            .foregroundColor(isClosedConnection ? Color.red.opacity(0.6) : Color.green)
+                        Text(isClosedConnection ? "0 B/s" : "\((connectionItem.uploadSpeed ?? 0).humanReadableByteCount())/s")
                             .lineLimit(1)
                             .frame(minWidth: 46, alignment: .trailing)
                             .multilineTextAlignment(.trailing)
                             .font(.system(size: 10 * scale))
-                            .foregroundColor(.gray)
+                            .foregroundColor(isClosedConnection ? .red.opacity(0.8) : .gray)
                         Image(systemName: "arrowtriangle.down")
                             .font(.system(size: 10 * scale))
-                            .foregroundColor(Color.green)
-                        Text("\((connectionItem.downloadSpeed ?? 0).humanReadableByteCount())/s")
+                            .foregroundColor(isClosedConnection ? Color.red.opacity(0.6) : Color.green)
+                        Text(isClosedConnection ? "0 B/s" : "\((connectionItem.downloadSpeed ?? 0).humanReadableByteCount())/s")
                             .lineLimit(1)
                             .frame(minWidth: 46, alignment: .trailing)
                             .multilineTextAlignment(.trailing)
                             .font(.system(size: 10 * scale))
-                            .foregroundColor(.gray)
+                            .foregroundColor(isClosedConnection ? .red.opacity(0.8) : .gray)
                     }
                     .frame(height: 18 * scale)
                     .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
@@ -152,14 +173,23 @@ struct ConnectionCardView: View {
                         }
                         .frame(height: 14 * scale)
                         HStack {
-                            // add a close image
-                            Image(systemName: "xmark.circle.fill")
-                                .font(.system(size: 10 * scale))
-                                .foregroundColor(.gray)
-                                .onTapGesture {
-                                    // self.showConnectionDetails = false
-                                    callback()
+                            if isClosedConnection {
+                                // Show close time for closed connections
+                                if let closeTime = connectionItem.closeTime, !closeTime.isEmpty {
+                                    Text(getRelativeCloseTime(closeTime))
+                                        .font(.system(size: 10 * scale))
+                                        .foregroundColor(.red.opacity(0.8))
                                 }
+                            } else {
+                                // add a close image for active connections
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.system(size: 10 * scale))
+                                    .foregroundColor(.gray)
+                                    .onTapGesture {
+                                        // self.showConnectionDetails = false
+                                        callback()
+                                    }
+                            }
                         }
                     }
                     .padding(EdgeInsets(top: 0, leading: 8, bottom: 4, trailing: 8))
@@ -167,13 +197,18 @@ struct ConnectionCardView: View {
                 #if os(tvOS)
                 .frame(height: 200, alignment: .topLeading)
                 #else
-                .frame(height: 98, alignment: .topLeading)
+                .frame(height: 106, alignment: .topLeading)
 #endif
             }
         }
 //        .background(Color("connectionCard"))
 //        .background(Material.thickMaterial)
         .modifier(CardBackgroundModifier())
+        .opacity(isClosedConnection ? 0.7 : 1.0)
+        .overlay(
+            RoundedRectangle(cornerRadius: 8 * scale)
+                .stroke(isClosedConnection ? Color.red.opacity(0.5) : Color.clear, lineWidth: 1)
+        )
         .cornerRadius(8 * scale)
         .padding(EdgeInsets(top: 0, leading: 2, bottom: 0, trailing: 0))
     }

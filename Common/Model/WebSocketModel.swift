@@ -61,12 +61,74 @@ struct ConnectionItem: Hashable, Codable {
     var chains: [String] = []
     var rule: String = ""
     var rulePayload: String = ""
+    var closed: Bool? = nil
+    var closeTime: String? = nil
+    
+    enum CodingKeys: String, CodingKey {
+        case id, metadata, upload, download, start, chains, rule, rulePayload
+    }
+    
+    init() {}
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decodeIfPresent(String.self, forKey: .id) ?? ""
+        metadata = try container.decodeIfPresent(ConnectionMetaData.self, forKey: .metadata) ?? ConnectionMetaData()
+        upload = try container.decodeIfPresent(Int.self, forKey: .upload) ?? 0
+        download = try container.decodeIfPresent(Int.self, forKey: .download) ?? 0
+        start = try container.decodeIfPresent(String.self, forKey: .start) ?? ""
+        chains = try container.decodeIfPresent([String].self, forKey: .chains) ?? []
+        rule = try container.decodeIfPresent(String.self, forKey: .rule) ?? ""
+        rulePayload = try container.decodeIfPresent(String.self, forKey: .rulePayload) ?? ""
+        // These are not part of the JSON from server, only added locally
+        closed = nil
+        closeTime = nil
+        uploadSpeed = nil
+        downloadSpeed = nil
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(metadata, forKey: .metadata)
+        try container.encode(upload, forKey: .upload)
+        try container.encode(download, forKey: .download)
+        try container.encode(start, forKey: .start)
+        try container.encode(chains, forKey: .chains)
+        try container.encode(rule, forKey: .rule)
+        try container.encode(rulePayload, forKey: .rulePayload)
+        // Don't encode closed, closeTime, uploadSpeed, downloadSpeed as they're not part of server JSON
+    }
 }
 
 struct ConnectionData: Hashable, Codable {
     var downloadTotal: Int = 0
     var uploadTotal: Int = 0
     var connections: [ConnectionItem] = []
+    var closedConnections: [ConnectionItem] = []
+    
+    enum CodingKeys: String, CodingKey {
+        case downloadTotal, uploadTotal, connections
+    }
+    
+    init() {}
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        downloadTotal = try container.decodeIfPresent(Int.self, forKey: .downloadTotal) ?? 0
+        uploadTotal = try container.decodeIfPresent(Int.self, forKey: .uploadTotal) ?? 0
+        connections = try container.decodeIfPresent([ConnectionItem].self, forKey: .connections) ?? []
+        // closedConnections is not part of server JSON, only managed locally
+        closedConnections = []
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(downloadTotal, forKey: .downloadTotal)
+        try container.encode(uploadTotal, forKey: .uploadTotal)
+        try container.encode(connections, forKey: .connections)
+        // Don't encode closedConnections as it's not part of server JSON
+    }
 }
 
 struct LogData: Hashable, Codable {
@@ -162,6 +224,29 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
                         }
                         idx += 1
                     }
+                    
+                    // Track closed connections
+                    let currentConnectionIds = Set(connectionData.connections.map { $0.id })
+                    let previousConnectionIds = Set(self.connectionData.connections.map { $0.id })
+                    let closedConnectionIds = previousConnectionIds.subtracting(currentConnectionIds)
+                    
+                    // Mark closed connections and add to closedConnections
+                    var newClosedConnections = self.connectionData.closedConnections
+                    for closedId in closedConnectionIds {
+                        if let closedConnection = self.connectionData.connections.first(where: { $0.id == closedId }) {
+                            var closed = closedConnection
+                            closed.closed = true
+                            closed.closeTime = self.getCurrentTimeString()
+                            newClosedConnections.append(closed)
+                        }
+                    }
+                    
+                    // Keep only last 1000 closed connections
+                    if newClosedConnections.count > 1000 {
+                        newClosedConnections = Array(newClosedConnections.suffix(1000))
+                    }
+                    
+                    connectionData.closedConnections = newClosedConnections
                     self.connectionData = connectionData
                 case .logs:
                     let logData = try JSONDecoder().decode(LogData.self, from: data)
@@ -194,6 +279,13 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss.SSSS"
+        return formatter.string(from: date)
+    }
+    
+    func getCurrentTimeString() -> String {
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return formatter.string(from: date)
     }
     

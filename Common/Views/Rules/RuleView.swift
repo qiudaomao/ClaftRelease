@@ -34,7 +34,12 @@ struct RuleView: View {
                     ServerListView()
                     #endif
                     if rect.size.width > 40 {
-                        ForEach(ruleProviders, id: \.name) { item in
+                        ForEach(ruleProviders.filter({ rule in
+                            if keyword.lengthOfBytes(using: .utf8) == 0 {
+                                return true
+                            }
+                            return rule.name.lowercased().contains(keyword.lowercased())
+                        }), id: \.name) { item in
                             RuleProviderCardView(rule: item) {
                                 print("update")
                                 if let server = serverModel.currentServer {
