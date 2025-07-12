@@ -139,6 +139,7 @@ class ServerModel: ObservableObject {
     @Published var servers:[Server] = []
     @Published var currentServerIndex:Int = 0
     @Published var currentServer: Server? = nil
+    @Published var searchKeyword: String = ""
     private var cancelables:Set<AnyCancellable> = Set<AnyCancellable>()
 
     public func connectServer(_ idx:Int) {

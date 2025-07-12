@@ -130,6 +130,24 @@ struct ContentView: View {
                         Spacer()
                     })
                 }
+            } else if self.selection == 1 {
+                ZStack {
+                        TextField("Search", text: $serverModel.searchKeyword)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .padding(7)
+                            .padding(.horizontal, 25)
+                            .background(Color("textFieldBackground"))
+                            .frame(width: 240, height: 28)
+                            .cornerRadius(8)
+                            .padding(.horizontal, 10)
+                            .overlay(
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 16)
+                        Spacer()
+                    })
+                }
             } else if self.selection == 3 {
                 ZStack {
                         TextField("Search", text: $connectionOrderModel.searchKeyword)

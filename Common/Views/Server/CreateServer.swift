@@ -114,6 +114,18 @@ struct CreateServer: View {
     @EnvironmentObject var serverModel:ServerModel
     @State var inputValue:[String] = ["", "9090", ""]
     @State var https:Bool = false
+    @FocusState var focusedField: CreateServerFocus?
+    
+    func saveServer() {
+        guard inputValue[0].lengthOfBytes(using: .utf8) > 0 else { return }
+        let secret:String? = inputValue[2].lengthOfBytes(using: .utf8) > 0 ? inputValue[2] : nil
+        let server = Server(id: UUID(), host: inputValue[0], port: inputValue[1], secret: secret, https: https)
+        serverModel.servers.append(server)
+        serverModel.connectServer(serverModel.servers.count-1)
+        serverModel.saveServers()
+        self.presentationMode.wrappedValue.dismiss()
+    }
+    
     var body: some View {
         VStack {
             HStack {
@@ -127,12 +139,7 @@ struct CreateServer: View {
                     .font(.headline)
                 Spacer()
                 Button {
-                    let secret:String? = inputValue[2].lengthOfBytes(using: .utf8) > 0 ? inputValue[2] : nil
-                    let server = Server(id: UUID(), host: inputValue[0], port: inputValue[1], secret: secret, https: https)
-                    serverModel.servers.append(server)
-                    serverModel.connectServer(serverModel.servers.count-1)
-                    serverModel.saveServers()
-                    self.presentationMode.wrappedValue.dismiss()
+                    saveServer()
                 } label: {
                     Image(systemName: "square.and.arrow.down")
                 }
@@ -152,11 +159,23 @@ struct CreateServer: View {
                                 .multilineTextAlignment(.leading)
                                 .disableAutocorrection(true)
                                 .frame(width: 120)
+                                .focused($focusedField, equals: CreateServerFocus(rawValue: idx))
+                                .onSubmit {
+                                    saveServer()
+                                }
                         } else {
                             TextField(entries[idx].placeHolder, text: $inputValue[idx])
                                 .multilineTextAlignment(.leading)
                                 .disableAutocorrection(true)
                                 .frame(width: 120)
+                                .focused($focusedField, equals: CreateServerFocus(rawValue: idx))
+                                .onSubmit {
+                                    if idx < entries.count - 1 {
+                                        focusedField = CreateServerFocus(rawValue: idx + 1)
+                                    } else {
+                                        saveServer()
+                                    }
+                                }
                         }
                     }
                     .padding()
@@ -171,8 +190,46 @@ struct CreateServer: View {
                 }.padding()
             }
         }
+        .onAppear {
+            focusedField = .host
+        }
+        .background(TabKeyHandler(focusedField: $focusedField))
     }
 }
+
+#if os(macOS)
+struct TabKeyHandler: NSViewRepresentable {
+    @FocusState.Binding var focusedField: CreateServerFocus?
+    
+    func makeNSView(context: Context) -> NSView {
+        let view = NSView()
+        DispatchQueue.main.async {
+            if let window = view.window {
+                NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+                    if event.keyCode == 48 { // Tab key
+                        switch focusedField {
+                        case .host:
+                            focusedField = .port
+                        case .port:
+                            focusedField = .secret
+                        case .secret:
+                            focusedField = .host
+                        case .none:
+                            focusedField = .host
+                        }
+                        return nil // Consume the event
+                    }
+                    return event
+                }
+            }
+        }
+        return view
+    }
+    
+    func updateNSView(_ nsView: NSView, context: Context) {}
+}
+#endif
+
 #endif
 
 struct CreateServer_Previews: PreviewProvider {

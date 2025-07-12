@@ -25,6 +25,8 @@ struct ProxiesView: View {
     @State var changeProxyCancellable:AnyCancellable? = nil
     @State var renderDatas:[RenderData] = []
     @State var currentSelection: Int = 0
+    @State var keyword: String = ""
+    @State var keywordCancellable: AnyCancellable? = nil
     @State private var rect: CGRect = .zero
     #if os(tvOS)
     @FocusState var focused: ProxiesFocusable?
@@ -189,12 +191,30 @@ struct ProxiesView: View {
     var leftBody: some View {
         ScrollView {
             LazyVStack {
-                ForEach($renderDatas, id: \.name) { $item in
-                    let idx = renderDatas.firstIndex(where: { obj in
-                        obj.name == item.name
-                    })
-                    if idx == currentSelection {
-                        if rect.width > 40 {
+                ForEach(renderDatas.indices, id: \.self) { index in
+                    if keyword.isEmpty || renderDatas[index].name.lowercased().contains(keyword) {
+                        let item = renderDatas[index]
+                        if index == currentSelection {
+                            if rect.width > 40 {
+                                HStack {
+                                    if item.isProvider {
+                                        Image(systemName: "link")
+                                            .padding([.leading])
+                                        Text("\(item.vehicleType ?? "")")
+                                            .foregroundColor(.secondary)
+                                        Spacer()
+                                    }
+                                    Text("\(item.name)")
+                                        .padding([.trailing])
+                                }
+                                .frame(width: rect.width - 40, height: 40)
+                                .background(Color.accentColor)
+                                .cornerRadius(8)
+                                .onTapGesture {
+                                    currentSelection = index
+                                }
+                            }
+                        } else {
                             HStack {
                                 if item.isProvider {
                                     Image(systemName: "link")
@@ -207,29 +227,11 @@ struct ProxiesView: View {
                                     .padding([.trailing])
                             }
                             .frame(width: rect.width - 40, height: 40)
-                            .background(Color.accentColor)
+                            .modifier(CardBackgroundModifier())
                             .cornerRadius(8)
                             .onTapGesture {
-                                currentSelection = idx ?? 0
+                                currentSelection = index
                             }
-                        }
-                    } else {
-                        HStack {
-                            if item.isProvider {
-                                Image(systemName: "link")
-                                    .padding([.leading])
-                                Text("\(item.vehicleType ?? "")")
-                                    .foregroundColor(.secondary)
-                                Spacer()
-                            }
-                            Text("\(item.name)")
-                                .padding([.trailing])
-                        }
-                        .frame(width: rect.width - 40, height: 40)
-                        .modifier(CardBackgroundModifier())
-                        .cornerRadius(8)
-                        .onTapGesture {
-                            currentSelection = idx ?? 0
                         }
                     }
                 }
@@ -384,6 +386,15 @@ struct ProxiesView: View {
                 }
                 self.renderDatas = datas
             }.store(in: &cancellables)
+            keywordCancellable = self.serverModel.$searchKeyword
+                .debounce(for: 0.5, scheduler: RunLoop.main)
+                .removeDuplicates()
+                .sink(receiveValue: { keyword in
+                    print("keyword change to '\(keyword)'")
+                    withAnimation {
+                        self.keyword = keyword.lowercased()
+                    }
+                })
         }
     }
 }
