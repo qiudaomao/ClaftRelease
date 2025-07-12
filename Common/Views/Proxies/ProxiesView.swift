@@ -237,7 +237,7 @@ struct ProxiesView: View {
             .padding()
         }
         #if os(macOS)
-        .frame(maxWidth: 220)
+        .frame(minWidth: 220, maxWidth: 220)
         #else
         .frame(maxWidth: 280)
         #endif
