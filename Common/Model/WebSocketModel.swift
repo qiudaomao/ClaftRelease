@@ -241,9 +241,9 @@ class WebSocketModel: ObservableObject, WebSocketDelegate {
                         }
                     }
                     
-                    // Keep only last 1000 closed connections
-                    if newClosedConnections.count > 1000 {
-                        newClosedConnections = Array(newClosedConnections.suffix(1000))
+                    // Keep only last 100 closed connections
+                    if newClosedConnections.count > 100 {
+                        newClosedConnections = Array(newClosedConnections.suffix(100))
                     }
                     
                     connectionData.closedConnections = newClosedConnections
