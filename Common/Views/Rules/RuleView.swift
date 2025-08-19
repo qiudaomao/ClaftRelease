@@ -94,6 +94,9 @@ struct RuleView: View {
                 })
         }
         .navigationTitle("Rules")
+#if os(iOS)
+        .searchable(text: $connectionOrderModel.searchKeyword, prompt: "Search rules")
+#endif
         .overlay(Color.clear.modifier(GeometryGetterMod(rect: $rect)))
     }
 }

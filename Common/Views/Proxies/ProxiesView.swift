@@ -360,6 +360,9 @@ struct ProxiesView: View {
 #endif
         }
         .navigationTitle("Proxies")
+#if os(iOS)
+        .searchable(text: $serverModel.searchKeyword, prompt: "Search proxies")
+#endif
         .onAppear {
             serverModel.$currentServer.sink { server in
                 guard let server = server else {

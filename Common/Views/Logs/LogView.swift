@@ -108,6 +108,9 @@ struct LogView: View {
             }
         }
         .navigationTitle("Logs")
+#if os(iOS)
+        .searchable(text: $connectionOrderModel.searchKeyword, prompt: "Search logs")
+#endif
         .overlay(Color.clear.modifier(GeometryGetterMod(rect: $rect)))
     }
 }

@@ -320,6 +320,9 @@ struct ConnectionsView: View {
             }
         }
         .navigationTitle("Connections")
+#if os(iOS)
+        .searchable(text: $connectionOrderModel.searchKeyword, prompt: "Search connections")
+#endif
         .overlay(Color.clear.modifier(GeometryGetterMod(rect: $rect)))
     }
 }
