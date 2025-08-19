@@ -360,9 +360,7 @@ struct ProxiesView: View {
 #endif
         }
         .navigationTitle("Proxies")
-#if os(iOS)
-        .searchable(text: $serverModel.searchKeyword, prompt: "Search proxies")
-#endif
+        .modifier(ProxiesSearchView(searchKeyword: $serverModel.searchKeyword))
         .onAppear {
             serverModel.$currentServer.sink { server in
                 guard let server = server else {
@@ -398,6 +396,19 @@ struct ProxiesView: View {
                         self.keyword = keyword.lowercased()
                     }
                 })
+        }
+    }
+}
+
+struct ProxiesSearchView: ViewModifier {
+    @Binding var searchKeyword: String
+
+    func body(content: Content) -> some View {
+        if #available(iOS 15.0, *) {
+            content
+                .searchable(text: $searchKeyword, prompt: "Search proxies")
+        } else {
+            content
         }
     }
 }

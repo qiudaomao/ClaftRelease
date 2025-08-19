@@ -320,9 +320,7 @@ struct ConnectionsView: View {
             }
         }
         .navigationTitle("Connections")
-#if os(iOS)
-        .searchable(text: $connectionOrderModel.searchKeyword, prompt: "Search connections")
-#endif
+        .modifier(ConnectionsSearchView(searchKeyword: $connectionOrderModel.searchKeyword))
         .overlay(Color.clear.modifier(GeometryGetterMod(rect: $rect)))
     }
 }
@@ -356,5 +354,19 @@ struct ConnectionsView_Previews: PreviewProvider {
         #endif
     }
 }
+
+struct ConnectionsSearchView: ViewModifier {
+    @Binding var searchKeyword: String
+
+    func body(content: Content) -> some View {
+        if #available(iOS 15.0, *) {
+            content
+                .searchable(text: $searchKeyword, prompt: "Search connections")
+        } else {
+            content
+        }
+    }
+}
+
 #endif
 

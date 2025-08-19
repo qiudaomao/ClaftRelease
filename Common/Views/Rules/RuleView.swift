@@ -94,10 +94,21 @@ struct RuleView: View {
                 })
         }
         .navigationTitle("Rules")
-#if os(iOS)
-        .searchable(text: $connectionOrderModel.searchKeyword, prompt: "Search rules")
-#endif
+        .modifier(RulesSearchView(searchKeyword: $connectionOrderModel.searchKeyword))
         .overlay(Color.clear.modifier(GeometryGetterMod(rect: $rect)))
+    }
+}
+
+struct RulesSearchView: ViewModifier {
+    @Binding var searchKeyword: String
+
+    func body(content: Content) -> some View {
+        if #available(iOS 15.0, *) {
+            content
+                .searchable(text: $searchKeyword, prompt: "Search rules")
+        } else {
+            content
+        }
     }
 }
 
