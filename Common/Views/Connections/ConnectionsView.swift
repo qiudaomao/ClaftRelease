@@ -325,6 +325,20 @@ struct ConnectionsView: View {
     }
 }
 
+struct ConnectionsSearchView: ViewModifier {
+    @Binding var searchKeyword: String
+
+    func body(content: Content) -> some View {
+        if #available(iOS 15.0, *) {
+            content
+                .searchable(text: $searchKeyword, prompt: "Search connections")
+        } else {
+            content
+        }
+    }
+}
+
+
 #if DEBUG
 struct ConnectionsView_Previews: PreviewProvider {
     static var connectionData = previewConnectionData
@@ -352,19 +366,6 @@ struct ConnectionsView_Previews: PreviewProvider {
                 .preferredColorScheme(.dark)
         }
         #endif
-    }
-}
-
-struct ConnectionsSearchView: ViewModifier {
-    @Binding var searchKeyword: String
-
-    func body(content: Content) -> some View {
-        if #available(iOS 15.0, *) {
-            content
-                .searchable(text: $searchKeyword, prompt: "Search connections")
-        } else {
-            content
-        }
     }
 }
 
