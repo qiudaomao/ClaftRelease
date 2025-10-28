@@ -105,7 +105,7 @@ struct RulesSearchView: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 15.0, *) {
             content
-                .searchable(text: $searchKeyword, prompt: "Search rules")
+                .searchable(text: $searchKeyword, prompt: "Search rules".localized)
         } else {
             content
         }

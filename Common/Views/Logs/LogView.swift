@@ -119,7 +119,7 @@ struct LogsSearchView: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 15.0, *) {
             content
-                .searchable(text: $searchKeyword, prompt: "Search logs")
+                .searchable(text: $searchKeyword, prompt: "Search logs".localized)
         } else {
             content
         }

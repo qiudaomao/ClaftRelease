@@ -13,6 +13,10 @@
 "Logs" = "Logs";
 "Servers" = "Servers";
 "Search" = "Search";
+"Search connections" = "Search connections";
+"Search rules" = "Search rules";
+"Search logs" = "Search logs";
+"Search proxies" = "Search proxies";
 "Default" = "Default";
 "Time" = "Time";
 "Download Size" = "Download Size";

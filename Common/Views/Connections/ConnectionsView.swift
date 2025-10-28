@@ -331,7 +331,7 @@ struct ConnectionsSearchView: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 15.0, *) {
             content
-                .searchable(text: $searchKeyword, prompt: "Search connections")
+                .searchable(text: $searchKeyword, prompt: "Search connections".localized)
         } else {
             content
         }

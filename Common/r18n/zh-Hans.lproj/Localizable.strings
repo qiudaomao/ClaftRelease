@@ -13,6 +13,10 @@
 "Logs" = "日志";
 "Servers" = "服务器";
 "Search" = "搜索";
+"Search connections" = "搜索连接";
+"Search rules" = "搜索规则";
+"Search logs" = "搜索日志";
+"Search proxies" = "搜索代理";
 "Default" = "默认";
 "Time" = "时间";
 "Download Size" = "下行数据";

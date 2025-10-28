@@ -114,7 +114,7 @@ struct ContentView: View {
         .toolbar {
             if self.selection == 2 || self.selection == 5 {
                 ZStack {
-                        TextField("Search", text: $connectionOrderModel.searchKeyword)
+                        TextField("Search".localized, text: $connectionOrderModel.searchKeyword)
                             .textFieldStyle(PlainTextFieldStyle())
                             .padding(7)
                             .padding(.horizontal, 25)
@@ -132,7 +132,7 @@ struct ContentView: View {
                 }
             } else if self.selection == 1 {
                 ZStack {
-                        TextField("Search", text: $serverModel.searchKeyword)
+                        TextField("Search".localized, text: $serverModel.searchKeyword)
                             .textFieldStyle(PlainTextFieldStyle())
                             .padding(7)
                             .padding(.horizontal, 25)
@@ -150,7 +150,7 @@ struct ContentView: View {
                 }
             } else if self.selection == 3 {
                 ZStack {
-                        TextField("Search", text: $connectionOrderModel.searchKeyword)
+                        TextField("Search".localized, text: $connectionOrderModel.searchKeyword)
                             .textFieldStyle(PlainTextFieldStyle())
                             .padding(7)
                             .padding(.horizontal, 25)
