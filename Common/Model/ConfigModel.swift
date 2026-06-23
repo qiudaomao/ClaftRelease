@@ -10,7 +10,7 @@ import Combine
 
 struct ConfigData: Decodable {
     var allowLan:Bool?
-    var authentication:[String]
+    var authentication:[String]?
     var bindAddress: String?
     var ipv6:Bool?
     var logLevel: String?
@@ -108,7 +108,7 @@ class ConfigModel: ObservableObject {
             receiveValue: { [weak self] config in
                 var configData = ConfigDataModel()
                 configData.allowLan = config.allowLan ?? false
-                configData.authentication = config.authentication
+                configData.authentication = config.authentication ?? []
                 configData.bindAddress = config.bindAddress ?? ""
                 configData.ipv6 = config.ipv6 ?? false
                 if let mode = config.mode {
