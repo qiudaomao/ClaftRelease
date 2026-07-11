@@ -403,13 +403,18 @@ struct ProxiesView: View {
 struct ProxiesSearchView: ViewModifier {
     @Binding var searchKeyword: String
 
+    @ViewBuilder
     func body(content: Content) -> some View {
+        #if os(iOS)
         if #available(iOS 15.0, *) {
             content
                 .searchable(text: $searchKeyword, prompt: "Search proxies".localized)
         } else {
             content
         }
+        #else
+        content
+        #endif
     }
 }
 

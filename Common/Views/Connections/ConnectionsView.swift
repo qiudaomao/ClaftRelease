@@ -328,13 +328,18 @@ struct ConnectionsView: View {
 struct ConnectionsSearchView: ViewModifier {
     @Binding var searchKeyword: String
 
+    @ViewBuilder
     func body(content: Content) -> some View {
+        #if os(iOS)
         if #available(iOS 15.0, *) {
             content
                 .searchable(text: $searchKeyword, prompt: "Search connections".localized)
         } else {
             content
         }
+        #else
+        content
+        #endif
     }
 }
 
@@ -370,4 +375,3 @@ struct ConnectionsView_Previews: PreviewProvider {
 }
 
 #endif
-
